@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
   --gutter: clamp(1rem, 3vw, 2rem);
 }
 
@@ -23,23 +23,23 @@ html {
 body {
   @apply bg-ink-950 text-mist-100 font-sans;
   background-image:
-    radial-gradient(1200px 600px at 15% -10%, rgba(94, 234, 212, 0.06), transparent 60%),
-    radial-gradient(900px 500px at 100% 0%, rgba(125, 211, 252, 0.05), transparent 55%),
-    linear-gradient(180deg, #070b12 0%, #060a11 100%);
+    radial-gradient(1000px 520px at 12% -8%, rgba(37, 99, 235, 0.08), transparent 60%),
+    radial-gradient(900px 480px at 100% 0%, rgba(8, 145, 178, 0.06), transparent 55%),
+    linear-gradient(180deg, #F7FAFC 0%, #EDF4FA 100%);
   background-attachment: fixed;
 }
 
-/* Subtle base body grid */
+/* Very subtle grid — light and low-contrast */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
   background-size: 44px 44px;
-  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
   z-index: 0;
 }
 
@@ -57,8 +57,8 @@ body::before {
 
 /* Selection */
 ::selection {
-  background: rgba(94, 234, 212, 0.25);
-  color: #f4f6fb;
+  background: rgba(37, 99, 235, 0.18);
+  color: #0B1220;
 }
 
 /* Scrollbar (webkit) */
@@ -67,11 +67,11 @@ body::before {
   height: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.2);
+  background: rgba(82, 96, 119, 0.28);
   border-radius: 8px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.3);
+  background: rgba(82, 96, 119, 0.44);
 }
 ::-webkit-scrollbar-track {
   background: transparent;
@@ -83,35 +83,38 @@ body::before {
   }
 
   .panel {
-    @apply rounded-xl border border-white/5 bg-ink-900/70 backdrop-blur-sm shadow-panel;
+    @apply rounded-xl border border-ink-600 bg-ink-900 shadow-panel;
   }
 
   .panel-hover {
-    @apply transition-colors hover:border-accent-cyan/30 hover:bg-ink-800/80;
+    @apply transition-colors hover:border-accent-cyan/40 hover:bg-brand-50/50;
   }
 
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-medium tracking-wide transition-colors focus-visible:outline-none;
   }
 
+  /* Primary CTA — solid medium blue, high contrast */
   .btn-primary {
-    @apply btn border-accent-cyan/40 bg-accent-cyan/10 text-accent-cyan hover:bg-accent-cyan/15 hover:border-accent-cyan/60;
+    @apply btn border-accent-cyan bg-accent-cyan text-white shadow-[0_1px_2px_rgba(15,23,42,0.08),0_8px_20px_-10px_rgba(37,99,235,0.55)] hover:bg-brand-600 hover:border-brand-600;
   }
 
+  /* Secondary — white pill with tinted border */
   .btn-secondary {
-    @apply btn border-white/10 bg-white/[0.03] text-mist-100 hover:bg-white/[0.06] hover:border-white/20;
+    @apply btn border-ink-600 bg-ink-900 text-mist-100 hover:border-accent-cyan/50 hover:bg-brand-50;
   }
 
+  /* Ghost — no fill */
   .btn-ghost {
-    @apply btn border-transparent bg-transparent text-mist-200 hover:text-mist-50;
+    @apply btn border-transparent bg-transparent text-mist-300 hover:text-mist-50 hover:bg-brand-50;
   }
 
   .tag {
-    @apply inline-flex items-center rounded-md border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[11px] font-medium text-mist-200;
+    @apply inline-flex items-center rounded-md border border-ink-600 bg-brand-50/60 px-2 py-0.5 text-[11px] font-medium text-mist-200;
   }
 
   .kbd {
-    @apply inline-flex items-center rounded border border-white/10 bg-white/[0.04] px-1.5 py-0.5 font-mono text-[11px] text-mist-200;
+    @apply inline-flex items-center rounded border border-ink-600 bg-ink-800 px-1.5 py-0.5 font-mono text-[11px] text-mist-200;
   }
 
   .section-title {

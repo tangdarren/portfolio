@@ -65,7 +65,7 @@ export default function ProjectCard({
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.4, delay: index * 0.04 }}
       className={[
-        'group relative flex h-full flex-col overflow-hidden rounded-xl border border-white/5 bg-ink-900/70 shadow-panel transition-all hover:-translate-y-0.5 hover:border-accent-cyan/30 hover:bg-ink-800/80',
+        'group relative flex h-full flex-col overflow-hidden rounded-xl border border-ink-600 bg-ink-900 shadow-panel transition-all hover:-translate-y-0.5 hover:border-accent-cyan/50 hover:shadow-card',
         featured ? 'lg:col-span-2' : '',
       ].join(' ')}
     >
@@ -76,7 +76,7 @@ export default function ProjectCard({
           {project.categories.slice(0, 3).map((c) => (
             <span
               key={c}
-              className="rounded-md border border-white/10 bg-white/[0.03] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-mist-300"
+              className="rounded-md border border-brand-100 bg-brand-50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-accent-cyan"
             >
               {c}
             </span>

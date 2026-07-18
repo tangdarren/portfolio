@@ -9,9 +9,9 @@ export default function SocialLinks() {
             href={href}
             target={external ? '_blank' : undefined}
             rel={external ? 'noreferrer noopener' : undefined}
-            className="group flex items-center gap-3 rounded-md border border-white/10 bg-white/[0.03] px-3 py-3 transition-colors hover:border-accent-cyan/40 hover:bg-white/[0.05]"
+            className="group flex items-center gap-3 rounded-md border border-ink-600 bg-ink-900 px-3 py-3 transition-colors hover:border-accent-cyan/50 hover:bg-brand-50 hover:shadow-panel"
           >
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-white/10 bg-ink-900 text-accent-cyan">
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-brand-100 bg-brand-50 text-accent-cyan">
               <Icon className="h-4 w-4" />
             </span>
             <span className="min-w-0">

@@ -35,8 +35,8 @@ export default function Navbar() {
       className={[
         'fixed inset-x-0 top-0 z-50 transition-colors',
         scrolled
-          ? 'border-b border-white/5 bg-ink-950/85 backdrop-blur-md'
-          : 'border-b border-transparent bg-ink-950/40 backdrop-blur-sm',
+          ? 'border-b border-ink-600 bg-ink-950/85 backdrop-blur-md'
+          : 'border-b border-transparent bg-ink-950/60 backdrop-blur-sm',
       ].join(' ')}
     >
       <div className="container-page flex h-16 items-center justify-between gap-4">
@@ -109,7 +109,7 @@ export default function Navbar() {
           role="dialog"
           aria-modal="true"
         >
-          <div className="border-t border-white/5 bg-ink-950/95 backdrop-blur">
+          <div className="border-t border-ink-600 bg-ink-900/95 backdrop-blur">
             <nav
               aria-label="Mobile"
               className="container-page flex flex-col gap-1 py-3"
@@ -123,8 +123,8 @@ export default function Navbar() {
                     [
                       'rounded-md px-3 py-3 font-mono text-xs uppercase tracking-[0.2em] transition-colors',
                       isActive
-                        ? 'bg-accent-cyan/10 text-accent-cyan'
-                        : 'text-mist-200 hover:bg-white/[0.04] hover:text-mist-50',
+                        ? 'bg-brand-50 text-accent-cyan'
+                        : 'text-mist-300 hover:bg-brand-50/70 hover:text-mist-50',
                     ].join(' ')
                   }
                 >

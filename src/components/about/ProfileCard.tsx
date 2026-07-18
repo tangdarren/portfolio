@@ -5,16 +5,16 @@ export default function ProfileCard() {
     <div className="panel grid gap-6 p-6 md:grid-cols-[220px_minmax(0,1fr)] md:p-8">
       <div className="mx-auto md:mx-0">
         <div
-          className="relative h-40 w-40 overflow-hidden rounded-xl border border-white/10 bg-ink-800 md:h-52 md:w-52"
+          className="relative h-40 w-40 overflow-hidden rounded-xl border border-ink-600 bg-brand-50 md:h-52 md:w-52"
           role="img"
           aria-label="Professional portrait placeholder"
         >
-          <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-ink-700 to-ink-900">
-            <span className="font-display text-5xl font-semibold text-mist-100/80">
+          <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-brand-100 to-brand-50">
+            <span className="font-display text-5xl font-semibold text-accent-cyan">
               DT
             </span>
           </div>
-          <div className="absolute inset-x-0 bottom-0 border-t border-white/5 bg-ink-950/60 px-3 py-1.5 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-mist-400">
+          <div className="absolute inset-x-0 bottom-0 border-t border-ink-600 bg-ink-900/80 px-3 py-1.5 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-mist-400">
             portrait · placeholder
           </div>
         </div>

@@ -30,8 +30,8 @@ export default function SkillsInventory() {
               className={[
                 'rounded-md border px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] transition-colors',
                 isActive
-                  ? 'border-accent-cyan/40 bg-accent-cyan/10 text-accent-cyan'
-                  : 'border-white/10 bg-white/[0.02] text-mist-300 hover:border-white/20 hover:text-mist-100',
+                  ? 'border-accent-cyan bg-accent-cyan text-white shadow-panel'
+                  : 'border-ink-600 bg-ink-900 text-mist-300 hover:border-accent-cyan/50 hover:bg-brand-50 hover:text-mist-100',
               ].join(' ')}
             >
               {cat}

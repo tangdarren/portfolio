@@ -41,7 +41,7 @@ export default function ProjectDetails({
     <AnimatePresence>
       {project && (
         <motion.div
-          className="fixed inset-0 z-[80] flex items-end justify-center bg-ink-950/80 backdrop-blur-sm sm:items-center"
+          className="fixed inset-0 z-[80] flex items-end justify-center bg-mist-50/40 backdrop-blur-sm sm:items-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -60,9 +60,9 @@ export default function ProjectDetails({
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.25 }}
-            className="relative flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-t-2xl border border-white/10 bg-ink-900 shadow-panel sm:rounded-2xl"
+            className="relative flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-t-2xl border border-ink-600 bg-ink-900 shadow-card sm:rounded-2xl"
           >
-            <div className="flex items-start justify-between gap-4 border-b border-white/5 bg-ink-850/60 px-6 py-4">
+            <div className="flex items-start justify-between gap-4 border-b border-ink-600 bg-ink-850 px-6 py-4">
               <div className="min-w-0">
                 <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent-cyan">
                   Project · Details
@@ -90,7 +90,7 @@ export default function ProjectDetails({
                 {project.categories.map((c) => (
                   <span
                     key={c}
-                    className="rounded-md border border-white/10 bg-white/[0.03] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-mist-300"
+                    className="rounded-md border border-brand-100 bg-brand-50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-accent-cyan"
                   >
                     {c}
                   </span>
@@ -150,7 +150,7 @@ export default function ProjectDetails({
                   {[0, 1].map((i) => (
                     <div
                       key={i}
-                      className="flex aspect-[16/10] items-center justify-center rounded-md border border-dashed border-white/10 bg-ink-950/60 font-mono text-[11px] uppercase tracking-[0.2em] text-mist-500"
+                      className="flex aspect-[16/10] items-center justify-center rounded-md border border-dashed border-ink-600 bg-ink-800/70 font-mono text-[11px] uppercase tracking-[0.2em] text-mist-400"
                     >
                       screenshot placeholder
                     </div>
@@ -159,7 +159,7 @@ export default function ProjectDetails({
               </Section>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 border-t border-white/5 bg-ink-850/50 px-6 py-4">
+            <div className="flex flex-wrap items-center gap-2 border-t border-ink-600 bg-ink-850 px-6 py-4">
               <ModalLink
                 href={project.githubUrl}
                 label="Repository"

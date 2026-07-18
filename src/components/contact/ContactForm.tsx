@@ -186,7 +186,7 @@ export default function ContactForm() {
             </span>
           )}
           {status === 'error' && errorMessage && (
-            <span className="inline-flex items-center gap-2 text-rose-300">
+            <span className="inline-flex items-center gap-2 text-rose-600">
               <AlertCircle className="h-3.5 w-3.5" />
               {errorMessage}
             </span>
@@ -250,10 +250,10 @@ function Field({
 }: FieldProps) {
   const errorId = error ? `${id}-error` : undefined;
   const inputClass = [
-    'w-full rounded-md border bg-ink-950/60 px-3 py-2.5 text-sm text-mist-100 placeholder:text-mist-500 transition-colors focus:outline-none',
+    'w-full rounded-md border bg-ink-900 px-3 py-2.5 text-sm text-mist-100 placeholder:text-mist-500 transition-colors focus:outline-none',
     error
-      ? 'border-rose-400/40 focus:border-rose-400/70'
-      : 'border-white/10 focus:border-accent-cyan/50',
+      ? 'border-rose-500/70 focus:border-rose-500'
+      : 'border-ink-600 focus:border-accent-cyan focus:ring-2 focus:ring-brand-100',
   ].join(' ');
 
   return (
@@ -297,7 +297,7 @@ function Field({
         <p
           id={errorId}
           role="alert"
-          className="font-mono text-[11px] text-rose-300"
+          className="font-mono text-[11px] text-rose-600"
         >
           {error}
         </p>

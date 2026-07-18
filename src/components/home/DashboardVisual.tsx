@@ -32,7 +32,7 @@ export default function DashboardVisual() {
     <div className="relative">
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-6 rounded-2xl bg-gradient-to-tr from-accent-cyan/10 via-transparent to-accent-blue/10 blur-2xl"
+        className="pointer-events-none absolute -inset-6 rounded-2xl bg-gradient-to-tr from-brand-100/60 via-transparent to-accent-blue/10 blur-2xl"
       />
 
       <motion.div
@@ -40,14 +40,14 @@ export default function DashboardVisual() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        className="relative overflow-hidden rounded-xl border border-white/10 bg-ink-900/85 shadow-panel"
+        className="relative overflow-hidden rounded-xl border border-ink-600 bg-ink-900 shadow-card"
       >
         {/* Window chrome */}
-        <div className="flex items-center justify-between border-b border-white/5 bg-ink-850/80 px-4 py-2.5">
+        <div className="flex items-center justify-between border-b border-ink-600 bg-ink-850 px-4 py-2.5">
           <div className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
-            <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
-            <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
+            <span className="h-2.5 w-2.5 rounded-full bg-ink-500" />
+            <span className="h-2.5 w-2.5 rounded-full bg-ink-500" />
+            <span className="h-2.5 w-2.5 rounded-full bg-ink-500" />
           </div>
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-mist-400">
             command_center — main
@@ -57,9 +57,9 @@ export default function DashboardVisual() {
 
         <div className="grid gap-3 p-4 sm:grid-cols-2">
           {/* Status card */}
-          <div className="panel col-span-2 flex items-center justify-between gap-3 p-3">
+          <div className="panel col-span-2 flex items-center justify-between gap-3 border-ink-600 bg-ink-850/60 p-3">
             <div className="flex items-center gap-3">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-accent-cyan/10 text-accent-cyan">
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-brand-50 text-accent-cyan">
                 <Activity className="h-4 w-4" />
               </span>
               <div>
@@ -76,7 +76,7 @@ export default function DashboardVisual() {
           </div>
 
           {/* Deploys card */}
-          <div className="panel p-3">
+          <div className="panel border-ink-600 bg-ink-900 p-3">
             <div className="flex items-center justify-between">
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-mist-400">
                 Deploys
@@ -90,7 +90,7 @@ export default function DashboardVisual() {
           </div>
 
           {/* Uptime card */}
-          <div className="panel p-3">
+          <div className="panel border-ink-600 bg-ink-900 p-3">
             <div className="flex items-center justify-between">
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-mist-400">
                 Uptime
@@ -104,7 +104,7 @@ export default function DashboardVisual() {
           </div>
 
           {/* Chart card */}
-          <div className="panel col-span-2 p-3">
+          <div className="panel col-span-2 border-ink-600 bg-ink-900 p-3">
             <div className="mb-2 flex items-center justify-between">
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-mist-400">
                 Throughput
@@ -121,16 +121,16 @@ export default function DashboardVisual() {
             >
               <defs>
                 <linearGradient id="sparkFill" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="0%" stopColor="rgb(94, 234, 212)" stopOpacity="0.35" />
-                  <stop offset="100%" stopColor="rgb(94, 234, 212)" stopOpacity="0" />
+                  <stop offset="0%" stopColor="rgb(37, 99, 235)" stopOpacity="0.30" />
+                  <stop offset="100%" stopColor="rgb(37, 99, 235)" stopOpacity="0" />
                 </linearGradient>
               </defs>
               <polygon points={sparkline.area} fill="url(#sparkFill)" />
               <polyline
                 points={sparkline.points}
                 fill="none"
-                stroke="rgb(94, 234, 212)"
-                strokeWidth="1.5"
+                stroke="rgb(37, 99, 235)"
+                strokeWidth="1.75"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
@@ -138,7 +138,7 @@ export default function DashboardVisual() {
           </div>
 
           {/* Terminal card */}
-          <div className="panel col-span-2 p-3">
+          <div className="panel col-span-2 border-ink-600 bg-ink-900 p-3">
             <div className="mb-2 flex items-center justify-between">
               <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-mist-400">
                 <Terminal className="h-3.5 w-3.5" />
@@ -146,7 +146,7 @@ export default function DashboardVisual() {
               </p>
               <span className="font-mono text-[10px] text-mist-400">zsh</span>
             </div>
-            <div className="rounded-md border border-white/5 bg-ink-950/70 p-3 font-mono text-[12px] leading-relaxed text-mist-200">
+            <div className="rounded-md border border-ink-600 bg-ink-800/70 p-3 font-mono text-[12px] leading-relaxed text-mist-200">
               <p>
                 <span className="text-accent-cyan">›</span>{' '}
                 <span className="text-mist-100">build</span>{' '}
@@ -162,7 +162,7 @@ export default function DashboardVisual() {
                 <span className="text-mist-100">deploy</span>{' '}
                 <span className="text-mist-400">--target production</span>
                 {!reduce && (
-                  <span className="ml-1 inline-block h-3.5 w-1.5 translate-y-[2px] animate-blink bg-mist-100" />
+                  <span className="ml-1 inline-block h-3.5 w-1.5 translate-y-[2px] animate-blink bg-mist-200" />
                 )}
               </p>
             </div>
@@ -171,7 +171,7 @@ export default function DashboardVisual() {
       </motion.div>
 
       {/* Floating side badge */}
-      <div className="pointer-events-none absolute -right-3 -top-3 hidden rounded-md border border-white/10 bg-ink-900/90 px-2.5 py-1 shadow-panel sm:block">
+      <div className="pointer-events-none absolute -right-3 -top-3 hidden rounded-md border border-ink-600 bg-ink-900 px-2.5 py-1 shadow-panel sm:block">
         <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-mist-300">
           live_view
         </span>

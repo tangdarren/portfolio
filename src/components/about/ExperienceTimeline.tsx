@@ -6,7 +6,7 @@ export default function ExperienceTimeline() {
   const reduce = useReducedMotion();
 
   return (
-    <ol className="relative border-l border-white/10 pl-6">
+    <ol className="relative border-l-2 border-ink-600 pl-6">
       {EXPERIENCE.map((entry, i) => (
         <motion.li
           key={`${entry.company}-${entry.role}`}
@@ -18,7 +18,7 @@ export default function ExperienceTimeline() {
         >
           <span
             aria-hidden
-            className="absolute -left-[29px] top-1.5 inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border border-white/10 bg-ink-900"
+            className="absolute -left-[30px] top-1.5 inline-flex h-4 w-4 items-center justify-center rounded-full border-2 border-ink-600 bg-ink-900 shadow-panel"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-accent-cyan" />
           </span>

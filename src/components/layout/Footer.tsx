@@ -7,7 +7,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-24 border-t border-white/5 bg-ink-950/60">
+    <footer className="mt-24 border-t border-ink-600 bg-ink-900/80">
       <div className="container-page grid gap-8 py-10 md:grid-cols-3">
         <div>
           <p className="font-display text-sm font-semibold text-mist-50">
@@ -38,7 +38,7 @@ export default function Footer() {
               aria-label={label}
               target={external ? '_blank' : undefined}
               rel={external ? 'noreferrer noopener' : undefined}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-white/10 bg-white/[0.03] text-mist-200 transition-colors hover:border-accent-cyan/40 hover:text-accent-cyan"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-ink-600 bg-ink-900 text-mist-300 transition-colors hover:border-accent-cyan/50 hover:bg-brand-50 hover:text-accent-cyan"
             >
               <Icon className="h-4 w-4" />
             </a>
@@ -46,7 +46,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/5">
+      <div className="border-t border-ink-600">
         <div className="container-page flex flex-col items-start justify-between gap-2 py-4 text-[11px] text-mist-400 md:flex-row md:items-center">
           <span className="font-mono uppercase tracking-[0.18em]">
             © {year} Darren Christopher Tang

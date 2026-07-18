@@ -9,9 +9,9 @@ interface ResumeViewerProps {
 export default function ResumeViewer({ path = RESUME_PDF_PATH }: ResumeViewerProps) {
   return (
     <div className="panel overflow-hidden">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/5 bg-ink-850/60 px-4 py-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-ink-600 bg-ink-850 px-4 py-3">
         <div className="flex items-center gap-3">
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-white/10 bg-white/[0.03] text-accent-cyan">
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-brand-100 bg-brand-50 text-accent-cyan">
             <FileText className="h-4 w-4" />
           </span>
           <div>
@@ -45,7 +45,7 @@ export default function ResumeViewer({ path = RESUME_PDF_PATH }: ResumeViewerPro
         <object
           data={path}
           type="application/pdf"
-          className="h-[70vh] w-full min-h-[520px] bg-ink-950"
+          className="h-[70vh] w-full min-h-[520px] bg-ink-800"
           aria-label="Résumé PDF embedded viewer"
         >
           <ResumeFallback path={path} />

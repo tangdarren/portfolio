@@ -21,7 +21,7 @@ export default function ProjectThumbnail({
   return (
     <div
       className={[
-        'relative w-full overflow-hidden border-b border-white/5 bg-ink-950/60',
+        'relative w-full overflow-hidden border-b border-ink-600 bg-brand-50/60',
         featured ? 'aspect-[16/7]' : 'aspect-[16/9]',
       ].join(' ')}
       role="img"
@@ -38,15 +38,15 @@ export default function ProjectThumbnail({
             <stop offset="100%" stopColor={palette.bgTo} />
           </linearGradient>
           <linearGradient id={`accent-${project.id}`} x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor={palette.accent} stopOpacity="0.9" />
-            <stop offset="100%" stopColor={palette.accent} stopOpacity="0.25" />
+            <stop offset="0%" stopColor={palette.accent} stopOpacity="0.85" />
+            <stop offset="100%" stopColor={palette.accent} stopOpacity="0.35" />
           </linearGradient>
         </defs>
 
         <rect width="400" height="200" fill={`url(#bg-${project.id})`} />
 
         {/* Grid overlay */}
-        <g stroke="rgba(255,255,255,0.05)" strokeWidth="1">
+        <g stroke="rgba(15, 23, 42, 0.06)" strokeWidth="1">
           {Array.from({ length: 12 }).map((_, i) => (
             <line
               key={`v-${i}`}
@@ -84,11 +84,11 @@ export default function ProjectThumbnail({
           <rect
             x="0"
             y="0"
-            width="82"
+            width="88"
             height="20"
             rx="4"
-            fill="rgba(11,18,32,0.6)"
-            stroke="rgba(148,163,184,0.2)"
+            fill="rgba(255, 255, 255, 0.85)"
+            stroke="rgba(15, 23, 42, 0.12)"
           />
           <text
             x="10"
@@ -103,7 +103,7 @@ export default function ProjectThumbnail({
         </g>
       </svg>
 
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/60 via-transparent to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/40 via-transparent to-transparent" />
     </div>
   );
 }
@@ -145,7 +145,7 @@ function ShapeGlyph({
         rx="6"
         fill={accent}
         stroke={accentSolid}
-        strokeOpacity="0.6"
+        strokeOpacity="0.55"
       />
     );
   }
@@ -157,8 +157,8 @@ function ShapeGlyph({
         r={shape.r ?? 22}
         fill="none"
         stroke={accentSolid}
-        strokeOpacity="0.6"
-        strokeWidth="1.5"
+        strokeOpacity="0.7"
+        strokeWidth="1.75"
       />
     );
   }
@@ -177,14 +177,14 @@ function ShapeGlyph({
 }
 
 function paletteFromId(id: string): Palette {
-  // Simple deterministic hash → palette / shape pick.
+  // Simple deterministic hash → palette / shape pick. Light-theme palettes.
   const h = Array.from(id).reduce((acc, ch) => acc * 31 + ch.charCodeAt(0), 7);
   const palettes: Omit<Palette, 'shapes'>[] = [
-    { bgFrom: '#0b1220', bgTo: '#0e1a2e', accent: '#5eead4' },
-    { bgFrom: '#0b1220', bgTo: '#111a2c', accent: '#7dd3fc' },
-    { bgFrom: '#0c1526', bgTo: '#0b1220', accent: '#86efac' },
-    { bgFrom: '#0b1220', bgTo: '#13223d', accent: '#a5b4fc' },
-    { bgFrom: '#0a111e', bgTo: '#0b1220', accent: '#fca5a5' },
+    { bgFrom: '#EFF6FF', bgTo: '#DBEAFE', accent: '#2563EB' }, // primary blue
+    { bgFrom: '#ECFEFF', bgTo: '#CFFAFE', accent: '#0891B2' }, // cyan
+    { bgFrom: '#F0FDF4', bgTo: '#DCFCE7', accent: '#16A34A' }, // green
+    { bgFrom: '#F5F3FF', bgTo: '#EDE9FE', accent: '#7C3AED' }, // lavender
+    { bgFrom: '#F1F5F9', bgTo: '#E2E8F0', accent: '#334155' }, // neutral
   ];
 
   const base = palettes[Math.abs(h) % palettes.length];

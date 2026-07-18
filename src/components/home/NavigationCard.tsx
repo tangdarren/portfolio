@@ -31,11 +31,11 @@ export default function NavigationCard({
     >
       <Link
         to={to}
-        className="group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-white/5 bg-ink-900/70 p-5 shadow-panel transition-all hover:-translate-y-0.5 hover:border-accent-cyan/30 hover:bg-ink-800/80"
+        className="group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-ink-600 bg-ink-900 p-5 shadow-panel transition-all hover:-translate-y-0.5 hover:border-accent-cyan/50 hover:shadow-card"
       >
         <div>
           <div className="flex items-center justify-between">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-white/10 bg-white/[0.03] text-accent-cyan">
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-brand-100 bg-brand-50 text-accent-cyan">
               <Icon className="h-4 w-4" />
             </span>
             <ArrowUpRight className="h-4 w-4 text-mist-400 transition-colors group-hover:text-accent-cyan" />

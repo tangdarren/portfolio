@@ -6,7 +6,7 @@ export default function ResumePanel() {
   return (
     <div className="panel p-5">
       <div className="flex items-start gap-3">
-        <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-white/10 bg-white/[0.03] text-accent-cyan">
+        <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-brand-100 bg-brand-50 text-accent-cyan">
           <FileText className="h-4 w-4" />
         </span>
         <div>

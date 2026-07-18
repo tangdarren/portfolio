@@ -34,8 +34,8 @@ export default function ProjectFilters({
             className={[
               'inline-flex items-center gap-2 rounded-md border px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] transition-colors',
               isActive
-                ? 'border-accent-cyan/40 bg-accent-cyan/10 text-accent-cyan'
-                : 'border-white/10 bg-white/[0.02] text-mist-300 hover:border-white/20 hover:text-mist-100',
+                ? 'border-accent-cyan bg-accent-cyan text-white shadow-panel'
+                : 'border-ink-600 bg-ink-900 text-mist-300 hover:border-accent-cyan/50 hover:bg-brand-50 hover:text-mist-100',
             ].join(' ')}
           >
             <span>{filter}</span>
@@ -44,8 +44,8 @@ export default function ProjectFilters({
                 className={[
                   'rounded px-1.5 py-0.5 text-[10px]',
                   isActive
-                    ? 'bg-accent-cyan/15 text-accent-cyan'
-                    : 'bg-white/[0.04] text-mist-400',
+                    ? 'bg-white/20 text-white'
+                    : 'bg-brand-50 text-mist-400',
                 ].join(' ')}
               >
                 {count}

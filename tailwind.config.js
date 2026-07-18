@@ -1,31 +1,49 @@
 /** @type {import('tailwindcss').Config} */
+// Light theme palette. Token names (ink-*, mist-*, accent-*) are kept from the
+// prior version so downstream JSX can stay stable, but their values now map
+// to a bright, professional design:
+//   ink-*   → light surface backgrounds (bg / cards / hovers / borders)
+//   mist-*  → dark navy/charcoal text (primary → subtle)
+//   accent  → primary blue, plus sparingly-used cyan / green / lavender
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        // Deep, calm slate/navy panel palette
+        // Surfaces (light)
         ink: {
-          950: '#070b12',
-          900: '#0b1220',
-          850: '#0f172a',
-          800: '#111a2c',
-          700: '#172033',
-          600: '#1f2a44',
-          500: '#2a3654',
+          950: '#F7FAFC', // Main page background
+          900: '#FFFFFF', // Card / panel background
+          850: '#F1F5FA', // Header strips inside panels
+          800: '#EDF4FA', // Secondary background, hover on cards
+          700: '#E2E8F0', // Subtle dividers
+          600: '#DCE5EF', // Standard border
+          500: '#CBD5E1', // Stronger border
         },
+        // Text (dark navy / charcoal)
         mist: {
-          50: '#f4f6fb',
-          100: '#e6ebf3',
-          200: '#c8d2e2',
-          300: '#94a3b8',
-          400: '#64748b',
+          50: '#0B1220',  // Strongest heading
+          100: '#172033', // Primary text
+          200: '#293449', // Strong body text
+          300: '#526077', // Secondary text
+          400: '#6B7A91', // Muted labels
+          500: '#94A3B8', // Placeholders / very muted
         },
+        // Accents — primary blue, sparing cyan / green / lavender
         accent: {
-          // Soft cyan / green highlights
-          cyan: '#5eead4',
-          green: '#86efac',
-          blue: '#7dd3fc',
+          cyan: '#2563EB',     // PRIMARY BLUE (repurposed from prior name)
+          blue: '#0891B2',     // Cyan accent (sparing use)
+          green: '#16A34A',    // Green accent (sparing use)
+          lavender: '#7C3AED', // Occasional lavender highlight
+        },
+        // Semantic brand ramp — for gradients and tinted surfaces
+        brand: {
+          50: '#EFF6FF',
+          100: '#DBEAFE',
+          200: '#BFDBFE',
+          500: '#2563EB',
+          600: '#1D4ED8',
+          700: '#1E40AF',
         },
       },
       fontFamily: {
@@ -54,13 +72,19 @@ export default {
         ],
       },
       boxShadow: {
+        // Light, natural shadows for cards on a bright background
         panel:
-          '0 1px 0 0 rgba(148, 163, 184, 0.06) inset, 0 20px 40px -20px rgba(2, 6, 23, 0.6)',
-        glow: '0 0 0 1px rgba(94, 234, 212, 0.25), 0 8px 30px -12px rgba(94, 234, 212, 0.35)',
+          '0 1px 2px 0 rgba(15, 23, 42, 0.04), 0 8px 24px -12px rgba(15, 23, 42, 0.10)',
+        card:
+          '0 1px 2px 0 rgba(15, 23, 42, 0.05), 0 12px 32px -16px rgba(37, 99, 235, 0.18)',
+        glow:
+          '0 0 0 1px rgba(37, 99, 235, 0.25), 0 10px 28px -14px rgba(37, 99, 235, 0.35)',
       },
       backgroundImage: {
-        'grid-fade':
-          'linear-gradient(to bottom, rgba(7,11,18,0) 0%, rgba(7,11,18,0.85) 70%, rgba(7,11,18,1) 100%)',
+        'hero-gradient':
+          'radial-gradient(1200px 500px at 15% -10%, rgba(37, 99, 235, 0.10), transparent 60%), radial-gradient(900px 500px at 100% 0%, rgba(8, 145, 178, 0.08), transparent 55%), linear-gradient(180deg, #F7FAFC 0%, #EDF4FA 100%)',
+        'header-gradient':
+          'linear-gradient(135deg, #EFF6FF 0%, #F7FAFC 100%)',
       },
       keyframes: {
         'fade-in-up': {
