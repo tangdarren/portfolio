@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --gutter: clamp(1rem, 3vw, 2rem);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  @apply bg-ink-950 text-mist-100 font-sans;
+  background-image:
+    radial-gradient(1200px 600px at 15% -10%, rgba(94, 234, 212, 0.06), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(125, 211, 252, 0.05), transparent 55%),
+    linear-gradient(180deg, #070b12 0%, #060a11 100%);
+  background-attachment: fixed;
+}
+
+/* Subtle base body grid */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  z-index: 0;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+/* Focus styles for accessibility */
+:where(a, button, [role='button'], input, textarea, select):focus-visible {
+  outline: 2px solid theme('colors.accent.cyan');
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Selection */
+::selection {
+  background: rgba(94, 234, 212, 0.25);
+  color: #f4f6fb;
+}
+
+/* Scrollbar (webkit) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.3);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-[var(--gutter)];
+  }
+
+  .panel {
+    @apply rounded-xl border border-white/5 bg-ink-900/70 backdrop-blur-sm shadow-panel;
+  }
+
+  .panel-hover {
+    @apply transition-colors hover:border-accent-cyan/30 hover:bg-ink-800/80;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-medium tracking-wide transition-colors focus-visible:outline-none;
+  }
+
+  .btn-primary {
+    @apply btn border-accent-cyan/40 bg-accent-cyan/10 text-accent-cyan hover:bg-accent-cyan/15 hover:border-accent-cyan/60;
+  }
+
+  .btn-secondary {
+    @apply btn border-white/10 bg-white/[0.03] text-mist-100 hover:bg-white/[0.06] hover:border-white/20;
+  }
+
+  .btn-ghost {
+    @apply btn border-transparent bg-transparent text-mist-200 hover:text-mist-50;
+  }
+
+  .tag {
+    @apply inline-flex items-center rounded-md border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[11px] font-medium text-mist-200;
+  }
+
+  .kbd {
+    @apply inline-flex items-center rounded border border-white/10 bg-white/[0.04] px-1.5 py-0.5 font-mono text-[11px] text-mist-200;
+  }
+
+  .section-title {
+    @apply font-display text-2xl font-semibold tracking-tight text-mist-50 sm:text-3xl;
+  }
+
+  .page-title {
+    @apply font-display text-3xl font-semibold tracking-tight text-mist-50 sm:text-4xl md:text-5xl;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-cyan;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
