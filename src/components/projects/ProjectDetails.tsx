@@ -143,18 +143,25 @@ export default function ProjectDetails({
                 </ul>
               </Section>
 
-              <Section title="Screenshots">
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  {[0, 1].map((i) => (
-                    <div
-                      key={i}
-                      className="flex aspect-[16/10] items-center justify-center rounded-md border border-dashed border-ink-600 bg-ink-800/70 font-mono text-[11px] uppercase tracking-[0.2em] text-mist-400"
-                    >
-                      screenshot placeholder
-                    </div>
-                  ))}
-                </div>
-              </Section>
+              {project.screenshots && project.screenshots.length > 0 && (
+                <Section title="Screenshots">
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    {project.screenshots.map((shot) => (
+                      <div
+                        key={shot.src}
+                        className="overflow-hidden rounded-md border border-ink-600 bg-ink-800/70"
+                      >
+                        <img
+                          src={shot.src}
+                          alt={shot.alt}
+                          loading="lazy"
+                          className="h-auto w-full object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </Section>
+              )}
             </div>
 
             <div className="flex flex-wrap items-center gap-2 border-t border-ink-600 bg-ink-850 px-6 py-4">

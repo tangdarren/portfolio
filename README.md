@@ -130,10 +130,22 @@ prompt.
 ## Adding project screenshots
 
 1. Add images under `public/projects/<project-id>/`.
-2. Add an `image` field on the corresponding entry in `src/data/projects.ts` if
-   you want to swap the abstract thumbnail for a real screenshot.
-3. Detailed screenshots for the project details modal can be dropped into
-   `ProjectDetails.tsx` in the `Screenshots` section.
+2. Set an optional `image` field on the project in `src/data/projects.ts` to
+   replace the abstract card thumbnail.
+3. Set an optional `screenshots` array on the same project entry for the
+   details modal. Each item needs a `src` path and descriptive `alt` text:
+
+```ts
+screenshots: [
+  {
+    src: '/projects/spy-market-intelligence/screen-01.png',
+    alt: 'SPY dashboard showing overnight movement and pre-market levels',
+  },
+],
+```
+
+The Screenshots section in the modal only renders when `screenshots` is
+present and non-empty.
 
 ---
 

@@ -8,6 +8,11 @@ export type ProjectCategory =
   | 'Automation'
   | 'Interactive Training';
 
+export interface ProjectScreenshot {
+  src: string;
+  alt: string;
+}
+
 export interface Project {
   id: string;
   name: string;
@@ -19,6 +24,7 @@ export interface Project {
   liveUrl?: string;
   featured?: boolean;
   image?: string;
+  screenshots?: ProjectScreenshot[];
   details: {
     problem: string;
     solution: string;
