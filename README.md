@@ -153,8 +153,10 @@ Suggested providers:
 - **Custom backend** — any endpoint that accepts a JSON body of
   `{ name, email, subject, message }` and returns a 2xx on success.
 
-When the env var is not set, the form runs in "demo mode" — it validates,
-simulates a short delay, and shows the success state without sending anything.
+When the env var is not set, the form still validates input, then opens a
+`mailto:` link to `tang.darren@gmail.com` with the entered subject and message.
+It reports “Opening your email application” and never claims the message was
+sent server-side.
 
 **Never** paste a secret API key into frontend code. Only public/publishable
 endpoints belong in `VITE_*` variables. Keep private keys behind a backend

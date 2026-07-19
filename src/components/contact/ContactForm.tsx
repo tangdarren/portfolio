@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AlertCircle, CheckCircle2, Loader2, Send } from 'lucide-react';
 
-type Status = 'idle' | 'submitting' | 'success' | 'error';
+type Status = 'idle' | 'submitting' | 'success' | 'mailto' | 'error';
 
 interface FormState {
   name: string;
@@ -28,11 +28,13 @@ const initial: FormState = {
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const CONTACT_EMAIL = 'tang.darren@gmail.com';
 
 /**
  * Frontend contact form. Wire up a real provider by setting VITE_CONTACT_ENDPOINT
- * in .env.local. See .env.example. When the env var is missing, the form simulates
- * a submission so the UI can still be reviewed.
+ * in .env.local. See .env.example. When the env var is missing, a validated
+ * submit opens the visitor's email application via mailto instead of claiming
+ * a message was sent.
  */
 export default function ContactForm() {
   const [values, setValues] = useState<FormState>(initial);
@@ -61,14 +63,22 @@ export default function ContactForm() {
     return e;
   };
 
+  const openMailto = (v: FormState) => {
+    const params = new URLSearchParams({
+      subject: v.subject.trim(),
+      body: v.message.trim(),
+    });
+    window.location.href = `mailto:${CONTACT_EMAIL}?${params.toString()}`;
+  };
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
 
     if (values.website.trim() !== '') {
-      // Silent success for honeypot hits.
-      setStatus('success');
+      // Silent no-op for honeypot hits — do not claim a message was sent.
       setValues(initial);
+      setStatus('idle');
       return;
     }
 
@@ -80,25 +90,26 @@ export default function ContactForm() {
       return;
     }
 
+    if (!endpoint) {
+      openMailto(values);
+      setStatus('mailto');
+      return;
+    }
+
     setStatus('submitting');
 
     try {
-      if (endpoint) {
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({
-            name: values.name,
-            email: values.email,
-            subject: values.subject,
-            message: values.message,
-          }),
-        });
-        if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
-      } else {
-        // Simulated round-trip while no provider is configured.
-        await new Promise((r) => setTimeout(r, 700));
-      }
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: values.name,
+          email: values.email,
+          subject: values.subject,
+          message: values.message,
+        }),
+      });
+      if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
       setStatus('success');
       setValues(initial);
     } catch (err) {
@@ -185,17 +196,23 @@ export default function ContactForm() {
               Message sent — I'll get back to you soon.
             </span>
           )}
+          {status === 'mailto' && (
+            <span className="inline-flex items-center gap-2 text-accent-cyan">
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              Opening your email application
+            </span>
+          )}
           {status === 'error' && errorMessage && (
             <span className="inline-flex items-center gap-2 text-rose-600">
               <AlertCircle className="h-3.5 w-3.5" />
               {errorMessage}
             </span>
           )}
-          {status !== 'success' && status !== 'error' && (
+          {status !== 'success' && status !== 'mailto' && status !== 'error' && (
             <span>
               {endpoint
                 ? 'Send · powered by your configured provider'
-                : 'Send · demo mode (no endpoint configured)'}
+                : 'Send · opens your email application (no provider configured)'}
             </span>
           )}
         </p>
