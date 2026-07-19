@@ -11,32 +11,18 @@ interface ProjectCardProps {
   featured?: boolean;
 }
 
-const PLACEHOLDER = 'PLACEHOLDER_URL';
-
 function LinkButton({
   href,
   children,
   variant = 'secondary',
   ariaLabel,
 }: {
-  href?: string;
+  href: string;
   children: React.ReactNode;
   variant?: 'primary' | 'secondary';
   ariaLabel?: string;
 }) {
-  const disabled = !href || href === PLACEHOLDER;
   const base = variant === 'primary' ? 'btn-primary' : 'btn-secondary';
-  if (disabled) {
-    return (
-      <span
-        className={`${base} cursor-not-allowed opacity-50`}
-        aria-disabled="true"
-        title="Link coming soon"
-      >
-        {children}
-      </span>
-    );
-  }
   return (
     <a
       href={href}
@@ -110,20 +96,24 @@ export default function ProjectCard({
             <Info className="h-4 w-4" />
             Details
           </button>
-          <LinkButton
-            href={project.githubUrl}
-            ariaLabel={`GitHub repository for ${project.name}`}
-          >
-            <Github className="h-4 w-4" />
-            GitHub
-          </LinkButton>
-          <LinkButton
-            href={project.liveUrl}
-            ariaLabel={`Live demo of ${project.name}`}
-          >
-            <ExternalLink className="h-4 w-4" />
-            Live Demo
-          </LinkButton>
+          {project.githubUrl && (
+            <LinkButton
+              href={project.githubUrl}
+              ariaLabel={`GitHub repository for ${project.name}`}
+            >
+              <Github className="h-4 w-4" />
+              GitHub
+            </LinkButton>
+          )}
+          {project.liveUrl && (
+            <LinkButton
+              href={project.liveUrl}
+              ariaLabel={`Live demo of ${project.name}`}
+            >
+              <ExternalLink className="h-4 w-4" />
+              Live Demo
+            </LinkButton>
+          )}
         </div>
       </div>
     </motion.article>

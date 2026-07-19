@@ -9,8 +9,6 @@ interface ProjectDetailsProps {
   onClose: () => void;
 }
 
-const PLACEHOLDER = 'PLACEHOLDER_URL';
-
 export default function ProjectDetails({
   project,
   onClose,
@@ -160,17 +158,21 @@ export default function ProjectDetails({
             </div>
 
             <div className="flex flex-wrap items-center gap-2 border-t border-ink-600 bg-ink-850 px-6 py-4">
-              <ModalLink
-                href={project.githubUrl}
-                label="Repository"
-                icon={<Github className="h-4 w-4" />}
-              />
-              <ModalLink
-                href={project.liveUrl}
-                label="Live demo"
-                icon={<ExternalLink className="h-4 w-4" />}
-                variant="primary"
-              />
+              {project.githubUrl && (
+                <ModalLink
+                  href={project.githubUrl}
+                  label="Repository"
+                  icon={<Github className="h-4 w-4" />}
+                />
+              )}
+              {project.liveUrl && (
+                <ModalLink
+                  href={project.liveUrl}
+                  label="Live demo"
+                  icon={<ExternalLink className="h-4 w-4" />}
+                  variant="primary"
+                />
+              )}
               <div className="grow" />
               <button
                 type="button"
@@ -210,25 +212,12 @@ function ModalLink({
   icon,
   variant = 'secondary',
 }: {
-  href?: string;
+  href: string;
   label: string;
   icon: React.ReactNode;
   variant?: 'primary' | 'secondary';
 }) {
-  const disabled = !href || href === PLACEHOLDER;
   const base = variant === 'primary' ? 'btn-primary' : 'btn-secondary';
-  if (disabled) {
-    return (
-      <span
-        className={`${base} cursor-not-allowed opacity-50`}
-        aria-disabled="true"
-        title="Link coming soon"
-      >
-        {icon}
-        {label}
-      </span>
-    );
-  }
   return (
     <a
       href={href}

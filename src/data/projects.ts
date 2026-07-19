@@ -27,8 +27,6 @@ export interface Project {
   };
 }
 
-const PLACEHOLDER = 'PLACEHOLDER_URL';
-
 export const PROJECTS: Project[] = [
   {
     id: 'spy-market-intelligence',
@@ -46,8 +44,7 @@ export const PROJECTS: Project[] = [
       'Financial APIs',
       'Data Visualization',
     ],
-    githubUrl: PLACEHOLDER,
-    liveUrl: PLACEHOLDER,
+    githubUrl: 'https://github.com/tangdarren/stock-market-dashboard',
     featured: true,
     details: {
       problem:
@@ -85,8 +82,7 @@ export const PROJECTS: Project[] = [
       'Vector Database',
       'AI Agents',
     ],
-    githubUrl: PLACEHOLDER,
-    liveUrl: PLACEHOLDER,
+    githubUrl: 'https://github.com/tangdarren/expensense',
     featured: true,
     details: {
       problem:
@@ -116,8 +112,6 @@ export const PROJECTS: Project[] = [
       'A business finance application for tracking income, expenses, tax estimates, and financial performance through an accessible dashboard.',
     categories: ['Full-Stack', 'Financial Technology'],
     technologies: ['React', 'TypeScript', 'Recharts', 'Local Storage'],
-    githubUrl: PLACEHOLDER,
-    liveUrl: PLACEHOLDER,
     details: {
       problem:
         'Small operators frequently rely on spreadsheets that make it hard to see business health at a glance.',
@@ -149,8 +143,7 @@ export const PROJECTS: Project[] = [
       'Extended Reality',
       'Interactive Training',
     ],
-    githubUrl: PLACEHOLDER,
-    liveUrl: PLACEHOLDER,
+    githubUrl: 'https://github.com/tangdarren/safecall-vr',
     details: {
       problem:
         'Hands-on training for first responders is expensive to run and hard to repeat at scale.',
@@ -176,8 +169,6 @@ export const PROJECTS: Project[] = [
       'A Flutter application for exploring and organizing books using structured state management and responsive mobile interfaces.',
     categories: ['Mobile', 'Full-Stack'],
     technologies: ['Flutter', 'Dart', 'BLoC', 'Responsive Design'],
-    githubUrl: PLACEHOLDER,
-    liveUrl: PLACEHOLDER,
     details: {
       problem:
         'Casual reading groups need a lightweight way to organize books without a heavy social platform.',

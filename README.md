@@ -95,18 +95,21 @@ Either platform serves the site as static files — no server required.
 
 ---
 
-## Replacing placeholder links
+## Links & contact
 
-Search the codebase for the following placeholders and replace them with real
-values before publishing:
+Social links and contact email are configured in `src/data/socials.ts`:
 
-| Placeholder            | Where                            | Replace with                          |
-| ---------------------- | -------------------------------- | ------------------------------------- |
-| `YOUR_GITHUB_URL`      | `src/data/socials.ts`            | Your GitHub username                  |
-| `YOUR_LINKEDIN_URL`    | `src/data/socials.ts`            | Your LinkedIn vanity slug             |
-| `YOUR_EMAIL_ADDRESS`   | `src/data/socials.ts`            | Your contact email                    |
-| `PLACEHOLDER_URL`      | `src/data/projects.ts`           | Real GitHub / live URLs per project   |
-| `example.com`          | `index.html`, `public/sitemap.xml`, `public/robots.txt`, `src/components/layout/SEO.tsx` | Your production domain |
+- GitHub: https://github.com/tangdarren
+- LinkedIn: https://www.linkedin.com/in/tang-darren
+- Email: tang.darren@gmail.com
+
+Project GitHub URLs live in `src/data/projects.ts`. Omit `githubUrl` /
+`liveUrl` when a public repo or demo is unavailable — the UI hides those
+buttons instead of showing placeholders.
+
+Before publishing to a custom domain, replace `example.com` in `index.html`,
+`public/sitemap.xml`, `public/robots.txt`, and
+`src/components/layout/SEO.tsx`.
 
 ---
 

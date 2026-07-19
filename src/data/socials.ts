@@ -9,27 +9,26 @@ export interface SocialLink {
   external?: boolean;
 }
 
-// NOTE: Replace the placeholder values below before publishing.
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     label: 'GitHub',
-    href: 'https://github.com/YOUR_GITHUB_URL',
+    href: 'https://github.com/tangdarren',
     icon: Github,
-    handle: 'YOUR_GITHUB_URL',
+    handle: 'tangdarren',
     external: true,
   },
   {
     label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/YOUR_LINKEDIN_URL',
+    href: 'https://www.linkedin.com/in/tang-darren',
     icon: Linkedin,
-    handle: 'YOUR_LINKEDIN_URL',
+    handle: 'tang-darren',
     external: true,
   },
   {
     label: 'Email',
-    href: 'mailto:YOUR_EMAIL_ADDRESS',
+    href: 'mailto:tang.darren@gmail.com',
     icon: Mail,
-    handle: 'YOUR_EMAIL_ADDRESS',
+    handle: 'tang.darren@gmail.com',
   },
 ];
 
