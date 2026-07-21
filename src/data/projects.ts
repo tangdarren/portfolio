@@ -13,6 +13,12 @@ export interface ProjectScreenshot {
   alt: string;
 }
 
+export interface ProjectArchitectureStage {
+  title: string;
+  description: string;
+  technologies?: string[];
+}
+
 export interface ProjectCaseStudy {
   role?: string;
   timeline?: string;
@@ -20,7 +26,7 @@ export interface ProjectCaseStudy {
   challenge?: string;
   approach?: string;
   outcome?: string;
-  architecture?: string[];
+  architecture?: ProjectArchitectureStage[];
   lessonsLearned?: string[];
   screenshots?: ProjectScreenshot[];
 }
@@ -90,10 +96,29 @@ export const PROJECTS: Project[] = [
       outcome:
         'Delivers educational one-day and five-session SPY directional forecasts with current market indicators, a Market Replay Lab, and a Model Monitor across forecast horizons.',
       architecture: [
-        'React + TypeScript + Vite frontend talks to a FastAPI REST backend.',
-        'Backend serves live Alpha Vantage data or an opt-in Excel simulation workbook.',
-        'pandas / scikit-learn produce local model artifacts used for forecasts.',
-        'Market Replay Lab supports reviewing historical sessions, locking predictions, and revealing outcomes.',
+        {
+          title: 'Frontend',
+          description:
+            'React + TypeScript + Vite client talks to a FastAPI REST backend.',
+          technologies: ['React', 'TypeScript', 'Vite'],
+        },
+        {
+          title: 'API & data',
+          description:
+            'Backend serves live Alpha Vantage data or an opt-in Excel simulation workbook.',
+          technologies: ['FastAPI', 'Alpha Vantage'],
+        },
+        {
+          title: 'Forecast models',
+          description:
+            'pandas / scikit-learn produce local model artifacts used for forecasts.',
+          technologies: ['pandas', 'scikit-learn'],
+        },
+        {
+          title: 'Market Replay Lab',
+          description:
+            'Supports reviewing historical sessions, locking predictions, and revealing outcomes.',
+        },
       ],
       lessonsLearned: [
         'Simulated mode stays opt-in and never activates automatically when live data fails.',
@@ -148,11 +173,28 @@ export const PROJECTS: Project[] = [
       outcome:
         'Automates receipt processing, policy rules (R1–R5), anomaly flagging, and admin approve/reject workflows with structured audit records.',
       architecture: [
-        'Presentation layer — web UI for employees and admins (React / Vite).',
-        'Business logic layer — traditional backend workflow and validation (FastAPI).',
-        'Agent logic layer — Expense, Document, Email, and Orchestrator agents.',
-        'Data access layer — CRUD abstraction for Firestore, Cloud Storage, Gmail, and a vector database.',
-        'Expense Agent handles OCR validation, rule checking, and anomaly detection; Document Agent handles receipt/PDF extraction; Email Agent handles notifications; Orchestrator routes tasks.',
+        {
+          title: 'Presentation',
+          description: 'Web UI for employees and admins.',
+          technologies: ['React', 'Vite'],
+        },
+        {
+          title: 'Business logic',
+          description: 'Traditional backend workflow and validation.',
+          technologies: ['FastAPI'],
+        },
+        {
+          title: 'Agent layer',
+          description:
+            'Expense, Document, Email, and Orchestrator agents coordinate OCR, policy checks, notifications, and routing.',
+          technologies: ['AI Agents'],
+        },
+        {
+          title: 'Data access',
+          description:
+            'CRUD abstraction for Firestore, Cloud Storage, Gmail, and a vector database.',
+          technologies: ['Firestore', 'Cloud Storage', 'Gmail API', 'Vector Database'],
+        },
       ],
       lessonsLearned: [
         'A MAESTRO-aligned red-team suite (29 tests across 7 layers and 4 agents) surfaced 5 vulnerabilities, primarily RBAC-related, with documented mitigation recommendations.',
@@ -191,10 +233,24 @@ export const PROJECTS: Project[] = [
       approach:
         'An accessible dashboard that visualizes income, expenses, and tax estimates alongside longer-term performance.',
       architecture: [
-        'Income and expense tracking with categorization.',
-        'Tax estimate calculations surfaced in the dashboard.',
-        'Performance charts powered by Recharts.',
-        'Local Storage persistence for a dependency-light demo.',
+        {
+          title: 'Income & expenses',
+          description: 'Track income and expenses with categorization.',
+        },
+        {
+          title: 'Tax estimates',
+          description: 'Surface tax estimate calculations in the dashboard.',
+        },
+        {
+          title: 'Performance charts',
+          description: 'Visualize longer-term performance.',
+          technologies: ['Recharts'],
+        },
+        {
+          title: 'Local persistence',
+          description: 'Persist demo state without a remote backend.',
+          technologies: ['Local Storage'],
+        },
       ],
     },
   },
@@ -240,11 +296,25 @@ export const PROJECTS: Project[] = [
       outcome:
         'Validated in the Apple Vision Pro simulator and on a physical Apple Vision Pro device provided for testing at the hackathon.',
       architecture: [
-        'Single main scene flow: launcher → scenario selection → focused call console → in-scene debrief.',
-        'Call transcript and current decision form the primary active-call experience; the backend remains authoritative.',
-        'Spatial app: React, Vite, TypeScript, Vitest, and the WebSpatial SDK.',
-        'Backend: Java 21 and Spring Boot with Maven Wrapper.',
-        'CI via GitHub Actions for backend and spatial-app jobs.',
+        {
+          title: 'Launcher',
+          description: 'Entry into the single main spatial scene.',
+          technologies: ['WebSpatial', 'React'],
+        },
+        {
+          title: 'Scenario selection',
+          description: 'Learner chooses a scripted 911-style training scenario.',
+        },
+        {
+          title: 'Call console',
+          description:
+            'Active-call experience with transcript and stage-based decisions; the backend remains authoritative.',
+          technologies: ['Spring Boot', 'Java 21'],
+        },
+        {
+          title: 'Debrief',
+          description: 'In-scene deterministic debrief after the simulation completes.',
+        },
       ],
       lessonsLearned: [
         'Keep the backend authoritative for scenario state, sessions, and debriefs.',
@@ -282,9 +352,20 @@ export const PROJECTS: Project[] = [
       approach:
         'A focused Flutter app that keeps state predictable via BLoC and adapts cleanly to different screen sizes.',
       architecture: [
-        'Book browsing and organization surfaces.',
-        'BLoC-based state management for predictable UI updates.',
-        'Responsive layouts across mobile form factors.',
+        {
+          title: 'Book browsing',
+          description: 'Surfaces for exploring and organizing books.',
+          technologies: ['Flutter', 'Dart'],
+        },
+        {
+          title: 'State management',
+          description: 'Keep UI updates predictable and business logic separable.',
+          technologies: ['BLoC'],
+        },
+        {
+          title: 'Responsive layouts',
+          description: 'Adapt cleanly across mobile form factors.',
+        },
       ],
     },
   },

@@ -5,6 +5,7 @@ import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
 import PageTransition from '@/components/layout/PageTransition';
 import PageHeader from '@/components/layout/PageHeader';
 import SEO from '@/components/layout/SEO';
+import ProjectArchitectureFlow from '@/components/projects/ProjectArchitectureFlow';
 import { getProjectById, type Project } from '@/data/projects';
 import NotFoundPage from '@/pages/NotFoundPage';
 
@@ -174,10 +175,8 @@ function ProjectCaseStudyShell({ project }: { project: Project }) {
           </CaseSection>
         )}
 
-        {hasItems(architecture) && (
-          <CaseSection title="Architecture">
-            <BulletList items={architecture} />
-          </CaseSection>
+        {architecture && architecture.length > 0 && (
+          <ProjectArchitectureFlow stages={architecture} />
         )}
 
         {hasText(outcome) && (
