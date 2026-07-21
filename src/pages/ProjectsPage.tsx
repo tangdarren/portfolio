@@ -1,18 +1,36 @@
 import { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import PageTransition from '@/components/layout/PageTransition';
 import PageHeader from '@/components/layout/PageHeader';
 import SEO from '@/components/layout/SEO';
 import ProjectCard from '@/components/projects/ProjectCard';
 import ProjectDetails from '@/components/projects/ProjectDetails';
-import ProjectFilters, {
+import ProjectFilters from '@/components/projects/ProjectFilters';
+import {
+  PROJECTS,
+  PROJECT_FILTERS,
+  isProjectFilter,
+  type Project,
   type ProjectFilter,
-} from '@/components/projects/ProjectFilters';
-import { PROJECTS, PROJECT_FILTERS, type Project } from '@/data/projects';
+} from '@/data/projects';
 
 export default function ProjectsPage() {
-  const [filter, setFilter] = useState<ProjectFilter>('All');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryParam = searchParams.get('category');
+  const filter: ProjectFilter = isProjectFilter(categoryParam)
+    ? categoryParam
+    : 'All';
+
   const [activeProject, setActiveProject] = useState<Project | null>(null);
+
+  const setFilter = (next: ProjectFilter) => {
+    if (next === 'All') {
+      setSearchParams({}, { replace: true });
+      return;
+    }
+    setSearchParams({ category: next }, { replace: true });
+  };
 
   const filtered = useMemo(() => {
     if (filter === 'All') return PROJECTS;
@@ -70,6 +88,7 @@ export default function ProjectsPage() {
                 onOpenDetails={setActiveProject}
                 index={i}
                 featured={project.featured}
+                filter={filter}
               />
             ))}
           </div>
@@ -79,6 +98,7 @@ export default function ProjectsPage() {
       <ProjectDetails
         project={activeProject}
         onClose={() => setActiveProject(null)}
+        filter={filter}
       />
     </PageTransition>
   );

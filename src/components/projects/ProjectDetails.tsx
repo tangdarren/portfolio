@@ -1,17 +1,25 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { ExternalLink, Github, X } from 'lucide-react';
+import { BookOpen, ExternalLink, Github, X } from 'lucide-react';
 
-import type { Project } from '@/data/projects';
+import {
+  hasCaseStudy,
+  projectCaseStudyPath,
+  type Project,
+  type ProjectFilter,
+} from '@/data/projects';
 
 interface ProjectDetailsProps {
   project: Project | null;
   onClose: () => void;
+  filter?: ProjectFilter;
 }
 
 export default function ProjectDetails({
   project,
   onClose,
+  filter = 'All',
 }: ProjectDetailsProps) {
   const reduce = useReducedMotion();
   const dialogRef = useRef<HTMLDivElement | null>(null);
@@ -165,6 +173,16 @@ export default function ProjectDetails({
             </div>
 
             <div className="flex flex-wrap items-center gap-2 border-t border-ink-600 bg-ink-850 px-6 py-4">
+              {hasCaseStudy(project) && (
+                <Link
+                  to={projectCaseStudyPath(project.id, filter)}
+                  className="btn-primary"
+                  onClick={onClose}
+                >
+                  <BookOpen className="h-4 w-4" />
+                  View Case Study
+                </Link>
+              )}
               {project.githubUrl && (
                 <ModalLink
                   href={project.githubUrl}
@@ -177,7 +195,6 @@ export default function ProjectDetails({
                   href={project.liveUrl}
                   label="Live demo"
                   icon={<ExternalLink className="h-4 w-4" />}
-                  variant="primary"
                 />
               )}
               <div className="grow" />

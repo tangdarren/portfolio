@@ -1,7 +1,14 @@
+import type { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ExternalLink, Github, Info } from 'lucide-react';
+import { BookOpen, ExternalLink, Github, Info } from 'lucide-react';
 
-import type { Project } from '@/data/projects';
+import {
+  hasCaseStudy,
+  projectCaseStudyPath,
+  type Project,
+  type ProjectFilter,
+} from '@/data/projects';
 import ProjectThumbnail from './ProjectThumbnail';
 
 interface ProjectCardProps {
@@ -9,26 +16,24 @@ interface ProjectCardProps {
   onOpenDetails: (project: Project) => void;
   index?: number;
   featured?: boolean;
+  filter?: ProjectFilter;
 }
 
-function LinkButton({
+function ExternalLinkButton({
   href,
   children,
-  variant = 'secondary',
   ariaLabel,
 }: {
   href: string;
-  children: React.ReactNode;
-  variant?: 'primary' | 'secondary';
+  children: ReactNode;
   ariaLabel?: string;
 }) {
-  const base = variant === 'primary' ? 'btn-primary' : 'btn-secondary';
   return (
     <a
       href={href}
       target="_blank"
       rel="noreferrer noopener"
-      className={base}
+      className="btn-ghost"
       aria-label={ariaLabel}
     >
       {children}
@@ -41,8 +46,10 @@ export default function ProjectCard({
   onOpenDetails,
   index = 0,
   featured = false,
+  filter = 'All',
 }: ProjectCardProps) {
   const reduce = useReducedMotion();
+  const showCaseStudy = hasCaseStudy(project);
 
   return (
     <motion.article
@@ -87,32 +94,42 @@ export default function ProjectCard({
         </ul>
 
         <div className="mt-5 flex flex-wrap items-center gap-2 pt-2">
+          {showCaseStudy && (
+            <Link
+              to={projectCaseStudyPath(project.id, filter)}
+              className="btn-primary"
+              aria-label={`View case study for ${project.name}`}
+            >
+              <BookOpen className="h-4 w-4" />
+              View Case Study
+            </Link>
+          )}
           <button
             type="button"
             onClick={() => onOpenDetails(project)}
-            className="btn-primary"
-            aria-label={`View details for ${project.name}`}
+            className={showCaseStudy ? 'btn-secondary' : 'btn-primary'}
+            aria-label={`View quick details for ${project.name}`}
           >
             <Info className="h-4 w-4" />
             Details
           </button>
           {project.githubUrl && (
-            <LinkButton
+            <ExternalLinkButton
               href={project.githubUrl}
               ariaLabel={`GitHub repository for ${project.name}`}
             >
               <Github className="h-4 w-4" />
-              GitHub
-            </LinkButton>
+              <span className="sr-only sm:not-sr-only">GitHub</span>
+            </ExternalLinkButton>
           )}
           {project.liveUrl && (
-            <LinkButton
+            <ExternalLinkButton
               href={project.liveUrl}
               ariaLabel={`Live demo of ${project.name}`}
             >
               <ExternalLink className="h-4 w-4" />
-              Live Demo
-            </LinkButton>
+              <span className="sr-only sm:not-sr-only">Live</span>
+            </ExternalLinkButton>
           )}
         </div>
       </div>

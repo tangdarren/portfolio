@@ -1,6 +1,6 @@
-import type { ProjectCategory } from '@/data/projects';
+import type { ProjectFilter } from '@/data/projects';
 
-export type ProjectFilter = 'All' | ProjectCategory;
+export type { ProjectFilter };
 
 interface ProjectFiltersProps {
   filters: readonly ProjectFilter[];

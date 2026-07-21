@@ -1,13 +1,20 @@
 import type { ReactNode } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
 
 import PageTransition from '@/components/layout/PageTransition';
 import PageHeader from '@/components/layout/PageHeader';
 import SEO from '@/components/layout/SEO';
 import ProjectArchitectureFlow from '@/components/projects/ProjectArchitectureFlow';
+import ProjectCaseStudyNav from '@/components/projects/ProjectCaseStudyNav';
 import ProjectScreenshotGallery from '@/components/projects/ProjectScreenshotGallery';
-import { getProjectById, type Project } from '@/data/projects';
+import {
+  getProjectById,
+  isProjectFilter,
+  projectsGalleryPath,
+  type Project,
+  type ProjectFilter,
+} from '@/data/projects';
 import NotFoundPage from '@/pages/NotFoundPage';
 
 function isValidHttpUrl(value?: string): value is string {
@@ -30,7 +37,12 @@ function hasItems(value?: string[]): value is string[] {
 
 export default function ProjectCaseStudyPage() {
   const { projectId } = useParams<{ projectId: string }>();
+  const [searchParams] = useSearchParams();
   const project = projectId ? getProjectById(projectId) : undefined;
+  const categoryParam = searchParams.get('category');
+  const filter: ProjectFilter = isProjectFilter(categoryParam)
+    ? categoryParam
+    : 'All';
 
   if (!project) {
     return <NotFoundPage />;
@@ -45,13 +57,19 @@ export default function ProjectCaseStudyPage() {
       />
 
       <div className="container-page py-10 sm:py-14">
-        <ProjectCaseStudyShell project={project} />
+        <ProjectCaseStudyShell project={project} filter={filter} />
       </div>
     </PageTransition>
   );
 }
 
-function ProjectCaseStudyShell({ project }: { project: Project }) {
+function ProjectCaseStudyShell({
+  project,
+  filter,
+}: {
+  project: Project;
+  filter: ProjectFilter;
+}) {
   const caseStudy = project.caseStudy;
   const screenshots = caseStudy?.screenshots ?? project.screenshots;
   const githubUrl = isValidHttpUrl(project.githubUrl)
@@ -61,6 +79,7 @@ function ProjectCaseStudyShell({ project }: { project: Project }) {
   const hasMeta = Boolean(
     caseStudy?.role || caseStudy?.timeline || caseStudy?.status,
   );
+  const galleryPath = projectsGalleryPath(filter);
 
   const challenge = caseStudy?.challenge ?? project.details.problem;
   const approach = caseStudy?.approach;
@@ -74,7 +93,7 @@ function ProjectCaseStudyShell({ project }: { project: Project }) {
   return (
     <>
       <Link
-        to="/projects"
+        to={galleryPath}
         className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-mist-300 transition-colors hover:text-accent-cyan"
       >
         <ArrowLeft className="h-3.5 w-3.5" />
@@ -197,6 +216,8 @@ function ProjectCaseStudyShell({ project }: { project: Project }) {
           />
         )}
       </div>
+
+      <ProjectCaseStudyNav project={project} filter={filter} />
     </>
   );
 }

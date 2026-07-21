@@ -375,7 +375,53 @@ export function getProjectById(id: string): Project | undefined {
   return PROJECTS.find((project) => project.id === id);
 }
 
-export const PROJECT_FILTERS: readonly (ProjectCategory | 'All')[] = [
+export function hasCaseStudy(project: Project): boolean {
+  return Boolean(project.caseStudy);
+}
+
+export type ProjectFilter = ProjectCategory | 'All';
+
+export function isProjectFilter(value: string | null | undefined): value is ProjectFilter {
+  if (!value) return false;
+  return (PROJECT_FILTERS as readonly string[]).includes(value);
+}
+
+/** Projects that have a dedicated case-study page, optionally narrowed by gallery filter. */
+export function getCaseStudyProjects(filter: ProjectFilter = 'All'): Project[] {
+  return PROJECTS.filter((project) => {
+    if (!hasCaseStudy(project)) return false;
+    if (filter === 'All') return true;
+    return project.categories.includes(filter);
+  });
+}
+
+export function getCaseStudyNeighbors(
+  id: string,
+  filter: ProjectFilter = 'All',
+): { previous?: Project; next?: Project } {
+  const list = getCaseStudyProjects(filter);
+  const index = list.findIndex((project) => project.id === id);
+  if (index === -1) return {};
+  return {
+    previous: index > 0 ? list[index - 1] : undefined,
+    next: index < list.length - 1 ? list[index + 1] : undefined,
+  };
+}
+
+export function projectsGalleryPath(filter: ProjectFilter = 'All'): string {
+  if (filter === 'All') return '/projects';
+  return `/projects?category=${encodeURIComponent(filter)}`;
+}
+
+export function projectCaseStudyPath(
+  id: string,
+  filter: ProjectFilter = 'All',
+): string {
+  if (filter === 'All') return `/projects/${id}`;
+  return `/projects/${id}?category=${encodeURIComponent(filter)}`;
+}
+
+export const PROJECT_FILTERS: readonly ProjectFilter[] = [
   'All',
   'Full-Stack',
   'AI',
