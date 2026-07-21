@@ -13,6 +13,18 @@ export interface ProjectScreenshot {
   alt: string;
 }
 
+export interface ProjectCaseStudy {
+  role?: string;
+  timeline?: string;
+  status?: string;
+  challenge?: string;
+  approach?: string;
+  outcome?: string;
+  architecture?: string[];
+  lessonsLearned?: string[];
+  screenshots?: ProjectScreenshot[];
+}
+
 export interface Project {
   id: string;
   name: string;
@@ -25,6 +37,7 @@ export interface Project {
   featured?: boolean;
   image?: string;
   screenshots?: ProjectScreenshot[];
+  caseStudy?: ProjectCaseStudy;
   details: {
     problem: string;
     solution: string;
@@ -69,6 +82,25 @@ export const PROJECTS: Project[] = [
         'Alpha Vantage as the primary data source, wrapped behind a small client for easy provider swaps.',
       ],
     },
+    caseStudy: {
+      challenge:
+        'Traders and analysts often stitch together fragmented data sources when preparing for the market open, which is slow and error-prone.',
+      approach:
+        'Build a full-stack market intelligence dashboard that combines live SPY data or explicitly enabled Excel simulation data with explainable forecasts, historical replay, and model monitoring.',
+      outcome:
+        'Delivers educational one-day and five-session SPY directional forecasts with current market indicators, a Market Replay Lab, and a Model Monitor across forecast horizons.',
+      architecture: [
+        'React + TypeScript + Vite frontend talks to a FastAPI REST backend.',
+        'Backend serves live Alpha Vantage data or an opt-in Excel simulation workbook.',
+        'pandas / scikit-learn produce local model artifacts used for forecasts.',
+        'Market Replay Lab supports reviewing historical sessions, locking predictions, and revealing outcomes.',
+      ],
+      lessonsLearned: [
+        'Simulated mode stays opt-in and never activates automatically when live data fails.',
+        'Keep the Alpha Vantage API key backend-only.',
+        'Build forecast features to avoid look-ahead leakage; forecasts remain probabilistic and educational.',
+      ],
+    },
   },
   {
     id: 'expensense',
@@ -108,6 +140,25 @@ export const PROJECTS: Project[] = [
         'React + Vite for a responsive reviewer UI.',
       ],
     },
+    caseStudy: {
+      challenge:
+        'Expense reimbursement is repetitive, spread across email and spreadsheets, and frequently loses context between submission and approval.',
+      approach:
+        'Coordinate specialized AI agents for receipt OCR and validation, policy-aware reimbursement decisions, anomaly detection, admin review, and full audit logging across the expense-review lifecycle.',
+      outcome:
+        'Automates receipt processing, policy rules (R1–R5), anomaly flagging, and admin approve/reject workflows with structured audit records.',
+      architecture: [
+        'Presentation layer — web UI for employees and admins (React / Vite).',
+        'Business logic layer — traditional backend workflow and validation (FastAPI).',
+        'Agent logic layer — Expense, Document, Email, and Orchestrator agents.',
+        'Data access layer — CRUD abstraction for Firestore, Cloud Storage, Gmail, and a vector database.',
+        'Expense Agent handles OCR validation, rule checking, and anomaly detection; Document Agent handles receipt/PDF extraction; Email Agent handles notifications; Orchestrator routes tasks.',
+      ],
+      lessonsLearned: [
+        'A MAESTRO-aligned red-team suite (29 tests across 7 layers and 4 agents) surfaced 5 vulnerabilities, primarily RBAC-related, with documented mitigation recommendations.',
+        'Policy retrieval via a vector database needs safeguard grounding to keep agent decisions auditable.',
+      ],
+    },
   },
   {
     id: 'business-finance-dashboard',
@@ -132,6 +183,18 @@ export const PROJECTS: Project[] = [
       technicalDecisions: [
         'Kept state local for a fast, dependency-light demo.',
         'Chose Recharts for accessible, composable charts.',
+      ],
+    },
+    caseStudy: {
+      challenge:
+        'Small operators frequently rely on spreadsheets that make it hard to see business health at a glance.',
+      approach:
+        'An accessible dashboard that visualizes income, expenses, and tax estimates alongside longer-term performance.',
+      architecture: [
+        'Income and expense tracking with categorization.',
+        'Tax estimate calculations surfaced in the dashboard.',
+        'Performance charts powered by Recharts.',
+        'Local Storage persistence for a dependency-light demo.',
       ],
     },
   },
@@ -165,6 +228,29 @@ export const PROJECTS: Project[] = [
         'React used for standard UI surfaces so the same team can iterate across web and spatial views.',
       ],
     },
+    caseStudy: {
+      timeline:
+        'Prototyped at Santa Clara University’s 2026 Hackathon for Humanity, with further enhancement afterwards.',
+      status:
+        'Focused 911 call console, backend scenarios/sessions/debriefs, Apple Vision Pro simulator flow, and physical device validation are implemented; voice, maps, AI, authentication, and database persistence remain planned enhancements.',
+      challenge:
+        'Hands-on training for first responders is expensive to run and hard to repeat at scale.',
+      approach:
+        'Build an Apple Vision Pro / WebSpatial experience backed by a Spring Boot REST API where learners work through scripted 911-style calls, make stage-based decisions, dispatch a response, and receive a deterministic debrief.',
+      outcome:
+        'Validated in the Apple Vision Pro simulator and on a physical Apple Vision Pro device provided for testing at the hackathon.',
+      architecture: [
+        'Single main scene flow: launcher → scenario selection → focused call console → in-scene debrief.',
+        'Call transcript and current decision form the primary active-call experience; the backend remains authoritative.',
+        'Spatial app: React, Vite, TypeScript, Vitest, and the WebSpatial SDK.',
+        'Backend: Java 21 and Spring Boot with Maven Wrapper.',
+        'CI via GitHub Actions for backend and spatial-app jobs.',
+      ],
+      lessonsLearned: [
+        'Keep the backend authoritative for scenario state, sessions, and debriefs.',
+        'Optional in-page view references can illustrate scenes without separate spatial windows.',
+      ],
+    },
   },
   {
     id: 'flutter-book-club-app',
@@ -190,8 +276,23 @@ export const PROJECTS: Project[] = [
         'Used Flutter for cross-platform reach from a single codebase.',
       ],
     },
+    caseStudy: {
+      challenge:
+        'Casual reading groups need a lightweight way to organize books without a heavy social platform.',
+      approach:
+        'A focused Flutter app that keeps state predictable via BLoC and adapts cleanly to different screen sizes.',
+      architecture: [
+        'Book browsing and organization surfaces.',
+        'BLoC-based state management for predictable UI updates.',
+        'Responsive layouts across mobile form factors.',
+      ],
+    },
   },
 ];
+
+export function getProjectById(id: string): Project | undefined {
+  return PROJECTS.find((project) => project.id === id);
+}
 
 export const PROJECT_FILTERS: readonly (ProjectCategory | 'All')[] = [
   'All',

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 import { NAV_ITEMS } from '@/data/navigation';
@@ -8,11 +8,6 @@ import Monogram from './Monogram';
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
-
-  useEffect(() => {
-    setOpen(false);
-  }, [location.pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4);
@@ -30,6 +25,8 @@ export default function Navbar() {
     };
   }, [open]);
 
+  const closeMenu = () => setOpen(false);
+
   return (
     <header
       className={[
@@ -44,6 +41,7 @@ export default function Navbar() {
           to="/"
           className="group flex items-center gap-3"
           aria-label="Darren Christopher Tang — Home"
+          onClick={closeMenu}
         >
           <Monogram />
           <span className="hidden font-display text-sm font-semibold tracking-tight text-mist-50 sm:inline">
@@ -119,6 +117,7 @@ export default function Navbar() {
                   key={item.to}
                   to={item.to}
                   end={item.to === '/'}
+                  onClick={closeMenu}
                   className={({ isActive }) =>
                     [
                       'rounded-md px-3 py-3 font-mono text-xs uppercase tracking-[0.2em] transition-colors',
