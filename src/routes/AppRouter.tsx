@@ -8,6 +8,7 @@ import ScrollToTop from '@/components/layout/ScrollToTop';
 const HomePage = lazy(() => import('@/pages/HomePage'));
 const AboutPage = lazy(() => import('@/pages/AboutPage'));
 const ProjectsPage = lazy(() => import('@/pages/ProjectsPage'));
+const ProjectCaseStudyPage = lazy(() => import('@/pages/ProjectCaseStudyPage'));
 const ResumePage = lazy(() => import('@/pages/ResumePage'));
 const ContactPage = lazy(() => import('@/pages/ContactPage'));
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
@@ -38,6 +39,7 @@ export default function AppRouter() {
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/projects/:projectId" element={<ProjectCaseStudyPage />} />
             <Route path="/resume" element={<ResumePage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="*" element={<NotFoundPage />} />
