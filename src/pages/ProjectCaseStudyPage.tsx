@@ -6,6 +6,7 @@ import PageTransition from '@/components/layout/PageTransition';
 import PageHeader from '@/components/layout/PageHeader';
 import SEO from '@/components/layout/SEO';
 import ProjectArchitectureFlow from '@/components/projects/ProjectArchitectureFlow';
+import ProjectScreenshotGallery from '@/components/projects/ProjectScreenshotGallery';
 import { getProjectById, type Project } from '@/data/projects';
 import NotFoundPage from '@/pages/NotFoundPage';
 
@@ -190,23 +191,10 @@ function ProjectCaseStudyShell({ project }: { project: Project }) {
         )}
 
         {screenshots && screenshots.length > 0 && (
-          <CaseSection title="Screenshots">
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {screenshots.map((shot) => (
-                <div
-                  key={shot.src}
-                  className="overflow-hidden rounded-md border border-ink-600 bg-ink-800/70"
-                >
-                  <img
-                    src={shot.src}
-                    alt={shot.alt}
-                    loading="lazy"
-                    className="h-auto w-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          </CaseSection>
+          <ProjectScreenshotGallery
+            screenshots={screenshots}
+            projectName={project.name}
+          />
         )}
       </div>
     </>
