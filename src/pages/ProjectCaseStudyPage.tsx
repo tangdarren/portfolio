@@ -18,6 +18,14 @@ function isValidHttpUrl(value?: string): value is string {
   }
 }
 
+function hasText(value?: string): value is string {
+  return Boolean(value?.trim());
+}
+
+function hasItems(value?: string[]): value is string[] {
+  return Boolean(value && value.length > 0);
+}
+
 export default function ProjectCaseStudyPage() {
   const { projectId } = useParams<{ projectId: string }>();
   const project = projectId ? getProjectById(projectId) : undefined;
@@ -51,6 +59,15 @@ function ProjectCaseStudyShell({ project }: { project: Project }) {
   const hasMeta = Boolean(
     caseStudy?.role || caseStudy?.timeline || caseStudy?.status,
   );
+
+  const challenge = caseStudy?.challenge ?? project.details.problem;
+  const approach = caseStudy?.approach;
+  const solution = project.details.solution;
+  const keyFeatures = project.details.keyFeatures;
+  const technicalDecisions = project.details.technicalDecisions;
+  const architecture = caseStudy?.architecture;
+  const outcome = caseStudy?.outcome;
+  const lessonsLearned = caseStudy?.lessonsLearned;
 
   return (
     <>
@@ -132,47 +149,67 @@ function ProjectCaseStudyShell({ project }: { project: Project }) {
         </div>
       )}
 
-      {caseStudy?.challenge && (
-        <CaseSection title="Challenge">{caseStudy.challenge}</CaseSection>
-      )}
-      {caseStudy?.approach && (
-        <CaseSection title="Approach">{caseStudy.approach}</CaseSection>
-      )}
-      {caseStudy?.outcome && (
-        <CaseSection title="Outcome">{caseStudy.outcome}</CaseSection>
-      )}
+      <div className="mt-12 space-y-10 sm:mt-14 sm:space-y-12">
+        {hasText(challenge) && (
+          <CaseSection title="The challenge">{challenge}</CaseSection>
+        )}
 
-      {caseStudy?.architecture && caseStudy.architecture.length > 0 && (
-        <CaseSection title="Architecture">
-          <BulletList items={caseStudy.architecture} />
-        </CaseSection>
-      )}
+        {hasText(approach) && (
+          <CaseSection title="My approach">{approach}</CaseSection>
+        )}
 
-      {caseStudy?.lessonsLearned && caseStudy.lessonsLearned.length > 0 && (
-        <CaseSection title="Lessons learned">
-          <BulletList items={caseStudy.lessonsLearned} />
-        </CaseSection>
-      )}
+        {hasText(solution) && (
+          <CaseSection title="The solution">{solution}</CaseSection>
+        )}
 
-      {screenshots && screenshots.length > 0 && (
-        <CaseSection title="Screenshots">
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {screenshots.map((shot) => (
-              <div
-                key={shot.src}
-                className="overflow-hidden rounded-md border border-ink-600 bg-ink-800/70"
-              >
-                <img
-                  src={shot.src}
-                  alt={shot.alt}
-                  loading="lazy"
-                  className="h-auto w-full object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        </CaseSection>
-      )}
+        {hasItems(keyFeatures) && (
+          <CaseSection title="Key features">
+            <BulletList items={keyFeatures} />
+          </CaseSection>
+        )}
+
+        {hasItems(technicalDecisions) && (
+          <CaseSection title="Technical decisions">
+            <BulletList items={technicalDecisions} />
+          </CaseSection>
+        )}
+
+        {hasItems(architecture) && (
+          <CaseSection title="Architecture">
+            <BulletList items={architecture} />
+          </CaseSection>
+        )}
+
+        {hasText(outcome) && (
+          <CaseSection title="Outcome">{outcome}</CaseSection>
+        )}
+
+        {hasItems(lessonsLearned) && (
+          <CaseSection title="Lessons learned">
+            <BulletList items={lessonsLearned} />
+          </CaseSection>
+        )}
+
+        {screenshots && screenshots.length > 0 && (
+          <CaseSection title="Screenshots">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {screenshots.map((shot) => (
+                <div
+                  key={shot.src}
+                  className="overflow-hidden rounded-md border border-ink-600 bg-ink-800/70"
+                >
+                  <img
+                    src={shot.src}
+                    alt={shot.alt}
+                    loading="lazy"
+                    className="h-auto w-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </CaseSection>
+        )}
+      </div>
     </>
   );
 }
@@ -196,18 +233,20 @@ function CaseSection({
   children: ReactNode;
 }) {
   return (
-    <section className="mt-10">
+    <section>
       <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent-cyan">
         {title}
       </h2>
-      <div className="mt-3 text-sm leading-relaxed text-mist-200">{children}</div>
+      <div className="mt-3 max-w-3xl text-sm leading-relaxed text-mist-200 sm:text-[15px]">
+        {children}
+      </div>
     </section>
   );
 }
 
 function BulletList({ items }: { items: string[] }) {
   return (
-    <ul className="space-y-1.5">
+    <ul className="space-y-2">
       {items.map((item) => (
         <li key={item} className="flex gap-2">
           <span
