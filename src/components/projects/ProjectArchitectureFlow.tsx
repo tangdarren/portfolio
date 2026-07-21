@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { ArrowDown, ArrowRight } from 'lucide-react';
 
 import type { ProjectArchitectureStage } from '@/data/projects';
@@ -15,18 +16,20 @@ export default function ProjectArchitectureFlow({
   stages,
   title = 'Architecture',
 }: ProjectArchitectureFlowProps) {
-  if (stages.length === 0) return null;
+  const headingId = useId();
+
+  if (!stages || stages.length === 0) return null;
 
   return (
-    <section aria-labelledby="architecture-heading">
+    <section aria-labelledby={headingId}>
       <h2
-        id="architecture-heading"
+        id={headingId}
         className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent-cyan"
       >
         {title}
       </h2>
 
-      <ol className="mt-4 flex flex-col gap-0 md:flex-row md:items-stretch md:gap-0">
+      <ol className="mt-4 flex flex-col md:flex-row md:items-stretch">
         {stages.map((stage, index) => {
           const isLast = index === stages.length - 1;
           return (
@@ -34,7 +37,7 @@ export default function ProjectArchitectureFlow({
               key={`${stage.title}-${index}`}
               className="flex min-w-0 flex-1 flex-col md:flex-row md:items-stretch"
             >
-              <article className="panel flex h-full flex-1 flex-col p-4">
+              <article className="panel flex h-full min-w-0 flex-1 flex-col p-4">
                 <div className="flex items-start gap-3">
                   <span
                     aria-hidden
@@ -43,16 +46,16 @@ export default function ProjectArchitectureFlow({
                     {String(index + 1).padStart(2, '0')}
                   </span>
                   <div className="min-w-0">
-                    <h3 className="font-display text-sm font-semibold text-mist-50">
+                    <h3 className="break-words font-display text-sm font-semibold text-mist-50">
                       {stage.title}
                     </h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-mist-300">
+                    <p className="mt-1.5 break-words text-sm leading-relaxed text-mist-300">
                       {stage.description}
                     </p>
                     {stage.technologies && stage.technologies.length > 0 && (
                       <ul className="mt-3 flex flex-wrap gap-1.5">
                         {stage.technologies.map((tech) => (
-                          <li key={tech} className="tag">
+                          <li key={tech} className="tag max-w-full break-words">
                             {tech}
                           </li>
                         ))}

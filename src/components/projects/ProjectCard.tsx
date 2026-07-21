@@ -9,6 +9,7 @@ import {
   type Project,
   type ProjectFilter,
 } from '@/data/projects';
+import { isValidHttpUrl } from '@/lib/url';
 import ProjectThumbnail from './ProjectThumbnail';
 
 interface ProjectCardProps {
@@ -50,13 +51,20 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const reduce = useReducedMotion();
   const showCaseStudy = hasCaseStudy(project);
+  const githubUrl = isValidHttpUrl(project.githubUrl)
+    ? project.githubUrl
+    : undefined;
+  const liveUrl = isValidHttpUrl(project.liveUrl) ? project.liveUrl : undefined;
 
   return (
     <motion.article
       initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.4, delay: index * 0.04 }}
+      transition={{
+        duration: reduce ? 0.01 : 0.4,
+        delay: reduce ? 0 : index * 0.04,
+      }}
       className={[
         'group relative flex h-full flex-col overflow-hidden rounded-xl border border-ink-600 bg-ink-900 shadow-panel transition-all hover:-translate-y-0.5 hover:border-accent-cyan/50 hover:shadow-card',
         featured ? 'lg:col-span-2' : '',
@@ -65,7 +73,7 @@ export default function ProjectCard({
       <ProjectThumbnail project={project} featured={featured} />
 
       <div className="flex flex-1 flex-col p-5">
-        <div className="mb-2 flex flex-wrap items-center gap-2">
+        <div className="mb-2 flex flex-wrap gap-2">
           {project.categories.slice(0, 3).map((c) => (
             <span
               key={c}
@@ -76,7 +84,7 @@ export default function ProjectCard({
           ))}
         </div>
 
-        <h3 className="font-display text-lg font-semibold text-mist-50">
+        <h3 className="break-words font-display text-lg font-semibold text-mist-50">
           {project.name}
         </h3>
         <p className="mt-1 text-sm text-mist-300">{project.summary}</p>
@@ -84,7 +92,7 @@ export default function ProjectCard({
 
         <ul className="mt-4 flex flex-wrap gap-1.5">
           {project.technologies.slice(0, 6).map((t) => (
-            <li key={t} className="tag">
+            <li key={t} className="tag max-w-full break-words">
               {t}
             </li>
           ))}
@@ -113,18 +121,18 @@ export default function ProjectCard({
             <Info className="h-4 w-4" />
             Details
           </button>
-          {project.githubUrl && (
+          {githubUrl && (
             <ExternalLinkButton
-              href={project.githubUrl}
+              href={githubUrl}
               ariaLabel={`GitHub repository for ${project.name}`}
             >
               <Github className="h-4 w-4" />
               <span className="sr-only sm:not-sr-only">GitHub</span>
             </ExternalLinkButton>
           )}
-          {project.liveUrl && (
+          {liveUrl && (
             <ExternalLinkButton
-              href={project.liveUrl}
+              href={liveUrl}
               ariaLabel={`Live demo of ${project.name}`}
             >
               <ExternalLink className="h-4 w-4" />

@@ -15,17 +15,8 @@ import {
   type Project,
   type ProjectFilter,
 } from '@/data/projects';
+import { isValidHttpUrl } from '@/lib/url';
 import NotFoundPage from '@/pages/NotFoundPage';
-
-function isValidHttpUrl(value?: string): value is string {
-  if (!value?.trim()) return false;
-  try {
-    const url = new URL(value);
-    return url.protocol === 'http:' || url.protocol === 'https:';
-  } catch {
-    return false;
-  }
-}
 
 function hasText(value?: string): value is string {
   return Boolean(value?.trim());
@@ -33,6 +24,14 @@ function hasText(value?: string): value is string {
 
 function hasItems(value?: string[]): value is string[] {
   return Boolean(value && value.length > 0);
+}
+
+function getProjectShareImage(project: Project): string | undefined {
+  return (
+    project.image ??
+    project.screenshots?.[0]?.src ??
+    project.caseStudy?.screenshots?.[0]?.src
+  );
 }
 
 export default function ProjectCaseStudyPage() {
@@ -48,12 +47,15 @@ export default function ProjectCaseStudyPage() {
     return <NotFoundPage />;
   }
 
+  const shareImage = getProjectShareImage(project);
+
   return (
     <PageTransition>
       <SEO
         title={`${project.name} | Darren Christopher Tang`}
         description={project.summary}
         path={`/projects/${project.id}`}
+        image={shareImage}
       />
 
       <div className="container-page py-10 sm:py-14">
@@ -76,9 +78,11 @@ function ProjectCaseStudyShell({
     ? project.githubUrl
     : undefined;
   const liveUrl = isValidHttpUrl(project.liveUrl) ? project.liveUrl : undefined;
-  const hasMeta = Boolean(
-    caseStudy?.role || caseStudy?.timeline || caseStudy?.status,
-  );
+  const metaItems = [
+    caseStudy?.role ? { label: 'Role', value: caseStudy.role } : null,
+    caseStudy?.timeline ? { label: 'Context', value: caseStudy.timeline } : null,
+    caseStudy?.status ? { label: 'Status', value: caseStudy.status } : null,
+  ].filter((item): item is { label: string; value: string } => Boolean(item));
   const galleryPath = projectsGalleryPath(filter);
 
   const challenge = caseStudy?.challenge ?? project.details.problem;
@@ -96,11 +100,11 @@ function ProjectCaseStudyShell({
         to={galleryPath}
         className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-mist-300 transition-colors hover:text-accent-cyan"
       >
-        <ArrowLeft className="h-3.5 w-3.5" />
+        <ArrowLeft className="h-3.5 w-3.5 shrink-0" />
         Back to Builds Gallery
       </Link>
 
-      <div className="mt-6">
+      <div className="mt-6 break-words">
         <PageHeader
           eyebrow="Case Study"
           title={project.name}
@@ -119,25 +123,21 @@ function ProjectCaseStudyShell({
         ))}
       </div>
 
-      <ul className="mt-4 flex flex-wrap gap-1.5">
+      <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Technologies">
         {project.technologies.map((tech) => (
-          <li key={tech} className="tag">
+          <li key={tech} className="tag max-w-full break-words">
             {tech}
           </li>
         ))}
       </ul>
 
-      {hasMeta && (
-        <dl className="panel mt-8 grid gap-5 p-5 sm:grid-cols-3 sm:gap-6">
-          {caseStudy?.role && (
-            <MetaItem label="Role">{caseStudy.role}</MetaItem>
-          )}
-          {caseStudy?.timeline && (
-            <MetaItem label="Context">{caseStudy.timeline}</MetaItem>
-          )}
-          {caseStudy?.status && (
-            <MetaItem label="Status">{caseStudy.status}</MetaItem>
-          )}
+      {metaItems.length > 0 && (
+        <dl className="panel mt-8 grid gap-5 p-5 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
+          {metaItems.map((item) => (
+            <MetaItem key={item.label} label={item.label}>
+              {item.value}
+            </MetaItem>
+          ))}
         </dl>
       )}
 
@@ -224,11 +224,13 @@ function ProjectCaseStudyShell({
 
 function MetaItem({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div>
+    <div className="min-w-0">
       <dt className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent-cyan">
         {label}
       </dt>
-      <dd className="mt-2 text-sm leading-relaxed text-mist-200">{children}</dd>
+      <dd className="mt-2 break-words text-sm leading-relaxed text-mist-200">
+        {children}
+      </dd>
     </div>
   );
 }
@@ -245,7 +247,7 @@ function CaseSection({
       <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent-cyan">
         {title}
       </h2>
-      <div className="mt-3 max-w-3xl text-sm leading-relaxed text-mist-200 sm:text-[15px]">
+      <div className="mt-3 max-w-3xl break-words text-sm leading-relaxed text-mist-200 sm:text-[15px]">
         {children}
       </div>
     </section>
@@ -261,7 +263,7 @@ function BulletList({ items }: { items: string[] }) {
             aria-hidden
             className="mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-accent-cyan"
           />
-          <span>{item}</span>
+          <span className="min-w-0 break-words">{item}</span>
         </li>
       ))}
     </ul>

@@ -9,12 +9,16 @@ import {
   type Project,
   type ProjectFilter,
 } from '@/data/projects';
+import { isValidHttpUrl } from '@/lib/url';
 
 interface ProjectDetailsProps {
   project: Project | null;
   onClose: () => void;
   filter?: ProjectFilter;
 }
+
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 export default function ProjectDetails({
   project,
@@ -25,7 +29,7 @@ export default function ProjectDetails({
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
 
-  // Close on Escape + trap body scroll
+  // Close on Escape, trap focus, restore focus, lock body scroll
   useEffect(() => {
     if (!project) return;
     const previouslyFocused = document.activeElement as HTMLElement | null;
@@ -33,7 +37,26 @@ export default function ProjectDetails({
     document.body.style.overflow = 'hidden';
     closeBtnRef.current?.focus();
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab' || !dialogRef.current) return;
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener('keydown', onKey);
     return () => {
@@ -43,6 +66,13 @@ export default function ProjectDetails({
     };
   }, [project, onClose]);
 
+  const githubUrl = project && isValidHttpUrl(project.githubUrl)
+    ? project.githubUrl
+    : undefined;
+  const liveUrl = project && isValidHttpUrl(project.liveUrl)
+    ? project.liveUrl
+    : undefined;
+
   return (
     <AnimatePresence>
       {project && (
@@ -51,11 +81,10 @@ export default function ProjectDetails({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: reduce ? 0.01 : 0.2 }}
           onMouseDown={(e) => {
             if (e.target === e.currentTarget) onClose();
           }}
-          aria-hidden={false}
         >
           <motion.div
             ref={dialogRef}
@@ -65,7 +94,7 @@ export default function ProjectDetails({
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: reduce ? 0.01 : 0.25 }}
             className="relative flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-t-2xl border border-ink-600 bg-ink-900 shadow-card sm:rounded-2xl"
           >
             <div className="flex items-start justify-between gap-4 border-b border-ink-600 bg-ink-850 px-6 py-4">
@@ -75,7 +104,7 @@ export default function ProjectDetails({
                 </p>
                 <h2
                   id="project-details-title"
-                  className="mt-1 font-display text-xl font-semibold text-mist-50 sm:text-2xl"
+                  className="mt-1 break-words font-display text-xl font-semibold text-mist-50 sm:text-2xl"
                 >
                   {project.name}
                 </h2>
@@ -183,16 +212,16 @@ export default function ProjectDetails({
                   View Case Study
                 </Link>
               )}
-              {project.githubUrl && (
+              {githubUrl && (
                 <ModalLink
-                  href={project.githubUrl}
+                  href={githubUrl}
                   label="Repository"
                   icon={<Github className="h-4 w-4" />}
                 />
               )}
-              {project.liveUrl && (
+              {liveUrl && (
                 <ModalLink
-                  href={project.liveUrl}
+                  href={liveUrl}
                   label="Live demo"
                   icon={<ExternalLink className="h-4 w-4" />}
                 />

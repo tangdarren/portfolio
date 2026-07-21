@@ -9,6 +9,9 @@ interface ProjectScreenshotGalleryProps {
   projectName: string;
 }
 
+const FOCUSABLE_SELECTOR =
+  'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 export default function ProjectScreenshotGallery({
   screenshots,
   projectName,
@@ -45,13 +48,14 @@ export default function ProjectScreenshotGallery({
                 triggerRefs.current[index] = node;
               }}
               onClick={() => setActiveIndex(index)}
-              className="group relative w-full overflow-hidden rounded-md border border-ink-600 bg-ink-800/70 text-left transition-colors hover:border-accent-cyan/50 focus-visible:outline-none"
+              className="group relative w-full overflow-hidden rounded-md border border-ink-600 bg-ink-800/70 text-left transition-colors hover:border-accent-cyan/50"
               aria-label={`Open larger view: ${shot.alt}`}
             >
               <img
                 src={shot.src}
                 alt={shot.alt}
                 loading="lazy"
+                decoding="async"
                 className="h-auto w-full object-cover"
               />
               <span
@@ -86,6 +90,7 @@ function ScreenshotLightbox({
   reduceMotion: boolean;
   onClose: () => void;
 }) {
+  const dialogRef = useRef<HTMLDivElement | null>(null);
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const titleId = useId();
   const open = Boolean(shot);
@@ -99,8 +104,36 @@ function ScreenshotLightbox({
     closeBtnRef.current?.focus();
 
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key !== 'Tab' || !dialogRef.current) return;
+
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+      ).filter((el) => !el.hasAttribute('disabled') && el.tabIndex !== -1);
+
+      if (focusable.length === 0) {
+        event.preventDefault();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+
+      if (event.shiftKey && (active === first || !dialogRef.current.contains(active))) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
+
     window.addEventListener('keydown', onKey);
 
     return () => {
@@ -124,6 +157,7 @@ function ScreenshotLightbox({
           }}
         >
           <motion.div
+            ref={dialogRef}
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
@@ -137,15 +171,15 @@ function ScreenshotLightbox({
           >
             <div className="flex items-start justify-between gap-4 border-b border-ink-600 bg-ink-850 px-4 py-3 sm:px-5">
               <div className="min-w-0">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent-cyan">
+                <p className="truncate font-mono text-[10px] uppercase tracking-[0.22em] text-accent-cyan">
                   {projectName}
                 </p>
-                <h3
+                <h2
                   id={titleId}
-                  className="mt-1 truncate font-display text-sm font-semibold text-mist-50 sm:text-base"
+                  className="mt-1 break-words font-display text-sm font-semibold text-mist-50 sm:text-base"
                 >
                   {shot.alt}
-                </h3>
+                </h2>
               </div>
               <button
                 ref={closeBtnRef}
