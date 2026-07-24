@@ -34,7 +34,11 @@ export default function ResumeViewer({ path = RESUME_PDF_PATH }: ResumeViewerPro
             <Maximize2 className="h-4 w-4" />
             View Full Screen
           </a>
-          <a href={path} download className="btn-primary">
+          <a
+            href={path}
+            download="Darren_Tang_Resume.pdf"
+            className="btn-primary"
+          >
             <Download className="h-4 w-4" />
             Download PDF
           </a>
@@ -70,7 +74,11 @@ function ResumeFallback({ path }: { path: string }) {
           <Maximize2 className="h-4 w-4" />
           Open in new tab
         </a>
-        <a href={path} download className="btn-primary">
+        <a
+          href={path}
+          download="Darren_Tang_Resume.pdf"
+          className="btn-primary"
+        >
           <Download className="h-4 w-4" />
           Download PDF
         </a>

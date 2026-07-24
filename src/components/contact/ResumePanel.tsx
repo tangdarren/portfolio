@@ -31,7 +31,11 @@ export default function ResumePanel() {
           <FileText className="h-4 w-4" />
           View Resume
         </a>
-        <a href={RESUME_PDF_PATH} download className="btn-primary">
+        <a
+          href={RESUME_PDF_PATH}
+          download="Darren_Tang_Resume.pdf"
+          className="btn-primary"
+        >
           <Download className="h-4 w-4" />
           Download Resume
         </a>
