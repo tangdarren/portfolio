@@ -193,7 +193,12 @@ export const PROJECTS: Project[] = [
           title: 'Data access',
           description:
             'CRUD abstraction for Firestore, Cloud Storage, Gmail, and a vector database.',
-          technologies: ['Firestore', 'Cloud Storage', 'Gmail API', 'Vector Database'],
+          technologies: [
+            'Firestore',
+            'Cloud Storage',
+            'Gmail API',
+            'Vector Database',
+          ],
         },
       ],
       lessonsLearned: [
@@ -203,70 +208,173 @@ export const PROJECTS: Project[] = [
     },
   },
   {
-    id: 'business-finance-dashboard',
-    name: 'Business Finance Dashboard',
+    id: 'sql-detective',
+    name: 'SQL Detective',
     summary:
-      'A finance dashboard for tracking income, expenses, tax estimates, and overall business performance.',
+      'A black-and-white SQL mystery game where you investigate a hotel theft by writing real queries against case evidence.',
     description:
-      'A business finance application for tracking income, expenses, tax estimates, and financial performance through an accessible dashboard.',
-    categories: ['Full-Stack', 'Financial Technology'],
-    technologies: ['React', 'TypeScript', 'Recharts', 'Local Storage'],
+      'Query the evidence and solve the case: a short mystery game with one fictional hotel theft, five levels, and no accounts — driven by real SQL against guest logs, staff records, access logs, and payments.',
+    categories: ['Full-Stack', 'Interactive Training'],
+    technologies: [
+      'React',
+      'TypeScript',
+      'Vite',
+      'Java',
+      'Spring Boot',
+      'PostgreSQL',
+      'Flyway',
+    ],
+    githubUrl: 'https://github.com/tangdarren/sql-detective',
+    featured: true,
     details: {
       problem:
-        'Small operators frequently rely on spreadsheets that make it hard to see business health at a glance.',
+        'Learning SQL is more engaging when practice is tied to a concrete investigation instead of isolated drills.',
       solution:
-        'An accessible dashboard that visualizes income, expenses, and tax estimates alongside longer-term performance.',
+        'A monochrome mystery game that progresses through five levels of a hotel-theft case while players write real SQL against case tables and track findings in a Detective Notebook.',
       keyFeatures: [
-        'Income and expense tracking with categorization.',
-        'Tax estimate calculations.',
-        'Performance charts powered by Recharts.',
-        'Local Storage persistence for a friction-free demo.',
+        'Black-and-white investigation UI for a focused mystery-game feel.',
+        'Five-level case progression from introduction through investigation to completion.',
+        'Persistent Detective Notebook for notes and pinnable query-result evidence (browser local storage).',
+        'Backend accepts only a single read-only SELECT, runs it with a restricted database role, and compares results to a hidden expected query.',
       ],
       technicalDecisions: [
-        'Kept state local for a fast, dependency-light demo.',
-        'Chose Recharts for accessible, composable charts.',
+        'React + TypeScript + Vite for the investigation workspace.',
+        'Java 21 and Spring Boot for challenge loading and SQL execution.',
+        'PostgreSQL with Flyway for schema and case data; player queries use a read-only role.',
       ],
     },
     caseStudy: {
       challenge:
-        'Small operators frequently rely on spreadsheets that make it hard to see business health at a glance.',
+        'Learning SQL is more engaging when practice is tied to a concrete investigation instead of isolated drills.',
       approach:
-        'An accessible dashboard that visualizes income, expenses, and tax estimates alongside longer-term performance.',
+        'Build a short, account-free mystery game inspired by SQL Murder Mystery: players investigate one hotel theft across five levels by querying real evidence tables through a locked-down API.',
+      outcome:
+        'Delivers a complete investigation loop — landing, case intro, workspace with SQL execution and feedback, Detective Notebook, and case completion — without exposing write access to the database.',
       architecture: [
         {
-          title: 'Income & expenses',
-          description: 'Track income and expenses with categorization.',
+          title: 'React UI',
+          description:
+            'Loads challenges from the API, sends SQL to an execute endpoint, and keeps notebook notes plus pinned evidence in local storage.',
+          technologies: ['React', 'TypeScript', 'Vite'],
         },
         {
-          title: 'Tax estimates',
-          description: 'Surface tax estimate calculations in the dashboard.',
+          title: 'Spring Boot API',
+          description:
+            'Serves challenges and validates player SQL as a single read-only SELECT before execution.',
+          technologies: ['Java 21', 'Spring Boot'],
         },
         {
-          title: 'Performance charts',
-          description: 'Visualize longer-term performance.',
-          technologies: ['Recharts'],
+          title: 'PostgreSQL',
+          description:
+            'Stores case data with Flyway migrations; player queries run under a restricted read-only database role.',
+          technologies: ['PostgreSQL', 'Flyway'],
         },
         {
-          title: 'Local persistence',
-          description: 'Persist demo state without a remote backend.',
-          technologies: ['Local Storage'],
+          title: 'Investigation progression',
+          description:
+            'Routes move from landing → case introduction → investigation workspace → case completion across five levels.',
         },
+      ],
+      lessonsLearned: [
+        'Restrict player SQL to a single read-only SELECT and a dedicated database role.',
+        'Keep notebook state client-side when the game does not require accounts.',
+        'Compare query results to a hidden expected query to grade progress without revealing the answer SQL.',
+      ],
+    },
+  },
+  {
+    id: 'musicbloom',
+    name: 'MusicBloom',
+    summary:
+      'A full-stack music player that turns listening into garden progression with Melody Points, quests, and achievements.',
+    description:
+      'Grow your music garden, one song at a time — a React visual player backed by a typed FastAPI service for catalog, playback sessions, queue control, progression, and optional Spotify or Azure DevOps integrations, with a credential-free demo mode.',
+    categories: ['Full-Stack'],
+    technologies: [
+      'React',
+      'TypeScript',
+      'Vite',
+      'FastAPI',
+      'Python',
+      'SQLAlchemy',
+      'Alembic',
+      'Docker',
+      'Azure Pipelines',
+    ],
+    githubUrl: 'https://github.com/tangdarren/musicbloom',
+    details: {
+      problem:
+        'Music players rarely connect listening behavior to a durable progression system that still works without third-party credentials.',
+      solution:
+        'A full-stack app where a React visual player talks to FastAPI for catalog, sessions, queue, Melody Points, quests, and achievements, with demo mode covering the product without Spotify or Azure DevOps secrets.',
+      keyFeatures: [
+        'Visual music player with playback controls, queue management, and listening-event sync.',
+        'Garden progression with Melody Points, quests, achievements, decorations, and BloomBud.',
+        'BloomMix mood-based five-track previews planted into a server-backed queue; Recent Blooms and Favorites from persisted listening events.',
+        'Demo mode for catalog, player, garden, history, favorites, and Dev Garden sample data without external credentials.',
+      ],
+      technicalDecisions: [
+        'React, TypeScript, Vite, React Router, and TanStack Query on the frontend.',
+        'Python, FastAPI, Pydantic, and SQLAlchemy 2 with Alembic migrations on the backend.',
+        'SQLite by default with PostgreSQL-compatible persistence; Spotify and Azure DevOps secrets stay server-side.',
+      ],
+    },
+    caseStudy: {
+      status:
+        'Single demo user; quest and achievement pages are partly scaffold-level; CI validates and publishes artifacts but does not deploy production.',
+      challenge:
+        'Music players rarely connect listening behavior to a durable progression system that still works without third-party credentials.',
+      approach:
+        'Split a typed FastAPI domain (catalog, sessions, progression, favorites, optional Spotify/Azure clients) from a React visual player, and default to demo mode so the full loop runs locally without external APIs.',
+      outcome:
+        'Delivers player, garden progression, history, favorites, OpenAPI docs, Docker Compose demo stack, and Azure Pipelines CI for lint, typecheck, tests, builds, and artifacts.',
+      architecture: [
+        {
+          title: 'React visual player',
+          description:
+            'Playback UI, queue, garden views, and a typed API client shared with TanStack Query.',
+          technologies: ['React', 'TypeScript', 'Vite', 'TanStack Query'],
+        },
+        {
+          title: 'FastAPI REST API',
+          description:
+            'Versioned /api/v1 routes for demo catalog, player session, queue, and progression systems.',
+          technologies: ['Python', 'FastAPI', 'Pydantic'],
+        },
+        {
+          title: 'Persistence',
+          description:
+            'SQLAlchemy repositories with Alembic migrations; SQLite by default, PostgreSQL-compatible.',
+          technologies: ['SQLAlchemy', 'Alembic', 'SQLite'],
+        },
+        {
+          title: 'Quality & delivery',
+          description:
+            'pytest (100% coverage gate on src/musicbloom), Vitest, Ruff, mypy, ESLint, Azure Pipelines, Docker, and Compose demo stack.',
+          technologies: ['pytest', 'Vitest', 'Docker', 'Azure Pipelines'],
+        },
+      ],
+      lessonsLearned: [
+        'Demo mode should cover the full product loop without requiring Spotify or Azure DevOps credentials.',
+        'Keep OAuth and DevOps tokens server-side so they are never exposed to the browser.',
+        'Enforce backend coverage and CI quality gates early so demo-friendly apps stay production-minded.',
       ],
     },
   },
   {
     id: 'vr-first-responder-training',
-    name: 'VR First-Responder Training',
+    name: 'SafeCall',
     summary:
-      'An immersive WebSpatial training experience prototyping scenarios for first responders.',
+      'An immersive WebSpatial training experience for emergency-response scenarios on Apple Vision Pro.',
     description:
-      'An immersive WebSpatial training experience created during Hack for Humanity 2026 to explore interactive training scenarios for first responders.',
+      'SafeCall lets learners work through scripted 911-style calls in WebSpatial, make stage-based decisions, dispatch a response, and receive a deterministic debrief — prototyped for Hack for Humanity 2026.',
     categories: ['Extended Reality', 'Interactive Training'],
     technologies: [
       'WebSpatial',
       'React',
-      'Extended Reality',
-      'Interactive Training',
+      'TypeScript',
+      'Spring Boot',
+      'Java',
     ],
     githubUrl: 'https://github.com/tangdarren/safecall-vr',
     details: {
@@ -313,59 +421,13 @@ export const PROJECTS: Project[] = [
         },
         {
           title: 'Debrief',
-          description: 'In-scene deterministic debrief after the simulation completes.',
+          description:
+            'In-scene deterministic debrief after the simulation completes.',
         },
       ],
       lessonsLearned: [
         'Keep the backend authoritative for scenario state, sessions, and debriefs.',
         'Optional in-page view references can illustrate scenes without separate spatial windows.',
-      ],
-    },
-  },
-  {
-    id: 'flutter-book-club-app',
-    name: 'Flutter Book Club App',
-    summary:
-      'A Flutter mobile app for exploring and organizing books with structured state management.',
-    description:
-      'A Flutter application for exploring and organizing books using structured state management and responsive mobile interfaces.',
-    categories: ['Mobile', 'Full-Stack'],
-    technologies: ['Flutter', 'Dart', 'BLoC', 'Responsive Design'],
-    details: {
-      problem:
-        'Casual reading groups need a lightweight way to organize books without a heavy social platform.',
-      solution:
-        'A focused Flutter app that keeps state predictable via BLoC and adapts cleanly to different screen sizes.',
-      keyFeatures: [
-        'Book browsing and organization surfaces.',
-        'BLoC-based state management for predictable UI updates.',
-        'Responsive layouts across mobile form factors.',
-      ],
-      technicalDecisions: [
-        'Chose BLoC to keep business logic separable and testable.',
-        'Used Flutter for cross-platform reach from a single codebase.',
-      ],
-    },
-    caseStudy: {
-      challenge:
-        'Casual reading groups need a lightweight way to organize books without a heavy social platform.',
-      approach:
-        'A focused Flutter app that keeps state predictable via BLoC and adapts cleanly to different screen sizes.',
-      architecture: [
-        {
-          title: 'Book browsing',
-          description: 'Surfaces for exploring and organizing books.',
-          technologies: ['Flutter', 'Dart'],
-        },
-        {
-          title: 'State management',
-          description: 'Keep UI updates predictable and business logic separable.',
-          technologies: ['BLoC'],
-        },
-        {
-          title: 'Responsive layouts',
-          description: 'Adapt cleanly across mobile form factors.',
-        },
       ],
     },
   },
@@ -381,7 +443,9 @@ export function hasCaseStudy(project: Project): boolean {
 
 export type ProjectFilter = ProjectCategory | 'All';
 
-export function isProjectFilter(value: string | null | undefined): value is ProjectFilter {
+export function isProjectFilter(
+  value: string | null | undefined,
+): value is ProjectFilter {
   if (!value) return false;
   return (PROJECT_FILTERS as readonly string[]).includes(value);
 }
@@ -426,6 +490,6 @@ export const PROJECT_FILTERS: readonly ProjectFilter[] = [
   'Full-Stack',
   'AI',
   'Financial Technology',
-  'Mobile',
   'Extended Reality',
+  'Interactive Training',
 ] as const;
