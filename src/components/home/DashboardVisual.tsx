@@ -1,13 +1,23 @@
 import { useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Activity, Cpu, GitBranch, Terminal } from 'lucide-react';
+import { Activity, Briefcase, FolderKanban, Terminal } from 'lucide-react';
+
+import { EXPERIENCE } from '@/data/experience';
+import { PROJECTS } from '@/data/projects';
 
 /**
  * A refined, original developer-dashboard visual.
  * Uses pure SVG + Tailwind, no external image assets.
+ * Metrics are derived from portfolio data — not invented ops claims.
  */
 export default function DashboardVisual() {
   const reduce = useReducedMotion();
+
+  const experienceCount = EXPERIENCE.length;
+  const featuredProjectCount = useMemo(
+    () => PROJECTS.filter((project) => project.featured).length,
+    [],
+  );
 
   // Simple, deterministic sparkline points for a calm chart.
   const sparkline = useMemo(() => {
@@ -37,9 +47,9 @@ export default function DashboardVisual() {
 
       <motion.div
         aria-hidden
-        initial={{ opacity: 0 }}
+        initial={reduce ? { opacity: 1 } : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.5 }}
+        transition={{ delay: reduce ? 0 : 0.2, duration: reduce ? 0.01 : 0.5 }}
         className="relative overflow-hidden rounded-xl border border-ink-600 bg-ink-900 shadow-card"
       >
         {/* Window chrome */}
@@ -56,68 +66,72 @@ export default function DashboardVisual() {
         </div>
 
         <div className="grid gap-3 p-4 sm:grid-cols-2">
-          {/* Status card */}
+          {/* Focus card */}
           <div className="panel col-span-2 flex items-center justify-between gap-3 border-ink-600 bg-ink-850/60 p-3">
-            <div className="flex items-center gap-3">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-brand-50 text-accent-cyan">
+            <div className="flex min-w-0 items-center gap-3">
+              <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand-50 text-accent-cyan">
                 <Activity className="h-4 w-4" />
               </span>
-              <div>
+              <div className="min-w-0">
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-mist-400">
-                  System status
+                  Current focus
                 </p>
-                <p className="text-sm text-mist-100">All services nominal</p>
+                <p className="truncate text-sm text-mist-100">
+                  AI agents and full-stack systems
+                </p>
               </div>
             </div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-accent-green/30 bg-accent-green/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-widest text-accent-green">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent-green" />
-              Healthy
+            <span className="inline-flex shrink-0 items-center gap-2 rounded-full border border-accent-cyan/30 bg-accent-cyan/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-widest text-accent-cyan">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent-cyan" />
+              Active
             </span>
           </div>
 
-          {/* Deploys card */}
+          {/* Experience card */}
           <div className="panel border-ink-600 bg-ink-900 p-3">
             <div className="flex items-center justify-between">
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-mist-400">
-                Deploys
+                Experience
               </p>
-              <GitBranch className="h-3.5 w-3.5 text-mist-400" />
+              <Briefcase className="h-3.5 w-3.5 text-mist-400" />
             </div>
             <p className="mt-2 font-display text-2xl font-semibold text-mist-50">
-              14
+              {String(experienceCount).padStart(2, '0')}
             </p>
-            <p className="mt-0.5 text-[11px] text-mist-400">this week</p>
+            <p className="mt-0.5 text-[11px] text-mist-400">
+              professional roles
+            </p>
           </div>
 
-          {/* Uptime card */}
+          {/* Featured projects card */}
           <div className="panel border-ink-600 bg-ink-900 p-3">
             <div className="flex items-center justify-between">
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-mist-400">
-                Uptime
+                Featured
               </p>
-              <Cpu className="h-3.5 w-3.5 text-mist-400" />
+              <FolderKanban className="h-3.5 w-3.5 text-mist-400" />
             </div>
             <p className="mt-2 font-display text-2xl font-semibold text-mist-50">
-              99.98<span className="text-mist-400 text-base">%</span>
+              {String(featuredProjectCount).padStart(2, '0')}
             </p>
-            <p className="mt-0.5 text-[11px] text-mist-400">rolling 30 days</p>
+            <p className="mt-0.5 text-[11px] text-mist-400">featured projects</p>
           </div>
 
-          {/* Chart card */}
+          {/* Education / areas card */}
           <div className="panel col-span-2 border-ink-600 bg-ink-900 p-3">
-            <div className="mb-2 flex items-center justify-between">
+            <div className="mb-2 flex items-center justify-between gap-2">
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-mist-400">
-                Throughput
+                Education
               </p>
-              <span className="font-mono text-[10px] text-accent-cyan">
-                +12.4%
+              <span className="truncate font-mono text-[10px] text-accent-cyan">
+                MS CSE · SCU · 2027
               </span>
             </div>
             <svg
               viewBox={`0 0 ${sparkline.w} ${sparkline.h}`}
               className="h-16 w-full"
               role="img"
-              aria-label="Throughput sparkline"
+              aria-label="Decorative portfolio chart"
             >
               <defs>
                 <linearGradient id="sparkFill" x1="0" x2="0" y1="0" y2="1">
@@ -135,6 +149,9 @@ export default function DashboardVisual() {
                 strokeLinejoin="round"
               />
             </svg>
+            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.16em] text-mist-400">
+              Primary areas · AI · Full-stack · Automation
+            </p>
           </div>
 
           {/* Terminal card */}
@@ -152,15 +169,15 @@ export default function DashboardVisual() {
                 <span className="text-mist-100">build</span>{' '}
                 <span className="text-mist-400">portfolio --release</span>
               </p>
-              <p className="text-mist-400">compiling components ✓</p>
+              <p className="text-mist-400">compiling pages ✓</p>
               <p className="text-mist-400">
-                bundling assets ✓{' '}
-                <span className="text-accent-green">ready in 812ms</span>
+                typecheck + lint ✓{' '}
+                <span className="text-accent-green">ready to ship</span>
               </p>
               <p>
                 <span className="text-accent-cyan">›</span>{' '}
-                <span className="text-mist-100">deploy</span>{' '}
-                <span className="text-mist-400">--target production</span>
+                <span className="text-mist-100">open</span>{' '}
+                <span className="text-mist-400">builds gallery</span>
                 {!reduce && (
                   <span className="ml-1 inline-block h-3.5 w-1.5 translate-y-[2px] animate-blink bg-mist-200" />
                 )}
@@ -173,7 +190,7 @@ export default function DashboardVisual() {
       {/* Floating side badge */}
       <div className="pointer-events-none absolute -right-3 -top-3 hidden rounded-md border border-ink-600 bg-ink-900 px-2.5 py-1 shadow-panel sm:block">
         <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-mist-300">
-          live_view
+          portfolio
         </span>
       </div>
     </div>
