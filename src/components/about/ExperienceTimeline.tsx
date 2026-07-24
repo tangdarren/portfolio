@@ -14,7 +14,7 @@ export default function ExperienceTimeline() {
           initial={reduce ? { opacity: 0 } : { opacity: 0, x: -8 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: '-30px' }}
-          transition={{ duration: 0.4, delay: i * 0.05 }}
+          transition={{ duration: reduce ? 0.01 : 0.4, delay: reduce ? 0 : i * 0.05 }}
         >
           <span
             aria-hidden
@@ -24,14 +24,27 @@ export default function ExperienceTimeline() {
           </span>
 
           <div className="panel p-5">
-            <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
               <h3 className="font-display text-lg font-semibold text-mist-50">
-                {entry.company}
-              </h3>
-              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-cyan">
                 {entry.role}
-              </span>
+              </h3>
+              {entry.dates && (
+                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-cyan">
+                  {entry.dates}
+                </span>
+              )}
             </div>
+            <p className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-sm text-mist-300">
+              <span className="font-medium text-mist-100">{entry.company}</span>
+              {entry.location && (
+                <>
+                  <span aria-hidden className="text-mist-500">
+                    ·
+                  </span>
+                  <span>{entry.location}</span>
+                </>
+              )}
+            </p>
             <ul className="mt-3 space-y-2 text-sm text-mist-200">
               {entry.bullets.map((b) => (
                 <li key={b} className="flex gap-2">

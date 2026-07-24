@@ -26,34 +26,34 @@ export default function ProfileCard() {
           <h2 className="font-display text-2xl font-semibold text-mist-50 sm:text-3xl">
             Darren Christopher Tang
           </h2>
-          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.22em] text-accent-cyan">
-            Full-Stack Engineer · AI Agent Engineer
+          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-cyan sm:tracking-[0.22em]">
+            Software Engineer · AI Agent Engineer · Full-Stack Engineer
           </p>
         </div>
 
         <p className="text-sm leading-relaxed text-mist-200 sm:text-base">
           I'm a software engineer focused on building reliable full-stack
           products, AI-powered tools, and workflow automation systems. I am
-          currently pursuing a Master of Science in Computer Science at Santa
-          Clara University after earning my Bachelor of Science in Computer
-          Science from the University of Wisconsin–Madison.
+          pursuing a Master of Science in Computer Science and Engineering at
+          Santa Clara University (expected June 2027) after earning my Bachelor
+          of Science in Computer Science from the University of
+          Wisconsin–Madison.
         </p>
 
         <p className="text-sm leading-relaxed text-mist-300 sm:text-base">
           I enjoy turning complex requirements into practical software that
           improves real workflows. My interests include full-stack engineering,
-          AI agents, applied AI, automation, financial technology, and
-          data-driven applications.
+          AI agents, applied AI, automation, and data-driven applications.
         </p>
 
         <div className="mt-1 flex flex-wrap gap-2">
           <span className="tag">
             <GraduationCap className="mr-1.5 h-3 w-3 text-accent-cyan" />
-            MSCS · Santa Clara
+            MS CSE · Santa Clara
           </span>
           <span className="tag">
             <GraduationCap className="mr-1.5 h-3 w-3 text-accent-cyan" />
-            BSCS · UW–Madison
+            BS CS · UW–Madison
           </span>
           <span className="tag">
             <Briefcase className="mr-1.5 h-3 w-3 text-accent-cyan" />
@@ -61,7 +61,7 @@ export default function ProfileCard() {
           </span>
           <span className="tag">
             <MapPin className="mr-1.5 h-3 w-3 text-accent-cyan" />
-            Bay Area, CA
+            San Francisco, CA
           </span>
         </div>
       </div>

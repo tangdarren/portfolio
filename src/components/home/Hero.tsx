@@ -49,7 +49,7 @@ export default function Hero() {
             variants={itemVariants}
             className="font-mono text-xs uppercase tracking-[0.24em] text-mist-300"
           >
-            Full-Stack Engineer · AI Agent Engineer
+            Software Engineer · AI Agent Engineer · Full-Stack Engineer
           </motion.p>
 
           <motion.p
