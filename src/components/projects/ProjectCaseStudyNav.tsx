@@ -50,7 +50,7 @@ export default function ProjectCaseStudyNav({
 
         <Link to={galleryPath} className="btn-secondary self-center shrink-0">
           <GalleryHorizontalEnd className="h-4 w-4" />
-          Builds Gallery
+          Projects
         </Link>
 
         {next ? (

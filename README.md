@@ -16,10 +16,10 @@ Screenshots go in `public/projects/<project-id>/` and can be linked from
 `docs/screenshots/` and reference them here once available.
 
 - `docs/screenshots/home.png` — Home hero + navigation cards
-- `docs/screenshots/about.png` — Character Stats page
-- `docs/screenshots/projects.png` — Builds Gallery
-- `docs/screenshots/resume.png` — Resume Viewer
-- `docs/screenshots/contact.png` — Trading Post
+- `docs/screenshots/about.png` — About Me page
+- `docs/screenshots/projects.png` — Projects page
+- `docs/screenshots/resume.png` — Resume page
+- `docs/screenshots/contact.png` — Contact page
 
 ---
 

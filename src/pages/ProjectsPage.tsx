@@ -49,15 +49,15 @@ export default function ProjectsPage() {
   return (
     <PageTransition>
       <SEO
-        title="Builds Gallery | Darren Christopher Tang"
-        description="Full-stack, AI, financial technology, mobile, and extended reality projects by Darren Christopher Tang."
+        title="Projects | Darren Christopher Tang"
+        description="Full-stack, AI, financial technology, and extended reality projects by Darren Christopher Tang."
         path="/projects"
       />
 
       <div className="container-page py-10 sm:py-14">
         <PageHeader
           eyebrow="Projects"
-          title="Builds Gallery"
+          title="Projects"
           description="A filterable catalog of applications, AI systems, financial tools, and immersive experiences I've built."
         />
 

@@ -11,7 +11,7 @@ export default function AboutPage() {
   return (
     <PageTransition>
       <SEO
-        title="Character Stats | Darren Christopher Tang"
+        title="About Me | Darren Christopher Tang"
         description="Background, experience, education, and technical skills of Darren Christopher Tang."
         path="/about"
       />
@@ -19,20 +19,20 @@ export default function AboutPage() {
       <div className="container-page py-10 sm:py-14">
         <PageHeader
           eyebrow="About"
-          title="Character Stats"
-          description="Background, experience, education, and the toolkit I use to ship reliable software."
+          title="About Me"
+          description="Background, experience, education, and the skills I use to ship reliable software."
         />
 
         <div className="mt-10">
           <ProfileCard />
         </div>
 
-        <section className="mt-16" aria-labelledby="achievement-title">
+        <section className="mt-16" aria-labelledby="highlights-title">
           <div className="mb-6 flex items-end justify-between gap-4">
             <div>
-              <p className="eyebrow">Milestones</p>
-              <h2 id="achievement-title" className="mt-2 section-title">
-                Achievement Unlocked
+              <p className="eyebrow">Highlights</p>
+              <h2 id="highlights-title" className="mt-2 section-title">
+                Education and Career Highlights
               </h2>
             </div>
             <span className="hidden font-mono text-[11px] uppercase tracking-[0.2em] text-mist-400 sm:inline">
@@ -48,7 +48,7 @@ export default function AboutPage() {
 
         <section className="mt-16" aria-labelledby="experience-title">
           <div className="mb-6">
-            <p className="eyebrow">Timeline</p>
+            <p className="eyebrow">Experience</p>
             <h2 id="experience-title" className="mt-2 section-title">
               Experience
             </h2>
@@ -58,9 +58,9 @@ export default function AboutPage() {
 
         <section className="mt-16" aria-labelledby="skills-title">
           <div className="mb-6">
-            <p className="eyebrow">Toolkit</p>
+            <p className="eyebrow">Skills</p>
             <h2 id="skills-title" className="mt-2 section-title">
-              Skills Inventory
+              Skills
             </h2>
           </div>
           <SkillsInventory />

@@ -28,7 +28,7 @@ export default function AchievementCard({
         </span>
         <div className="min-w-0">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-cyan">
-            Milestone
+            Highlight
           </p>
           <h3 className="mt-0.5 text-sm font-semibold text-mist-50">
             {achievement.title}

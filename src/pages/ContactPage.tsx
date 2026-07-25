@@ -9,7 +9,7 @@ export default function ContactPage() {
   return (
     <PageTransition>
       <SEO
-        title="Trading Post | Darren Christopher Tang"
+        title="Contact | Darren Christopher Tang"
         description="Get in touch with Darren Christopher Tang about software engineering opportunities, projects, and collaborations."
         path="/contact"
       />
@@ -17,19 +17,16 @@ export default function ContactPage() {
       <div className="container-page py-10 sm:py-14">
         <PageHeader
           eyebrow="Contact"
-          title="Trading Post"
-          description="A professional place to connect about roles, projects, and collaborations."
+          title="Contact"
+          description="A straightforward place to connect about roles, projects, and collaborations."
         />
 
         <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-          <section aria-labelledby="trade-with-me-title" className="flex flex-col gap-5">
+          <section aria-labelledby="get-in-touch-title" className="flex flex-col gap-5">
             <div>
               <p className="eyebrow">Message</p>
-              <h2
-                id="trade-with-me-title"
-                className="mt-2 section-title"
-              >
-                Trade With Me
+              <h2 id="get-in-touch-title" className="mt-2 section-title">
+                Get in Touch
               </h2>
               <div className="mt-2 space-y-2 text-sm text-mist-300 sm:text-base">
                 <p>

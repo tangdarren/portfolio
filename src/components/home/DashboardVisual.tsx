@@ -177,7 +177,7 @@ export default function DashboardVisual() {
               <p>
                 <span className="text-accent-cyan">›</span>{' '}
                 <span className="text-mist-100">open</span>{' '}
-                <span className="text-mist-400">builds gallery</span>
+                <span className="text-mist-400">projects</span>
                 {!reduce && (
                   <span className="ml-1 inline-block h-3.5 w-1.5 translate-y-[2px] animate-blink bg-mist-200" />
                 )}

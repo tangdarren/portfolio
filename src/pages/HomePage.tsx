@@ -8,7 +8,7 @@ import NavigationCard from '@/components/home/NavigationCard';
 const CARDS = [
   {
     eyebrow: 'About',
-    title: 'Character Stats',
+    title: 'About Me',
     description:
       'Learn about my background, experience, education, and technical skills.',
     to: '/about',
@@ -16,7 +16,7 @@ const CARDS = [
   },
   {
     eyebrow: 'Projects',
-    title: 'Builds Gallery',
+    title: 'Projects',
     description:
       'Explore full-stack applications, AI systems, financial tools, and immersive projects.',
     to: '/projects',
@@ -24,14 +24,14 @@ const CARDS = [
   },
   {
     eyebrow: 'Resume',
-    title: 'Resume Viewer',
+    title: 'Resume',
     description: 'View or download my complete professional résumé.',
     to: '/resume',
     icon: ScrollText,
   },
   {
     eyebrow: 'Contact',
-    title: 'Trading Post',
+    title: 'Contact',
     description:
       'Contact me about software engineering opportunities and collaborations.',
     to: '/contact',
@@ -53,11 +53,11 @@ export default function HomePage() {
       <section className="container-page pb-24">
         <div className="mb-6 flex items-end justify-between gap-4">
           <div>
-            <p className="eyebrow">Navigation</p>
+            <p className="eyebrow">Explore</p>
             <h2 className="mt-2 section-title">Choose a destination</h2>
           </div>
           <span className="hidden font-mono text-[11px] uppercase tracking-[0.2em] text-mist-400 sm:inline">
-            04 modules
+            04 sections
           </span>
         </div>
 

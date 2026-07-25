@@ -7,7 +7,7 @@ export default function ResumePage() {
   return (
     <PageTransition>
       <SEO
-        title="Resume Viewer | Darren Christopher Tang"
+        title="Resume | Darren Christopher Tang"
         description="View or download the résumé of Darren Christopher Tang — full-stack and AI agent engineer."
         path="/resume"
       />
@@ -15,7 +15,7 @@ export default function ResumePage() {
       <div className="container-page py-10 sm:py-14">
         <PageHeader
           eyebrow="Résumé"
-          title="Resume Viewer"
+          title="Resume"
           description="Full-stack and AI-focused software engineer with experience building internal business applications, automation tools, financial dashboards, and AI-powered workflows."
         />
 
