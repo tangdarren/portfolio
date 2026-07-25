@@ -1,9 +1,13 @@
-import { FolderKanban, Mail, ScrollText, User } from 'lucide-react';
+import { useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, FolderKanban, Mail, ScrollText, User } from 'lucide-react';
 
 import PageTransition from '@/components/layout/PageTransition';
 import SEO from '@/components/layout/SEO';
 import Hero from '@/components/home/Hero';
 import NavigationCard from '@/components/home/NavigationCard';
+import FeaturedProjectCard from '@/components/home/FeaturedProjectCard';
+import { PROJECTS } from '@/data/projects';
 
 const CARDS = [
   {
@@ -39,7 +43,14 @@ const CARDS = [
   },
 ];
 
+const MAX_FEATURED = 3;
+
 export default function HomePage() {
+  const featuredProjects = useMemo(
+    () => PROJECTS.filter((project) => project.featured).slice(0, MAX_FEATURED),
+    [],
+  );
+
   return (
     <PageTransition>
       <SEO
@@ -50,11 +61,13 @@ export default function HomePage() {
 
       <Hero />
 
-      <section className="container-page pb-24">
+      <section className="container-page pb-16" aria-labelledby="home-nav-title">
         <div className="mb-6 flex items-end justify-between gap-4">
           <div>
             <p className="eyebrow">Explore</p>
-            <h2 className="mt-2 section-title">Choose a destination</h2>
+            <h2 id="home-nav-title" className="mt-2 section-title">
+              Choose a destination
+            </h2>
           </div>
           <span className="hidden font-mono text-[11px] uppercase tracking-[0.2em] text-mist-400 sm:inline">
             04 sections
@@ -67,6 +80,40 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {featuredProjects.length > 0 && (
+        <section
+          className="container-page pb-24"
+          aria-labelledby="featured-projects-title"
+        >
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="eyebrow">Selected work</p>
+              <h2 id="featured-projects-title" className="mt-2 section-title">
+                Featured Projects
+              </h2>
+            </div>
+            <Link
+              to="/projects"
+              className="btn-secondary group"
+              aria-label="View all projects"
+            >
+              View All Projects
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {featuredProjects.map((project, i) => (
+              <FeaturedProjectCard
+                key={project.id}
+                project={project}
+                index={i}
+              />
+            ))}
+          </div>
+        </section>
+      )}
     </PageTransition>
   );
 }
