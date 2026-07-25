@@ -65,6 +65,8 @@ the site falls back to `http://localhost:5173`.
 | `npm run build`     | Type-check and create a production build      |
 | `npm run preview`   | Preview the production build locally          |
 | `npm run typecheck` | Run `tsc` without emitting output             |
+| `npm test`          | Run the Vitest suite once (CI / local check)  |
+| `npm run test:watch`| Run Vitest in watch mode during development   |
 
 ---
 
