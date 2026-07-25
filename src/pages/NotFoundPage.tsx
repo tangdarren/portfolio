@@ -10,6 +10,7 @@ export default function NotFoundPage() {
       <SEO
         title="404 · Not Found | Darren Christopher Tang"
         description="The page you're looking for doesn't exist."
+        noindex
       />
 
       <div className="container-page flex min-h-[60vh] items-center py-16">

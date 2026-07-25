@@ -44,11 +44,16 @@ Requires Node.js 18+ (Node 20+ recommended) and npm 9+.
 git clone <your-fork-url> portfolio
 cd portfolio
 npm install
-cp .env.example .env.local   # optional — needed only for a live contact form
+cp .env.example .env.local   # optional — contact form + production site URL
 npm run dev
 ```
 
 The dev server runs on http://localhost:5173.
+
+Set `VITE_SITE_URL` in `.env.local` (or your host’s env) to your public origin
+(no trailing slash), e.g. `https://yourdomain.com`. It drives canonical URLs,
+Open Graph / Twitter image URLs, `robots.txt`, and `sitemap.xml`. When unset,
+the site falls back to `http://localhost:5173`.
 
 ---
 
@@ -107,9 +112,10 @@ Project GitHub URLs live in `src/data/projects.ts`. Omit `githubUrl` /
 `liveUrl` when a public repo or demo is unavailable — the UI hides those
 buttons instead of showing placeholders.
 
-Before publishing to a custom domain, replace `example.com` in `index.html`,
-`public/sitemap.xml`, `public/robots.txt`, and
-`src/components/layout/SEO.tsx`.
+Before publishing, set `VITE_SITE_URL` to your production origin. Site name,
+default description, and default social image live in `src/config/site.ts`.
+`robots.txt` and `sitemap.xml` are generated at build time from that URL plus
+static routes and project case-study paths.
 
 ---
 
@@ -181,14 +187,15 @@ proxy.
 ```
 public/
   favicon.svg
-  og-image.svg
-  robots.txt
-  sitemap.xml
+  og-image.svg           # default social-preview image
   _redirects
   resume/                # place Darren_Tang_Resume.pdf here
   projects/              # per-project image folders
 
 src/
+  config/
+    site.ts              # site name, URL helper, default SEO copy/image
+    seoAssets.ts         # robots.txt + sitemap.xml builders
   components/
     layout/
       Footer.tsx
