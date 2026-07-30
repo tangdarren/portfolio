@@ -1,284 +1,86 @@
-# Darren Christopher Tang — Portfolio
+# Darren Tang Portfolio
 
-A recruiter-facing, multi-page software engineering portfolio for
-**Darren Christopher Tang** — full-stack and AI agent engineer.
+A recruiter-facing, multi-page software engineering portfolio for Darren Christopher Tang. It presents professional experience, skills, selected projects with case studies, and résumé information in a clear, navigable site. The app is built as a static frontend that can be deployed to common hosting platforms.
 
-Built with React, TypeScript, Vite, Tailwind CSS, React Router, Framer Motion,
-and Lucide React icons. Designed to feel like a calm, modern developer
-workstation rather than a game skin.
+## Project Overview
 
----
+- **Home** — Introduction, section navigation, and featured projects with links to case studies.
+- **About** — Background, education and career highlights, experience timeline, and skills.
+- **Projects** — Filterable project gallery with search and sort, plus individual case-study routes.
+- **Résumé** — Embedded PDF viewer with download support.
+- **Contact** — Contact form and social links.
 
-## Screenshots
+The layout is responsive, with mobile navigation and accessibility-minded markup (semantic landmarks, skip link, labeled controls, and focus management). Motion respects `prefers-reduced-motion` via Framer Motion and CSS. Portfolio content is driven from modules under `src/data/`.
 
-Screenshots go in `public/projects/<project-id>/` and can be linked from
-`src/data/projects.ts`. Add site-level captures (home, about, projects, etc.) to
-`docs/screenshots/` and reference them here once available.
+## Project Architecture
 
-- `docs/screenshots/home.png` — Home hero + navigation cards
-- `docs/screenshots/about.png` — About Me page
-- `docs/screenshots/projects.png` — Projects page
-- `docs/screenshots/resume.png` — Resume page
-- `docs/screenshots/contact.png` — Contact page
+```mermaid
+flowchart LR
+  Browser --> Router[React Router]
+  Router --> Pages[Page components]
+  Pages --> UI[Reusable UI components]
+  Pages --> SEO[Route-level SEO metadata]
+  UI --> Data[src/data modules]
+  Pages --> Data
+  Data --> Projects[projects / experience / skills]
+  Data --> NavSocial[navigation / socials]
+  Public[public/ assets] --> Browser
+  Env[VITE_CONTACT_ENDPOINT] -.-> Contact[Contact form]
+  Contact --> Pages
+```
 
----
+Static images and the résumé PDF are served from `public/`. Project, experience, skills, navigation, and social content live in `src/data/`. Each route sets SEO metadata through the shared SEO component. The optional contact form endpoint is configured with `VITE_CONTACT_ENDPOINT`.
 
-## Tech stack
+Content is separated from presentation so portfolio information can be updated in the data modules without rewriting component markup.
 
-- **Framework**: React 18 + TypeScript (strict)
-- **Bundler**: Vite 5
-- **Routing**: React Router v6 (BrowserRouter)
-- **Styling**: Tailwind CSS 3 with a custom navy / mist / cyan palette
-- **Motion**: Framer Motion with `useReducedMotion` fallbacks
-- **Icons**: Lucide React
-- **SEO**: `react-helmet-async` per-route titles + Open Graph / Twitter tags
-- **Fonts**: Space Grotesk (display), Inter (body), JetBrains Mono (mono)
+## Tech Stack
 
----
+| Area | Technology |
+| --- | --- |
+| UI | React, TypeScript |
+| Build | Vite |
+| Routing | React Router |
+| Styling | Tailwind CSS |
+| Motion | Framer Motion |
+| SEO | React Helmet Async |
+| Icons | Lucide React |
+| Quality | ESLint |
 
-## Local setup
-
-Requires Node.js 18+ (Node 20+ recommended) and npm 9+.
+## Getting Started
 
 ```bash
-git clone <your-fork-url> portfolio
+git clone https://github.com/tangdarren/portfolio.git
 cd portfolio
 npm install
-cp .env.example .env.local   # optional — contact form + production site URL
+cp .env.example .env.local
 npm run dev
 ```
 
-The dev server runs on http://localhost:5173.
+Copying `.env.example` to `.env.local` is optional unless you are configuring the contact endpoint (or other documented Vite variables). The Vite dev server runs at [http://localhost:5173](http://localhost:5173).
 
-Set `VITE_SITE_URL` in `.env.local` (or your host’s env) to your public origin
-(no trailing slash), e.g. `https://yourdomain.com`. It drives canonical URLs,
-Open Graph / Twitter image URLs, `robots.txt`, and `sitemap.xml`. When unset,
-the site falls back to `http://localhost:5173`.
+## Available Scripts
 
----
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the Vite development server |
+| `npm run build` | Type-check and create a production build in `dist/` |
+| `npm run preview` | Preview the production build locally |
+| `npm run typecheck` | Run TypeScript checks without emitting output |
+| `npm run lint` | Run ESLint |
+| `npm test` | Run the Vitest suite once |
+| `npm run test:watch` | Run Vitest in watch mode |
 
-## Scripts
+## Environment Configuration
 
-| Command             | Description                                   |
-| ------------------- | --------------------------------------------- |
-| `npm run dev`       | Start the Vite dev server                     |
-| `npm run build`     | Type-check and create a production build      |
-| `npm run preview`   | Preview the production build locally          |
-| `npm run typecheck` | Run `tsc` without emitting output             |
-| `npm test`          | Run the Vitest suite once (CI / local check)  |
-| `npm run test:watch`| Run Vitest in watch mode during development   |
+| Variable | Purpose |
+| --- | --- |
+| `VITE_CONTACT_ENDPOINT` | Optional URL the contact form POSTs to (JSON body: `name`, `email`, `subject`, `message`) |
+| `VITE_SITE_URL` | Optional public site origin for canonical URLs, Open Graph/Twitter images, `robots.txt`, and `sitemap.xml` |
 
----
+When `VITE_CONTACT_ENDPOINT` is unset, the form still validates input, then opens a `mailto:` link to `tang.darren@gmail.com` with the submitted subject and message. It does not claim a server-side send succeeded.
 
-## Production build
-
-```bash
-npm run build
-npm run preview
-```
-
-The compiled site lands in `dist/` and can be deployed as static files.
-
----
+Do not put secret API keys in frontend `VITE_*` variables. Use a public or publishable endpoint, or a backend proxy that keeps secrets server-side.
 
 ## Deployment
 
-### Vercel
-
-1. Push this repository to GitHub.
-2. Import the project on Vercel.
-3. Framework preset: **Vite**. Build command `npm run build`, output `dist`.
-4. `vercel.json` in this repo rewrites all routes to `/` so React Router works
-   with direct links and refreshes.
-
-### Netlify
-
-1. Push this repository to GitHub.
-2. Create a new site from Git on Netlify.
-3. Build command `npm run build`, publish directory `dist`.
-4. `netlify.toml` and `public/_redirects` handle SPA fallback routing.
-
-Either platform serves the site as static files — no server required.
-
----
-
-## Links & contact
-
-Social links and contact email are configured in `src/data/socials.ts`:
-
-- GitHub: https://github.com/tangdarren
-- LinkedIn: https://www.linkedin.com/in/tang-darren
-- Email: tang.darren@gmail.com
-
-Project GitHub URLs live in `src/data/projects.ts`. Omit `githubUrl` /
-`liveUrl` when a public repo or demo is unavailable — the UI hides those
-buttons instead of showing placeholders.
-
-Before publishing, set `VITE_SITE_URL` to your production origin. Site name,
-default description, and default social image live in `src/config/site.ts`.
-`robots.txt` and `sitemap.xml` are generated at build time from that URL plus
-static routes and project case-study paths.
-
----
-
-## Adding the résumé PDF
-
-Place your résumé at:
-
-```
-public/resume/Darren_Tang_Resume.pdf
-```
-
-If you rename the file, update `RESUME_PDF_PATH` in `src/data/socials.ts`.
-When no PDF is present, the embedded viewer gracefully falls back to a download
-prompt.
-
----
-
-## Adding project screenshots
-
-1. Add images under `public/projects/<project-id>/`.
-2. Set an optional `image` field on the project in `src/data/projects.ts` to
-   replace the abstract card thumbnail.
-3. Set an optional `screenshots` array on the same project entry for the
-   details modal. Each item needs a `src` path and descriptive `alt` text:
-
-```ts
-screenshots: [
-  {
-    src: '/projects/spy-market-intelligence/screen-01.png',
-    alt: 'SPY dashboard showing overnight movement and pre-market levels',
-  },
-],
-```
-
-The Screenshots section in the modal only renders when `screenshots` is
-present and non-empty.
-
----
-
-## Contact form environment variables
-
-The contact form reads a single Vite env var:
-
-```
-VITE_CONTACT_ENDPOINT=<your provider or proxy URL>
-```
-
-Suggested providers:
-
-- **Formspree** — set to `https://formspree.io/f/<your-form-id>`.
-- **Resend / EmailJS** — set to your own `/api/contact` proxy that keeps the
-  provider's secret key on the server side.
-- **Custom backend** — any endpoint that accepts a JSON body of
-  `{ name, email, subject, message }` and returns a 2xx on success.
-
-When the env var is not set, the form still validates input, then opens a
-`mailto:` link to `tang.darren@gmail.com` with the entered subject and message.
-It reports “Opening your email application” and never claims the message was
-sent server-side.
-
-**Never** paste a secret API key into frontend code. Only public/publishable
-endpoints belong in `VITE_*` variables. Keep private keys behind a backend
-proxy.
-
----
-
-## Project structure
-
-```
-public/
-  favicon.svg
-  og-image.svg           # default social-preview image
-  _redirects
-  resume/                # place Darren_Tang_Resume.pdf here
-  projects/              # per-project image folders
-
-src/
-  config/
-    site.ts              # site name, URL helper, default SEO copy/image
-    seoAssets.ts         # robots.txt + sitemap.xml builders
-  components/
-    layout/
-      Footer.tsx
-      Layout.tsx
-      Monogram.tsx
-      Navbar.tsx
-      PageHeader.tsx
-      PageTransition.tsx
-      ScrollToTop.tsx
-      SEO.tsx
-    home/
-      DashboardVisual.tsx
-      Hero.tsx
-      NavigationCard.tsx
-    about/
-      AchievementCard.tsx
-      ExperienceTimeline.tsx
-      ProfileCard.tsx
-      SkillsInventory.tsx
-    projects/
-      ProjectCard.tsx
-      ProjectDetails.tsx
-      ProjectFilters.tsx
-      ProjectThumbnail.tsx
-    resume/
-      ResumeViewer.tsx
-    contact/
-      ContactForm.tsx
-      ResumePanel.tsx
-      SocialLinks.tsx
-  data/
-    experience.ts
-    navigation.ts
-    projects.ts
-    skills.ts
-    socials.ts
-  pages/
-    AboutPage.tsx
-    ContactPage.tsx
-    HomePage.tsx
-    NotFoundPage.tsx
-    ProjectsPage.tsx
-    ResumePage.tsx
-  routes/
-    AppRouter.tsx
-  App.tsx
-  index.css
-  main.tsx
-```
-
-Structured data lives in `src/data/*` so that project, skill, experience,
-navigation, and social-link content can be edited without touching component
-markup.
-
----
-
-## Accessibility notes
-
-- Semantic HTML throughout (`header`, `nav`, `main`, `footer`, `section`,
-  `article`, `aside`, `ol/ul`, `dialog`).
-- Skip-to-content link is the first focusable element.
-- Every interactive element has a visible focus ring (via `:focus-visible`).
-- Nav, footer, filters, and form controls have descriptive labels.
-- The project details modal traps focus loosely (focuses close button on open,
-  restores previous focus on close) and closes on `Escape` or backdrop click.
-- Icon-only buttons carry `aria-label`s. Charts and thumbnails carry `role="img"`
-  with descriptive `aria-label`s.
-- The site honors `prefers-reduced-motion` — Framer Motion transitions collapse
-  to opacity-only, and the global stylesheet neutralizes CSS animations.
-- Color contrast targets ≥ 4.5:1 for body text on the dark navy background.
-
----
-
-## Credits
-
-Site structure was inspired by modern multi-page developer portfolios that
-separate landing, about, projects, résumé, and contact into their own routes.
-No third-party portfolio's assets, source code, imagery, or original design
-were reused — the visual identity, components, and copy in this repository are
-original.
-
-Icons courtesy of [Lucide](https://lucide.dev/). Fonts by
-[Google Fonts](https://fonts.google.com/) (Inter, Space Grotesk, JetBrains
-Mono).
+`npm run build` outputs a static site to `dist/`. The repository includes SPA routing configuration for Vercel (`vercel.json`) and Netlify (`netlify.toml` and `public/_redirects`).
