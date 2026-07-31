@@ -12,6 +12,28 @@ A recruiter-facing, multi-page software engineering portfolio for Darren Christo
 
 The layout is responsive, with mobile navigation and accessibility-minded markup (semantic landmarks, skip link, labeled controls, and focus management). Motion respects `prefers-reduced-motion` via Framer Motion and CSS. Portfolio content is driven from modules under `src/data/`.
 
+## Project Preview
+
+Screenshots of the main recruiter-facing areas of the portfolio.
+
+### Home
+
+![Home page of Darren Christopher Tang’s portfolio, with hero introduction, command-center summary, and section navigation cards](docs/images/portfolio-home-page.png)
+
+The home page introduces my software engineering focus and provides direct access to projects and my résumé.
+
+### Projects
+
+![Projects page showing search, sort, category filters, and the start of the project gallery](docs/images/portfolio-projects-page.png)
+
+The project gallery supports searching, category filtering, sorting, and access to individual project case studies.
+
+### About
+
+![About page with profile card, education and career highlights for Darren Christopher Tang](docs/images/portfolio-about-page.png)
+
+The About page presents my background, education, professional experience, and technical focus.
+
 ## Project Architecture
 
 ```mermaid
