@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 
 import ProjectsPage from '@/views/ProjectsPage';
+import { PROJECTS, PROJECT_FILTERS } from '@/data/projects';
 import { getLocationProbe, renderWithProviders } from '@/test/render';
 
 function categoryTab(label: string) {
@@ -90,5 +91,14 @@ describe('ProjectsPage URL filters', () => {
         search: '',
       });
     });
+  });
+
+  it('keeps at least one project available for every gallery category filter', () => {
+    for (const filter of PROJECT_FILTERS) {
+      if (filter === 'All') continue;
+      expect(
+        PROJECTS.some((project) => project.categories.includes(filter)),
+      ).toBe(true);
+    }
   });
 });

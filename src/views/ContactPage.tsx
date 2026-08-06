@@ -1,5 +1,3 @@
-'use client';
-
 import PageHeader from '@/components/layout/PageHeader';
 import ContactForm from '@/components/contact/ContactForm';
 import SocialLinks from '@/components/contact/SocialLinks';

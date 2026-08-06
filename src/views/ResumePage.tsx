@@ -1,5 +1,3 @@
-'use client';
-
 import PageHeader from '@/components/layout/PageHeader';
 import ResumeViewer from '@/components/resume/ResumeViewer';
 

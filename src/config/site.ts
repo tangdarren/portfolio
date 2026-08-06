@@ -23,12 +23,10 @@ const LOCAL_DEV_ORIGIN = 'http://localhost:3000';
 
 /**
  * Public site origin for canonical URLs, Open Graph, robots.txt, and sitemap.xml.
- * Prefer server-only `SITE_URL`; fall back to legacy `NEXT_PUBLIC_SITE_URL` if set.
+ * Set via the server-only `SITE_URL` environment variable.
  */
 export function getSiteUrl(): string {
-  return resolveSiteUrl(
-    process.env.SITE_URL ?? process.env.NEXT_PUBLIC_SITE_URL,
-  );
+  return resolveSiteUrl(process.env.SITE_URL);
 }
 
 /** Normalize a configured origin, falling back to the local Next.js URL. */

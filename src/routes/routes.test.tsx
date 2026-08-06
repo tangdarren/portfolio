@@ -10,7 +10,7 @@ import ProjectsPage from '@/views/ProjectsPage';
 import ResumePage from '@/views/ResumePage';
 import { renderWithProviders } from '@/test/render';
 
-describe('App routes', () => {
+describe('Portfolio pages', () => {
   it('renders main routes successfully', async () => {
     const routes: Array<{
       path: string;
@@ -35,7 +35,7 @@ describe('App routes', () => {
     }
   });
 
-  it('displays the 404 page for unknown routes', async () => {
+  it('displays the custom 404 page', async () => {
     renderWithProviders(<NotFoundPage />, {
       initialPath: '/this-route-does-not-exist',
     });
@@ -45,6 +45,9 @@ describe('App routes', () => {
     ).toBeInTheDocument();
     expect(
       screen.getByRole('link', { name: /back to home/i }),
-    ).toBeInTheDocument();
+    ).toHaveAttribute('href', '/');
+    expect(
+      screen.getByRole('link', { name: /browse projects/i }),
+    ).toHaveAttribute('href', '/projects');
   });
 });

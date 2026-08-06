@@ -1,5 +1,3 @@
-'use client';
-
 import PageHeader from '@/components/layout/PageHeader';
 import ProfileCard from '@/components/about/ProfileCard';
 import AchievementCard from '@/components/about/AchievementCard';

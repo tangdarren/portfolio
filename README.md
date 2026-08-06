@@ -1,6 +1,6 @@
 # Darren Tang Portfolio
 
-A recruiter-facing, multi-page software engineering portfolio for Darren Christopher Tang. It presents professional experience, skills, selected projects with case studies, and résumé information in a clear, navigable site. The app is built as a static frontend that can be deployed to common hosting platforms.
+A recruiter-facing software engineering portfolio for Darren Christopher Tang. It presents professional experience, skills, selected projects with case studies, and résumé information in a clear, navigable multi-page site built with the Next.js App Router.
 
 ## Project Overview
 
@@ -38,35 +38,36 @@ The About page presents my background, education, professional experience, and t
 
 ```mermaid
 flowchart LR
-  Browser --> Router[React Router]
-  Router --> Pages[Page components]
-  Pages --> UI[Reusable UI components]
-  Pages --> SEO[Route-level SEO metadata]
+  Browser --> AppRouter[Next.js App Router]
+  AppRouter --> Layout[Root layout + SiteShell]
+  Layout --> Pages[Route pages in src/app]
+  Pages --> Views[Page views in src/views]
+  Views --> UI[Reusable UI components]
+  Pages --> Metadata[Next.js Metadata API]
   UI --> Data[src/data modules]
-  Pages --> Data
+  Views --> Data
   Data --> Projects[projects / experience / skills]
   Data --> NavSocial[navigation / socials]
   Public[public/ assets] --> Browser
-  Env[VITE_CONTACT_ENDPOINT] -.-> Contact[Contact form]
-  Contact --> Pages
+  Env[NEXT_PUBLIC_CONTACT_ENDPOINT] -.-> Contact[Contact form]
+  Contact --> Views
+  SiteUrl[SITE_URL] -.-> Metadata
+  SiteUrl -.-> SEOFiles[robots.txt / sitemap.xml]
 ```
 
-Static images and the résumé PDF are served from `public/`. Project, experience, skills, navigation, and social content live in `src/data/`. Each route sets SEO metadata through the shared SEO component. The optional contact form endpoint is configured with `VITE_CONTACT_ENDPOINT`.
-
-Content is separated from presentation so portfolio information can be updated in the data modules without rewriting component markup.
+Route files under `src/app` own routing and metadata. Presentation lives in `src/views` and `src/components`. Static images and the résumé PDF are served from `public/`. Content is separated from presentation so portfolio information can be updated in the data modules without rewriting component markup.
 
 ## Tech Stack
 
 | Area | Technology |
 | --- | --- |
+| Framework | Next.js App Router |
 | UI | React, TypeScript |
-| Build | Vite |
-| Routing | React Router |
 | Styling | Tailwind CSS |
 | Motion | Framer Motion |
-| SEO | React Helmet Async |
+| SEO | Next.js Metadata API, `robots.ts`, `sitemap.ts` |
 | Icons | Lucide React |
-| Quality | ESLint |
+| Quality | ESLint, Vitest, React Testing Library |
 
 ## Getting Started
 
@@ -78,15 +79,15 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Copying `.env.example` to `.env.local` is optional unless you are configuring the contact endpoint (or other documented Vite variables). The Vite dev server runs at [http://localhost:5173](http://localhost:5173).
+Copying `.env.example` to `.env.local` is optional unless you are configuring the contact endpoint or production site URL. The Next.js development server runs at [http://localhost:3000](http://localhost:3000).
 
 ## Available Scripts
 
 | Command | Description |
 | --- | --- |
-| `npm run dev` | Start the Vite development server |
-| `npm run build` | Type-check and create a production build in `dist/` |
-| `npm run preview` | Preview the production build locally |
+| `npm run dev` | Start the Next.js development server |
+| `npm run build` | Create a production build |
+| `npm run start` | Serve the production build |
 | `npm run typecheck` | Run TypeScript checks without emitting output |
 | `npm run lint` | Run ESLint |
 | `npm test` | Run the Vitest suite once |
@@ -96,13 +97,21 @@ Copying `.env.example` to `.env.local` is optional unless you are configuring th
 
 | Variable | Purpose |
 | --- | --- |
-| `VITE_CONTACT_ENDPOINT` | Optional URL the contact form POSTs to (JSON body: `name`, `email`, `subject`, `message`) |
-| `VITE_SITE_URL` | Optional public site origin for canonical URLs, Open Graph/Twitter images, `robots.txt`, and `sitemap.xml` |
+| `NEXT_PUBLIC_CONTACT_ENDPOINT` | Optional URL the contact form POSTs to (JSON body: `name`, `email`, `subject`, `message`). Exposed to the browser. |
+| `SITE_URL` | Server-only public site origin for canonical URLs, Open Graph/Twitter images, `robots.txt`, and `sitemap.xml`. No trailing slash. |
 
-When `VITE_CONTACT_ENDPOINT` is unset, the form still validates input, then opens a `mailto:` link to `tang.darren@gmail.com` with the submitted subject and message. It does not claim a server-side send succeeded.
+When `NEXT_PUBLIC_CONTACT_ENDPOINT` is unset, the form still validates input, then opens a `mailto:` link to `tang.darren@gmail.com` with the submitted subject and message. It does not claim a server-side send succeeded.
 
-Do not put secret API keys in frontend `VITE_*` variables. Use a public or publishable endpoint, or a backend proxy that keeps secrets server-side.
+Do not put secret API keys in `NEXT_PUBLIC_*` variables. Use a public or publishable endpoint, or a backend proxy that keeps secrets server-side.
+
+## Testing
+
+The project uses Vitest and React Testing Library. Navigation-aware tests mock `next/navigation` and `next/link` lightly so page rendering, project filters, case-study links, navbar behavior, metadata helpers, and contact-form fallbacks can be exercised without spinning up the Next.js server.
+
+```bash
+npm test
+```
 
 ## Deployment
 
-`npm run build` outputs a static site to `dist/`. The repository includes SPA routing configuration for Vercel (`vercel.json`) and Netlify (`netlify.toml` and `public/_redirects`).
+The app is configured for Vercel with the Next.js App Router. Connect the repository to Vercel, set `SITE_URL` (and optionally `NEXT_PUBLIC_CONTACT_ENDPOINT`) in the project environment, then deploy. Vercel runs `npm run build` and serves the Next.js application; no SPA rewrite configuration is required.

@@ -52,7 +52,7 @@ export default function Footer() {
             © {year} Darren Christopher Tang
           </span>
           <span className="font-mono uppercase tracking-[0.18em]">
-            Built with React · TypeScript · Tailwind
+            Built with Next.js · React · TypeScript · Tailwind
           </span>
         </div>
       </div>
