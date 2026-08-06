@@ -25,7 +25,7 @@ export default function SEO({
   image,
   noindex = false,
 }: SEOProps) {
-  const siteUrl = resolveSiteUrl(import.meta.env.VITE_SITE_URL);
+  const siteUrl = resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL);
   const finalDescription = description ?? SITE_DEFAULT_DESCRIPTION;
   const canonical = path ? toAbsoluteUrl(siteUrl, path) : undefined;
   const absoluteImage = toAbsoluteUrl(

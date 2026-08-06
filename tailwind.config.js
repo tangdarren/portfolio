@@ -6,7 +6,7 @@
 //   mist-*  → dark navy/charcoal text (primary → subtle)
 //   accent  → primary blue, plus sparingly-used cyan / green / lavender
 export default {
-  content: ['./index.html', './src/**/*.{ts,tsx}'],
+  content: ['./src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {

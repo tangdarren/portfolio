@@ -12,7 +12,7 @@ import { toAbsoluteUrl } from '@/lib/url';
 
 describe('SEO metadata', () => {
   it('emits absolute canonical and social image URLs', async () => {
-    const siteUrl = resolveSiteUrl(import.meta.env.VITE_SITE_URL);
+    const siteUrl = resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL);
     const imagePath = '/projects/demo/cover.png';
 
     render(
@@ -45,7 +45,7 @@ describe('SEO metadata', () => {
   });
 
   it('falls back to the default social preview image', async () => {
-    const siteUrl = resolveSiteUrl(import.meta.env.VITE_SITE_URL);
+    const siteUrl = resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL);
 
     render(
       <HelmetProvider>

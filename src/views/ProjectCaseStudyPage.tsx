@@ -16,7 +16,7 @@ import {
   type ProjectFilter,
 } from '@/data/projects';
 import { isValidHttpUrl } from '@/lib/url';
-import NotFoundPage from '@/pages/NotFoundPage';
+import NotFoundPage from '@/views/NotFoundPage';
 
 function hasText(value?: string): value is string {
   return Boolean(value?.trim());

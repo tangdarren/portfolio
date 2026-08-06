@@ -17,9 +17,9 @@ export const SITE_STATIC_ROUTES = [
   '/contact',
 ] as const;
 
-const LOCAL_DEV_ORIGIN = 'http://localhost:5173';
+const LOCAL_DEV_ORIGIN = 'http://localhost:3000';
 
-/** Normalize a configured origin, falling back to the local Vite URL. */
+/** Normalize a configured origin, falling back to the local Next.js URL. */
 export function resolveSiteUrl(envValue?: string | null): string {
   const trimmed = envValue?.trim().replace(/\/$/, '');
   if (trimmed) return trimmed;

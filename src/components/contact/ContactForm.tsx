@@ -31,10 +31,10 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const CONTACT_EMAIL = 'tang.darren@gmail.com';
 
 /**
- * Frontend contact form. Wire up a real provider by setting VITE_CONTACT_ENDPOINT
- * in .env.local. See .env.example. When the env var is missing, a validated
- * submit opens the visitor's email application via mailto instead of claiming
- * a message was sent.
+ * Frontend contact form. Wire up a real provider by setting
+ * NEXT_PUBLIC_CONTACT_ENDPOINT in .env.local. See .env.example. When the env
+ * var is missing, a validated submit opens the visitor's email application via
+ * mailto instead of claiming a message was sent.
  */
 export default function ContactForm() {
   const [values, setValues] = useState<FormState>(initial);
@@ -42,7 +42,7 @@ export default function ContactForm() {
   const [status, setStatus] = useState<Status>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const endpoint = import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined;
+  const endpoint = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT;
 
   const setField = (key: keyof FormState) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

@@ -5,13 +5,13 @@ import { AnimatePresence } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
 import ScrollToTop from '@/components/layout/ScrollToTop';
 
-const HomePage = lazy(() => import('@/pages/HomePage'));
-const AboutPage = lazy(() => import('@/pages/AboutPage'));
-const ProjectsPage = lazy(() => import('@/pages/ProjectsPage'));
-const ProjectCaseStudyPage = lazy(() => import('@/pages/ProjectCaseStudyPage'));
-const ResumePage = lazy(() => import('@/pages/ResumePage'));
-const ContactPage = lazy(() => import('@/pages/ContactPage'));
-const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
+const HomePage = lazy(() => import('@/views/HomePage'));
+const AboutPage = lazy(() => import('@/views/AboutPage'));
+const ProjectsPage = lazy(() => import('@/views/ProjectsPage'));
+const ProjectCaseStudyPage = lazy(() => import('@/views/ProjectCaseStudyPage'));
+const ResumePage = lazy(() => import('@/views/ResumePage'));
+const ContactPage = lazy(() => import('@/views/ContactPage'));
+const NotFoundPage = lazy(() => import('@/views/NotFoundPage'));
 
 function PageFallback() {
   return (
