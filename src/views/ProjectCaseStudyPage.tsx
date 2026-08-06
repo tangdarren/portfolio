@@ -6,7 +6,6 @@ import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
 
 import PageHeader from '@/components/layout/PageHeader';
-import SEO from '@/components/layout/SEO';
 import ProjectArchitectureFlow from '@/components/projects/ProjectArchitectureFlow';
 import ProjectCaseStudyNav from '@/components/projects/ProjectCaseStudyNav';
 import ProjectScreenshotGallery from '@/components/projects/ProjectScreenshotGallery';
@@ -26,14 +25,6 @@ function hasItems(value?: string[]): value is string[] {
   return Boolean(value && value.length > 0);
 }
 
-function getProjectShareImage(project: Project): string | undefined {
-  return (
-    project.image ??
-    project.screenshots?.[0]?.src ??
-    project.caseStudy?.screenshots?.[0]?.src
-  );
-}
-
 interface ProjectCaseStudyPageProps {
   project: Project;
 }
@@ -47,21 +38,10 @@ export default function ProjectCaseStudyPage({
     ? categoryParam
     : 'All';
 
-  const shareImage = getProjectShareImage(project);
-
   return (
-    <>
-      <SEO
-        title={`${project.name} | Darren Christopher Tang`}
-        description={project.summary}
-        path={`/projects/${project.id}`}
-        image={shareImage}
-      />
-
-      <div className="container-page py-10 sm:py-14">
-        <ProjectCaseStudyShell project={project} filter={filter} />
-      </div>
-    </>
+    <div className="container-page py-10 sm:py-14">
+      <ProjectCaseStudyShell project={project} filter={filter} />
+    </div>
   );
 }
 

@@ -1,6 +1,5 @@
 import type { ReactElement, ReactNode } from 'react';
 import { render, type RenderOptions } from '@testing-library/react';
-import { HelmetProvider } from 'react-helmet-async';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 import { nextRouterState } from '@/test/next-router-state';
@@ -26,10 +25,10 @@ interface ProvidersProps {
 
 function Providers({ children }: ProvidersProps) {
   return (
-    <HelmetProvider>
+    <>
       <LocationProbe />
       {children}
-    </HelmetProvider>
+    </>
   );
 }
 

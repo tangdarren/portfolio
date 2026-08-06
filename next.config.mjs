@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Static export for Netlify/Vercel static hosting (publish directory: dist/).
-  output: 'export',
-  distDir: './dist',
+  // Native Next.js deployment on Vercel (no static-export SPA shim).
   images: {
     unoptimized: true,
   },

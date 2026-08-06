@@ -1,6 +1,15 @@
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
 import ProjectsPage from '@/views/ProjectsPage';
+import { createPageMetadata } from '@/lib/metadata';
+
+export const metadata: Metadata = createPageMetadata({
+  title: 'Projects | Darren Christopher Tang',
+  description:
+    'Full-stack, AI, financial technology, and extended reality projects by Darren Christopher Tang.',
+  path: '/projects',
+});
 
 function ProjectsFallback() {
   return (

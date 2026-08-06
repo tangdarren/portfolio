@@ -4,7 +4,6 @@ import { useMemo } from 'react';
 import Link from 'next/link';
 import { ArrowRight, FolderKanban, Mail, ScrollText, User } from 'lucide-react';
 
-import SEO from '@/components/layout/SEO';
 import Hero from '@/components/home/Hero';
 import NavigationCard from '@/components/home/NavigationCard';
 import FeaturedProjectCard from '@/components/home/FeaturedProjectCard';
@@ -54,12 +53,6 @@ export default function HomePage() {
 
   return (
     <>
-      <SEO
-        title="Home | Darren Christopher Tang"
-        description="Full-stack and AI agent engineer. Explore projects, résumé, and background."
-        path="/"
-      />
-
       <Hero />
 
       <section className="container-page pb-16" aria-labelledby="home-nav-title">

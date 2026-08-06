@@ -1,4 +1,6 @@
-/** Shared site metadata for SEO, Open Graph, and build-time assets. */
+/** Shared site metadata for SEO, Open Graph, and sitemap generation. */
+
+import { PROJECTS, hasCaseStudy } from '@/data/projects';
 
 export const SITE_NAME = 'Darren Christopher Tang';
 
@@ -19,9 +21,27 @@ export const SITE_STATIC_ROUTES = [
 
 const LOCAL_DEV_ORIGIN = 'http://localhost:3000';
 
+/**
+ * Public site origin for canonical URLs, Open Graph, robots.txt, and sitemap.xml.
+ * Prefer server-only `SITE_URL`; fall back to legacy `NEXT_PUBLIC_SITE_URL` if set.
+ */
+export function getSiteUrl(): string {
+  return resolveSiteUrl(
+    process.env.SITE_URL ?? process.env.NEXT_PUBLIC_SITE_URL,
+  );
+}
+
 /** Normalize a configured origin, falling back to the local Next.js URL. */
 export function resolveSiteUrl(envValue?: string | null): string {
   const trimmed = envValue?.trim().replace(/\/$/, '');
   if (trimmed) return trimmed;
   return LOCAL_DEV_ORIGIN;
+}
+
+/** All indexable paths: static routes plus project case-study pages. */
+export function getSitemapPaths(): string[] {
+  const caseStudyPaths = PROJECTS.filter(hasCaseStudy).map(
+    (project) => `/projects/${project.id}`,
+  );
+  return [...SITE_STATIC_ROUTES, ...caseStudyPaths];
 }

@@ -5,7 +5,6 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Search, X } from 'lucide-react';
 
 import PageHeader from '@/components/layout/PageHeader';
-import SEO from '@/components/layout/SEO';
 import ProjectCard from '@/components/projects/ProjectCard';
 import ProjectDetails from '@/components/projects/ProjectDetails';
 import ProjectFilters from '@/components/projects/ProjectFilters';
@@ -136,12 +135,6 @@ export default function ProjectsPage() {
 
   return (
     <>
-      <SEO
-        title="Projects | Darren Christopher Tang"
-        description="Full-stack, AI, financial technology, and extended reality projects by Darren Christopher Tang."
-        path="/projects"
-      />
-
       <div className="container-page py-10 sm:py-14">
         <PageHeader
           eyebrow="Projects"

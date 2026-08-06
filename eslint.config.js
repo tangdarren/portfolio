@@ -39,7 +39,7 @@ export default tseslint.config(
   },
   {
     files: [
-      'src/app/**/{layout,page,route,template,default,robots,sitemap}.{ts,tsx}',
+      'src/app/**/{layout,page,route,template,default,not-found,robots,sitemap}.{ts,tsx}',
       'src/app/**/opengraph-image.{ts,tsx}',
     ],
     rules: {

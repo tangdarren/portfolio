@@ -17,7 +17,7 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     css: false,
     env: {
-      NEXT_PUBLIC_SITE_URL: 'https://portfolio.test',
+      SITE_URL: 'https://portfolio.test',
     },
   },
 });
