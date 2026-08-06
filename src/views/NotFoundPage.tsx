@@ -1,12 +1,13 @@
-import { Link } from 'react-router-dom';
+'use client';
+
+import Link from 'next/link';
 import { ArrowLeft, Compass } from 'lucide-react';
 
-import PageTransition from '@/components/layout/PageTransition';
 import SEO from '@/components/layout/SEO';
 
 export default function NotFoundPage() {
   return (
-    <PageTransition>
+    <>
       <SEO
         title="404 · Not Found | Darren Christopher Tang"
         description="The page you're looking for doesn't exist."
@@ -27,17 +28,17 @@ export default function NotFoundPage() {
           </p>
 
           <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-            <Link to="/" className="btn-primary">
+            <Link href="/" className="btn-primary">
               <ArrowLeft className="h-4 w-4" />
               Back to Home
             </Link>
-            <Link to="/projects" className="btn-secondary">
+            <Link href="/projects" className="btn-secondary">
               <Compass className="h-4 w-4" />
               Browse Projects
             </Link>
           </div>
         </div>
       </div>
-    </PageTransition>
+    </>
   );
 }

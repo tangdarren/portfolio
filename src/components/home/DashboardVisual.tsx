@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Activity, Briefcase, FolderKanban, Terminal } from 'lucide-react';

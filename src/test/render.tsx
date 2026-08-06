@@ -1,17 +1,20 @@
 import type { ReactElement, ReactNode } from 'react';
 import { render, type RenderOptions } from '@testing-library/react';
 import { HelmetProvider } from 'react-helmet-async';
-import { MemoryRouter, useLocation } from 'react-router-dom';
+import { usePathname, useSearchParams } from 'next/navigation';
 
-import App from '@/App';
+import { nextRouterState } from '@/test/next-router-state';
 
 function LocationProbe() {
-  const location = useLocation();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const query = searchParams.toString();
+
   return (
     <div
       data-testid="location"
-      data-pathname={location.pathname}
-      data-search={location.search}
+      data-pathname={pathname}
+      data-search={query ? `?${query}` : ''}
       hidden
     />
   );
@@ -19,36 +22,30 @@ function LocationProbe() {
 
 interface ProvidersProps {
   children: ReactNode;
-  initialEntries?: string[];
 }
 
-function Providers({ children, initialEntries = ['/'] }: ProvidersProps) {
+function Providers({ children }: ProvidersProps) {
   return (
     <HelmetProvider>
-      <MemoryRouter initialEntries={initialEntries}>
-        <LocationProbe />
-        {children}
-      </MemoryRouter>
+      <LocationProbe />
+      {children}
     </HelmetProvider>
   );
 }
 
 export function renderWithProviders(
   ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'> & { initialEntries?: string[] },
+  options?: Omit<RenderOptions, 'wrapper'> & { initialPath?: string },
 ) {
-  const { initialEntries, ...renderOptions } = options ?? {};
+  const { initialPath, ...renderOptions } = options ?? {};
+  if (initialPath !== undefined) {
+    nextRouterState.reset(initialPath);
+  }
+
   return render(ui, {
-    wrapper: ({ children }) => (
-      <Providers initialEntries={initialEntries}>{children}</Providers>
-    ),
+    wrapper: ({ children }) => <Providers>{children}</Providers>,
     ...renderOptions,
   });
-}
-
-/** Render the full app at a route (supports search params). */
-export function renderApp(initialEntry = '/') {
-  return renderWithProviders(<App />, { initialEntries: [initialEntry] });
 }
 
 export function getLocationProbe() {

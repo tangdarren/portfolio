@@ -1,8 +1,9 @@
+'use client';
+
 import { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ArrowRight, FolderKanban, Mail, ScrollText, User } from 'lucide-react';
 
-import PageTransition from '@/components/layout/PageTransition';
 import SEO from '@/components/layout/SEO';
 import Hero from '@/components/home/Hero';
 import NavigationCard from '@/components/home/NavigationCard';
@@ -52,7 +53,7 @@ export default function HomePage() {
   );
 
   return (
-    <PageTransition>
+    <>
       <SEO
         title="Home | Darren Christopher Tang"
         description="Full-stack and AI agent engineer. Explore projects, résumé, and background."
@@ -94,7 +95,7 @@ export default function HomePage() {
               </h2>
             </div>
             <Link
-              to="/projects"
+              href="/projects"
               className="btn-secondary group"
               aria-label="View all projects"
             >
@@ -114,6 +115,6 @@ export default function HomePage() {
           </div>
         </section>
       )}
-    </PageTransition>
+    </>
   );
 }

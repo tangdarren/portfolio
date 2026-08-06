@@ -1,4 +1,5 @@
-import PageTransition from '@/components/layout/PageTransition';
+'use client';
+
 import PageHeader from '@/components/layout/PageHeader';
 import SEO from '@/components/layout/SEO';
 import ContactForm from '@/components/contact/ContactForm';
@@ -7,7 +8,7 @@ import ResumePanel from '@/components/contact/ResumePanel';
 
 export default function ContactPage() {
   return (
-    <PageTransition>
+    <>
       <SEO
         title="Contact | Darren Christopher Tang"
         description="Get in touch with Darren Christopher Tang about software engineering opportunities, projects, and collaborations."
@@ -61,6 +62,6 @@ export default function ContactPage() {
           </aside>
         </div>
       </div>
-    </PageTransition>
+    </>
   );
 }

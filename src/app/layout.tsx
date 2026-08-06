@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 
+import AppProviders from '@/components/providers/AppProviders';
+import SiteShell from '@/components/layout/SiteShell';
 import {
   SITE_DEFAULT_DESCRIPTION,
   SITE_NAME,
@@ -42,7 +44,11 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <div id="root">{children}</div>
+        <div id="root">
+          <AppProviders>
+            <SiteShell>{children}</SiteShell>
+          </AppProviders>
+        </div>
       </body>
     </html>
   );

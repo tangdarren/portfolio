@@ -1,11 +1,12 @@
-import PageTransition from '@/components/layout/PageTransition';
+'use client';
+
 import PageHeader from '@/components/layout/PageHeader';
 import SEO from '@/components/layout/SEO';
 import ResumeViewer from '@/components/resume/ResumeViewer';
 
 export default function ResumePage() {
   return (
-    <PageTransition>
+    <>
       <SEO
         title="Resume | Darren Christopher Tang"
         description="View or download the résumé of Darren Christopher Tang — full-stack and AI agent engineer."
@@ -29,6 +30,6 @@ export default function ResumePage() {
           <span className="text-mist-200">Download PDF</span> above.
         </p>
       </div>
-    </PageTransition>
+    </>
   );
 }

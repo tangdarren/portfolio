@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom';
+'use client';
+
+import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, FileText } from 'lucide-react';
 
@@ -64,11 +66,11 @@ export default function Hero() {
             variants={itemVariants}
             className="flex flex-wrap items-center gap-3"
           >
-            <Link to="/projects" className="btn-primary group">
+            <Link href="/projects" className="btn-primary group">
               Explore Projects
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
-            <Link to="/resume" className="btn-secondary">
+            <Link href="/resume" className="btn-secondary">
               <FileText className="h-4 w-4" />
               View Resume
             </Link>

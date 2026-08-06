@@ -1,3 +1,5 @@
+'use client';
+
 import { useId } from 'react';
 import { ArrowDown, ArrowRight } from 'lucide-react';
 

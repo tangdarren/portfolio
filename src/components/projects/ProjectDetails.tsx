@@ -1,5 +1,7 @@
+'use client';
+
 import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { BookOpen, ExternalLink, Github, X } from 'lucide-react';
 
@@ -204,7 +206,7 @@ export default function ProjectDetails({
             <div className="flex flex-wrap items-center gap-2 border-t border-ink-600 bg-ink-850 px-6 py-4">
               {hasCaseStudy(project) && (
                 <Link
-                  to={projectCaseStudyPath(project.id, filter)}
+                  href={projectCaseStudyPath(project.id, filter)}
                   className="btn-primary"
                   onClick={onClose}
                 >

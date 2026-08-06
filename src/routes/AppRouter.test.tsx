@@ -1,20 +1,33 @@
+import type { ReactElement } from 'react';
 import { screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { renderApp } from '@/test/render';
+import AboutPage from '@/views/AboutPage';
+import ContactPage from '@/views/ContactPage';
+import HomePage from '@/views/HomePage';
+import NotFoundPage from '@/views/NotFoundPage';
+import ProjectsPage from '@/views/ProjectsPage';
+import ResumePage from '@/views/ResumePage';
+import { renderWithProviders } from '@/test/render';
 
 describe('App routes', () => {
   it('renders main routes successfully', async () => {
-    const routes: Array<{ path: string; heading: string | RegExp }> = [
-      { path: '/', heading: /Darren Christopher/i },
-      { path: '/about', heading: 'About Me' },
-      { path: '/projects', heading: 'Projects' },
-      { path: '/resume', heading: 'Resume' },
-      { path: '/contact', heading: 'Contact' },
+    const routes: Array<{
+      path: string;
+      ui: ReactElement;
+      heading: string | RegExp;
+    }> = [
+      { path: '/', ui: <HomePage />, heading: /Darren Christopher/i },
+      { path: '/about', ui: <AboutPage />, heading: 'About Me' },
+      { path: '/projects', ui: <ProjectsPage />, heading: 'Projects' },
+      { path: '/resume', ui: <ResumePage />, heading: 'Resume' },
+      { path: '/contact', ui: <ContactPage />, heading: 'Contact' },
     ];
 
     for (const route of routes) {
-      const { unmount } = renderApp(route.path);
+      const { unmount } = renderWithProviders(route.ui, {
+        initialPath: route.path,
+      });
       expect(
         await screen.findByRole('heading', { level: 1, name: route.heading }),
       ).toBeInTheDocument();
@@ -23,7 +36,9 @@ describe('App routes', () => {
   });
 
   it('displays the 404 page for unknown routes', async () => {
-    renderApp('/this-route-does-not-exist');
+    renderWithProviders(<NotFoundPage />, {
+      initialPath: '/this-route-does-not-exist',
+    });
 
     expect(
       await screen.findByRole('heading', { name: /page not found/i }),

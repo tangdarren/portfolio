@@ -1,10 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // SPA-style static export while React Router remains the client router.
+  // Static export for Netlify/Vercel static hosting (publish directory: dist/).
   output: 'export',
-  // Keep the existing `dist/` publish directory used by Netlify/Vercel static hosting.
   distDir: './dist',
-  // Avoid next/image optimizer requirements during the static SPA migration stage.
   images: {
     unoptimized: true,
   },

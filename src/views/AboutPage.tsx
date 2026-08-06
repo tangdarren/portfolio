@@ -1,4 +1,5 @@
-import PageTransition from '@/components/layout/PageTransition';
+'use client';
+
 import PageHeader from '@/components/layout/PageHeader';
 import SEO from '@/components/layout/SEO';
 import ProfileCard from '@/components/about/ProfileCard';
@@ -9,7 +10,7 @@ import { ACHIEVEMENTS } from '@/data/experience';
 
 export default function AboutPage() {
   return (
-    <PageTransition>
+    <>
       <SEO
         title="About Me | Darren Christopher Tang"
         description="Background, experience, education, and technical skills of Darren Christopher Tang."
@@ -66,6 +67,6 @@ export default function AboutPage() {
           <SkillsInventory />
         </section>
       </div>
-    </PageTransition>
+    </>
   );
 }
