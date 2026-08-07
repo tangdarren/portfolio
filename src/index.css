@@ -128,6 +128,33 @@ body::before {
   .eyebrow {
     @apply inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-cyan;
   }
+
+  /*
+   * Hero pixel-menu buttons — hard-edged shadow (no blur), quick press feel.
+   * Artwork stays untouched; filter/transform only.
+   */
+  .hero-nav-btn {
+    transition:
+      transform 120ms ease-out,
+      filter 120ms ease-out;
+    filter: drop-shadow(0 2px 0 rgb(40 28 18 / 0.28));
+  }
+
+  .hero-nav-btn:hover,
+  .hero-nav-btn:focus-visible {
+    transform: translate3d(0, -3px, 0);
+    filter:
+      brightness(1.07)
+      drop-shadow(0 3px 0 rgb(40 28 18 / 0.34))
+      drop-shadow(0 5px 0 rgb(40 28 18 / 0.22));
+  }
+
+  .hero-nav-btn:active {
+    transform: translate3d(0, 2px, 0);
+    filter:
+      brightness(0.93)
+      drop-shadow(0 1px 0 rgb(40 28 18 / 0.2));
+  }
 }
 
 /* Reduced motion */
@@ -139,5 +166,12 @@ body::before {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Keep brightness/shadow feedback; disable positional movement only. */
+  .hero-nav-btn:hover,
+  .hero-nav-btn:focus-visible,
+  .hero-nav-btn:active {
+    transform: none;
   }
 }

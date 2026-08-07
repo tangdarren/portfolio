@@ -99,11 +99,17 @@ export default {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.55' },
         },
+        /* Track is [tile][gap][tile][gap]; -50% shifts exactly one tile+gap. */
+        'hero-cloud-drift': {
+          from: { transform: 'translate3d(0, 0, 0)' },
+          to: { transform: 'translate3d(-50%, 0, 0)' },
+        },
       },
       animation: {
         'fade-in-up': 'fade-in-up 0.5s ease-out forwards',
         blink: 'blink 1.1s steps(1) infinite',
         'pulse-soft': 'pulse-soft 2.4s ease-in-out infinite',
+        'hero-cloud-drift': 'hero-cloud-drift 40s linear infinite',
       },
     },
   },
