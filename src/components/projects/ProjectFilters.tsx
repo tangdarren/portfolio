@@ -1,3 +1,5 @@
+'use client';
+
 import type { ProjectFilter } from '@/data/projects';
 
 export type { ProjectFilter };

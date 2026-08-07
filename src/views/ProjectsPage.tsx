@@ -1,10 +1,10 @@
+'use client';
+
 import { useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Search, X } from 'lucide-react';
 
-import PageTransition from '@/components/layout/PageTransition';
 import PageHeader from '@/components/layout/PageHeader';
-import SEO from '@/components/layout/SEO';
 import ProjectCard from '@/components/projects/ProjectCard';
 import ProjectDetails from '@/components/projects/ProjectDetails';
 import ProjectFilters from '@/components/projects/ProjectFilters';
@@ -57,7 +57,9 @@ function sortProjects(projects: Project[], sort: ProjectSort): Project[] {
 }
 
 export default function ProjectsPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
   const queryParam = searchParams.get('q') ?? '';
   const sortParam = searchParams.get('sort');
@@ -71,25 +73,21 @@ export default function ProjectsPage() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
 
   const updateParams = (updates: Record<string, string | null>) => {
-    setSearchParams(
-      (prev) => {
-        const next = new URLSearchParams(prev);
+    const next = new URLSearchParams(searchParams.toString());
 
-        for (const [key, value] of Object.entries(updates)) {
-          const shouldDelete =
-            value === null ||
-            value === '' ||
-            (key === 'category' && value === 'All') ||
-            (key === 'sort' && value === DEFAULT_SORT);
+    for (const [key, value] of Object.entries(updates)) {
+      const shouldDelete =
+        value === null ||
+        value === '' ||
+        (key === 'category' && value === 'All') ||
+        (key === 'sort' && value === DEFAULT_SORT);
 
-          if (shouldDelete) next.delete(key);
-          else next.set(key, value);
-        }
+      if (shouldDelete) next.delete(key);
+      else next.set(key, value);
+    }
 
-        return next;
-      },
-      { replace: true },
-    );
+    const qs = next.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
   };
 
   const setFilter = (next: ProjectFilter) => {
@@ -105,7 +103,7 @@ export default function ProjectsPage() {
   };
 
   const clearFilters = () => {
-    setSearchParams({}, { replace: true });
+    router.replace(pathname, { scroll: false });
   };
 
   const filtersActive =
@@ -136,13 +134,7 @@ export default function ProjectsPage() {
       : `${filtered.length} projects`;
 
   return (
-    <PageTransition>
-      <SEO
-        title="Projects | Darren Christopher Tang"
-        description="Full-stack, AI, financial technology, and extended reality projects by Darren Christopher Tang."
-        path="/projects"
-      />
-
+    <>
       <div className="container-page py-10 sm:py-14">
         <PageHeader
           eyebrow="Projects"
@@ -252,6 +244,6 @@ export default function ProjectsPage() {
         onClose={() => setActiveProject(null)}
         filter={filter}
       />
-    </PageTransition>
+    </>
   );
 }

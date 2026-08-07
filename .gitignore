@@ -3,10 +3,14 @@ node_modules/
 .pnp
 .pnp.js
 
-# Production build
+# Production / tooling output
 dist/
-dist-ssr/
+coverage/
 *.local
+
+# Next.js
+.next/
+next-env.d.ts
 
 # Environment
 .env

@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom';
+'use client';
+
+import Link from 'next/link';
 import type { LucideIcon } from 'lucide-react';
 import { ArrowUpRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
@@ -30,7 +32,7 @@ export default function NavigationCard({
       transition={{ duration: 0.4, delay: index * 0.05 }}
     >
       <Link
-        to={to}
+        href={to}
         className="group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-ink-600 bg-ink-900 p-5 shadow-panel transition-all hover:-translate-y-0.5 hover:border-accent-cyan/50 hover:shadow-card"
       >
         <div>

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import { NAV_ITEMS } from '@/data/navigation';
 import { SOCIAL_LINKS } from '@/data/socials';
@@ -22,7 +22,7 @@ export default function Footer() {
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.to}
-              to={item.to}
+              href={item.to}
               className="font-mono text-[11px] uppercase tracking-[0.18em] text-mist-300 transition-colors hover:text-mist-50"
             >
               {item.label}
@@ -52,7 +52,7 @@ export default function Footer() {
             © {year} Darren Christopher Tang
           </span>
           <span className="font-mono uppercase tracking-[0.18em]">
-            Built with React · TypeScript · Tailwind
+            Built with Next.js · React · TypeScript · Tailwind
           </span>
         </div>
       </div>

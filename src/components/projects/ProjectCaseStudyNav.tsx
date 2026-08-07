@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ArrowLeft, ArrowRight, GalleryHorizontalEnd } from 'lucide-react';
 
 import {
@@ -29,7 +29,7 @@ export default function ProjectCaseStudyNav({
       <div className="flex flex-col gap-4 sm:flex-row sm:items-stretch sm:justify-between">
         {previous ? (
           <Link
-            to={projectCaseStudyPath(previous.id, filter)}
+            href={projectCaseStudyPath(previous.id, filter)}
             className="panel panel-hover flex min-w-0 flex-1 flex-col gap-1 p-4"
             aria-label={`Previous case study: ${previous.name}`}
           >
@@ -48,14 +48,14 @@ export default function ProjectCaseStudyNav({
           <div className="hidden flex-1 sm:block" aria-hidden />
         )}
 
-        <Link to={galleryPath} className="btn-secondary self-center shrink-0">
+        <Link href={galleryPath} className="btn-secondary self-center shrink-0">
           <GalleryHorizontalEnd className="h-4 w-4" />
           Projects
         </Link>
 
         {next ? (
           <Link
-            to={projectCaseStudyPath(next.id, filter)}
+            href={projectCaseStudyPath(next.id, filter)}
             className="panel panel-hover flex min-w-0 flex-1 flex-col gap-1 p-4 text-left sm:items-end sm:text-right"
             aria-label={`Next case study: ${next.name}`}
           >

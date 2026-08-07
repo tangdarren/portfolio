@@ -2,7 +2,9 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 
-import { getLocationProbe, renderApp } from '@/test/render';
+import ProjectsPage from '@/views/ProjectsPage';
+import { PROJECTS, PROJECT_FILTERS } from '@/data/projects';
+import { getLocationProbe, renderWithProviders } from '@/test/render';
 
 function categoryTab(label: string) {
   return screen.getByRole('tab', {
@@ -14,7 +16,7 @@ function categoryTab(label: string) {
 describe('ProjectsPage URL filters', () => {
   it('updates and preserves category, search, and sort in the URL', async () => {
     const user = userEvent.setup();
-    renderApp('/projects');
+    renderWithProviders(<ProjectsPage />, { initialPath: '/projects' });
 
     expect(
       await screen.findByRole('heading', { level: 1, name: 'Projects' }),
@@ -54,7 +56,9 @@ describe('ProjectsPage URL filters', () => {
   });
 
   it('restores filters from URL search parameters', async () => {
-    renderApp('/projects?category=AI&q=expense&sort=name');
+    renderWithProviders(<ProjectsPage />, {
+      initialPath: '/projects?category=AI&q=expense&sort=name',
+    });
 
     expect(await screen.findByRole('heading', { level: 1, name: 'Projects' })).toBeInTheDocument();
     expect(categoryTab('AI')).toHaveAttribute('aria-selected', 'true');
@@ -71,7 +75,9 @@ describe('ProjectsPage URL filters', () => {
 
   it('clears filters and resets the URL', async () => {
     const user = userEvent.setup();
-    renderApp('/projects?category=AI&q=test&sort=name');
+    renderWithProviders(<ProjectsPage />, {
+      initialPath: '/projects?category=AI&q=test&sort=name',
+    });
 
     const clearButtons = await screen.findAllByRole('button', {
       name: /clear filters/i,
@@ -85,5 +91,14 @@ describe('ProjectsPage URL filters', () => {
         search: '',
       });
     });
+  });
+
+  it('keeps at least one project available for every gallery category filter', () => {
+    for (const filter of PROJECT_FILTERS) {
+      if (filter === 'All') continue;
+      expect(
+        PROJECTS.some((project) => project.categories.includes(filter)),
+      ).toBe(true);
+    }
   });
 });

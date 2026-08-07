@@ -1,3 +1,5 @@
+'use client';
+
 import { CheckCircle2 } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 

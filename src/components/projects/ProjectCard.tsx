@@ -1,5 +1,7 @@
+'use client';
+
 import type { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import { BookOpen, ExternalLink, Github, Info } from 'lucide-react';
 
@@ -104,7 +106,7 @@ export default function ProjectCard({
         <div className="mt-5 flex flex-wrap items-center gap-2 pt-2">
           {showCaseStudy && (
             <Link
-              to={projectCaseStudyPath(project.id, filter)}
+              href={projectCaseStudyPath(project.id, filter)}
               className="btn-primary"
               aria-label={`View case study for ${project.name}`}
             >

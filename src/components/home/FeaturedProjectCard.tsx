@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom';
+'use client';
+
+import Link from 'next/link';
 import { BookOpen } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 
@@ -50,7 +52,7 @@ export default function FeaturedProjectCard({
 
       <h3 className="break-words font-display text-lg font-semibold text-mist-50">
         <Link
-          to={caseStudyPath}
+          href={caseStudyPath}
           className="transition-colors hover:text-accent-cyan focus-visible:outline-none"
         >
           {project.name}
@@ -72,7 +74,7 @@ export default function FeaturedProjectCard({
 
       <div className="mt-5 pt-1">
         <Link
-          to={caseStudyPath}
+          href={caseStudyPath}
           className="btn-primary"
           aria-label={`View case study for ${project.name}`}
         >

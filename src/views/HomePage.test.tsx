@@ -2,11 +2,12 @@ import { screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import { PROJECTS } from '@/data/projects';
-import { renderApp } from '@/test/render';
+import HomePage from '@/views/HomePage';
+import { renderWithProviders } from '@/test/render';
 
 describe('HomePage featured projects', () => {
   it('links featured projects to their case studies', async () => {
-    renderApp('/');
+    renderWithProviders(<HomePage />, { initialPath: '/' });
 
     const featured = PROJECTS.filter((project) => project.featured).slice(0, 3);
     expect(featured.length).toBeGreaterThan(0);

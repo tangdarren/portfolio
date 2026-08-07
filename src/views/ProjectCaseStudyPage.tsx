@@ -1,22 +1,21 @@
+'use client';
+
 import type { ReactNode } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
 
-import PageTransition from '@/components/layout/PageTransition';
 import PageHeader from '@/components/layout/PageHeader';
-import SEO from '@/components/layout/SEO';
 import ProjectArchitectureFlow from '@/components/projects/ProjectArchitectureFlow';
 import ProjectCaseStudyNav from '@/components/projects/ProjectCaseStudyNav';
 import ProjectScreenshotGallery from '@/components/projects/ProjectScreenshotGallery';
 import {
-  getProjectById,
   isProjectFilter,
   projectsGalleryPath,
   type Project,
   type ProjectFilter,
 } from '@/data/projects';
 import { isValidHttpUrl } from '@/lib/url';
-import NotFoundPage from '@/pages/NotFoundPage';
 
 function hasText(value?: string): value is string {
   return Boolean(value?.trim());
@@ -26,42 +25,23 @@ function hasItems(value?: string[]): value is string[] {
   return Boolean(value && value.length > 0);
 }
 
-function getProjectShareImage(project: Project): string | undefined {
-  return (
-    project.image ??
-    project.screenshots?.[0]?.src ??
-    project.caseStudy?.screenshots?.[0]?.src
-  );
+interface ProjectCaseStudyPageProps {
+  project: Project;
 }
 
-export default function ProjectCaseStudyPage() {
-  const { projectId } = useParams<{ projectId: string }>();
-  const [searchParams] = useSearchParams();
-  const project = projectId ? getProjectById(projectId) : undefined;
+export default function ProjectCaseStudyPage({
+  project,
+}: ProjectCaseStudyPageProps) {
+  const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
   const filter: ProjectFilter = isProjectFilter(categoryParam)
     ? categoryParam
     : 'All';
 
-  if (!project) {
-    return <NotFoundPage />;
-  }
-
-  const shareImage = getProjectShareImage(project);
-
   return (
-    <PageTransition>
-      <SEO
-        title={`${project.name} | Darren Christopher Tang`}
-        description={project.summary}
-        path={`/projects/${project.id}`}
-        image={shareImage}
-      />
-
-      <div className="container-page py-10 sm:py-14">
-        <ProjectCaseStudyShell project={project} filter={filter} />
-      </div>
-    </PageTransition>
+    <div className="container-page py-10 sm:py-14">
+      <ProjectCaseStudyShell project={project} filter={filter} />
+    </div>
   );
 }
 
@@ -97,7 +77,7 @@ function ProjectCaseStudyShell({
   return (
     <>
       <Link
-        to={galleryPath}
+        href={galleryPath}
         className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-mist-300 transition-colors hover:text-accent-cyan"
       >
         <ArrowLeft className="h-3.5 w-3.5 shrink-0" />
