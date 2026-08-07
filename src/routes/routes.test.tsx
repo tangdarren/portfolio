@@ -17,7 +17,7 @@ describe('Portfolio pages', () => {
       ui: ReactElement;
       heading: string | RegExp;
     }> = [
-      { path: '/', ui: <HomePage />, heading: /Darren Christopher/i },
+      { path: '/', ui: <HomePage />, heading: /Darren Tang/i },
       { path: '/about', ui: <AboutPage />, heading: 'About Me' },
       { path: '/projects', ui: <ProjectsPage />, heading: 'Projects' },
       { path: '/resume', ui: <ResumePage />, heading: 'Resume' },
