@@ -65,4 +65,21 @@ describe('ContactForm fallback', () => {
     ).toBeInTheDocument();
     expect(screen.getByText(/please enter your name/i)).toBeInTheDocument();
   });
+
+  it('treats subject as optional', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<ContactForm />);
+
+    expect(screen.getByLabelText(/^subject$/i)).not.toBeRequired();
+
+    await user.click(screen.getByRole('button', { name: /send message/i }));
+
+    expect(
+      await screen.findByText(/please enter your name/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText(/please add a subject/i),
+    ).not.toBeInTheDocument();
+  });
 });
+

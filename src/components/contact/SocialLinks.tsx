@@ -2,7 +2,7 @@ import { SOCIAL_LINKS } from '@/data/socials';
 
 export default function SocialLinks() {
   return (
-    <ul className="grid gap-3 sm:grid-cols-3">
+    <ul className="grid gap-3">
       {SOCIAL_LINKS.map(({ label, href, handle, icon: Icon, external }) => (
         <li key={label}>
           <a

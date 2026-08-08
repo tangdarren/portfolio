@@ -58,7 +58,6 @@ export default function ContactForm() {
     if (!v.email.trim()) e.email = 'Please enter your email.';
     else if (!EMAIL_RE.test(v.email.trim()))
       e.email = 'That email address does not look valid.';
-    if (!v.subject.trim()) e.subject = 'Please add a subject.';
     if (!v.message.trim()) e.message = 'Please add a message.';
     else if (v.message.trim().length < 10)
       e.message = 'Message should be at least 10 characters.';
@@ -67,9 +66,10 @@ export default function ContactForm() {
 
   const openMailto = (v: FormState) => {
     const params = new URLSearchParams({
-      subject: v.subject.trim(),
       body: v.message.trim(),
     });
+    const subject = v.subject.trim();
+    if (subject) params.set('subject', subject);
     window.location.href = `mailto:${CONTACT_EMAIL}?${params.toString()}`;
   };
 
@@ -169,7 +169,6 @@ export default function ContactForm() {
             id="subject"
             value={values.subject}
             onChange={setField('subject')}
-            required
             error={errors.subject}
           />
         </div>
@@ -189,13 +188,13 @@ export default function ContactForm() {
 
       <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
         <p
-          className="max-w-md font-mono text-[11px] uppercase tracking-[0.18em] text-mist-400"
+          className="min-h-[1.25rem] max-w-md font-mono text-[11px] uppercase tracking-[0.18em] text-mist-400"
           aria-live="polite"
         >
           {status === 'success' && (
             <span className="inline-flex items-center gap-2 text-accent-green">
               <CheckCircle2 className="h-3.5 w-3.5" />
-              Message sent — I'll get back to you soon.
+              Message sent — I&apos;ll get back to you soon.
             </span>
           )}
           {status === 'mailto' && (
@@ -208,13 +207,6 @@ export default function ContactForm() {
             <span className="inline-flex items-center gap-2 text-rose-600">
               <AlertCircle className="h-3.5 w-3.5" />
               {errorMessage}
-            </span>
-          )}
-          {status !== 'success' && status !== 'mailto' && status !== 'error' && (
-            <span>
-              {endpoint
-                ? 'Send · powered by your configured provider'
-                : 'Send · opens your email application (no provider configured)'}
             </span>
           )}
         </p>

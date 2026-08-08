@@ -1,109 +1,67 @@
+import Image from 'next/image';
 import { useMemo } from 'react';
 
 import type { Project } from '@/data/projects';
 
 interface ProjectThumbnailProps {
   project: Project;
-  featured?: boolean;
 }
 
 /**
- * Deterministic, per-project abstract thumbnail.
- * Uses SVG geometry so the site ships with no bitmap assets, but replaces cleanly
- * once a real screenshot exists (see ProjectCard for the image slot).
+ * Image-first project preview. Uses `project.image` or the first screenshot
+ * when available; otherwise a warm deterministic abstract fallback.
  */
-export default function ProjectThumbnail({
-  project,
-  featured = false,
-}: ProjectThumbnailProps) {
+export default function ProjectThumbnail({ project }: ProjectThumbnailProps) {
   const palette = useMemo(() => paletteFromId(project.id), [project.id]);
+  const photo =
+    project.image ??
+    project.screenshots?.[0]?.src ??
+    project.caseStudy?.screenshots?.[0]?.src;
+  const photoAlt =
+    project.screenshots?.[0]?.alt ??
+    project.caseStudy?.screenshots?.[0]?.alt ??
+    `${project.name} preview`;
 
   return (
     <div
-      className={[
-        'relative w-full overflow-hidden border-b border-ink-600 bg-brand-50/60',
-        featured ? 'aspect-[16/7]' : 'aspect-[16/9]',
-      ].join(' ')}
-      role="img"
-      aria-label={`${project.name} — abstract preview graphic`}
+      className="projects-card-media relative aspect-[16/10] w-full overflow-hidden"
+      role={photo ? undefined : 'img'}
+      aria-label={photo ? undefined : `${project.name} — preview graphic`}
     >
-      <svg
-        viewBox="0 0 400 200"
-        preserveAspectRatio="xMidYMid slice"
-        className="h-full w-full"
-      >
-        <defs>
-          <linearGradient id={`bg-${project.id}`} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor={palette.bgFrom} />
-            <stop offset="100%" stopColor={palette.bgTo} />
-          </linearGradient>
-          <linearGradient id={`accent-${project.id}`} x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor={palette.accent} stopOpacity="0.85" />
-            <stop offset="100%" stopColor={palette.accent} stopOpacity="0.35" />
-          </linearGradient>
-        </defs>
-
-        <rect width="400" height="200" fill={`url(#bg-${project.id})`} />
-
-        {/* Grid overlay */}
-        <g stroke="rgba(15, 23, 42, 0.06)" strokeWidth="1">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <line
-              key={`v-${i}`}
-              x1={(i + 1) * (400 / 13)}
-              y1="0"
-              x2={(i + 1) * (400 / 13)}
-              y2="200"
-            />
-          ))}
-          {Array.from({ length: 6 }).map((_, i) => (
-            <line
-              key={`h-${i}`}
-              x1="0"
-              y1={(i + 1) * (200 / 7)}
-              x2="400"
-              y2={(i + 1) * (200 / 7)}
-            />
-          ))}
-        </g>
-
-        {/* Signature shapes */}
-        <g opacity="0.95">
-          {palette.shapes.map((shape, i) => (
-            <ShapeGlyph
-              key={i}
-              shape={shape}
-              accent={`url(#accent-${project.id})`}
-              accentSolid={palette.accent}
-            />
-          ))}
-        </g>
-
-        {/* Corner ident */}
-        <g transform="translate(16 16)">
-          <rect
-            x="0"
-            y="0"
-            width="88"
-            height="20"
-            rx="4"
-            fill="rgba(255, 255, 255, 0.85)"
-            stroke="rgba(15, 23, 42, 0.12)"
-          />
-          <text
-            x="10"
-            y="14"
-            fill={palette.accent}
-            fontFamily="ui-monospace, SFMono-Regular, monospace"
-            fontSize="10"
-            letterSpacing="1.6"
-          >
-            {project.id.slice(0, 10).toUpperCase()}
-          </text>
-        </g>
-      </svg>
-
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/40 via-transparent to-transparent" />
+      {photo ? (
+        <Image
+          src={photo}
+          alt={photoAlt}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover"
+        />
+      ) : (
+        <svg
+          viewBox="0 0 400 250"
+          preserveAspectRatio="xMidYMid slice"
+          className="h-full w-full"
+          aria-hidden
+        >
+          <defs>
+            <linearGradient id={`pg-bg-${project.id}`} x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor={palette.bgFrom} />
+              <stop offset="100%" stopColor={palette.bgTo} />
+            </linearGradient>
+          </defs>
+          <rect width="400" height="250" fill={`url(#pg-bg-${project.id})`} />
+          <g opacity="0.9">
+            {palette.shapes.map((shape, i) => (
+              <ShapeGlyph
+                key={i}
+                shape={shape}
+                fill={palette.accent}
+                stroke={palette.stroke}
+              />
+            ))}
+          </g>
+        </svg>
+      )}
     </div>
   );
 }
@@ -123,17 +81,18 @@ interface Palette {
   bgFrom: string;
   bgTo: string;
   accent: string;
+  stroke: string;
   shapes: Shape[];
 }
 
 function ShapeGlyph({
   shape,
-  accent,
-  accentSolid,
+  fill,
+  stroke,
 }: {
   shape: Shape;
-  accent: string;
-  accentSolid: string;
+  fill: string;
+  stroke: string;
 }) {
   if (shape.kind === 'rect') {
     return (
@@ -142,10 +101,9 @@ function ShapeGlyph({
         y={shape.y}
         width={shape.w ?? 40}
         height={shape.h ?? 40}
-        rx="6"
-        fill={accent}
-        stroke={accentSolid}
-        strokeOpacity="0.55"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="3"
       />
     );
   }
@@ -156,9 +114,8 @@ function ShapeGlyph({
         cy={shape.y}
         r={shape.r ?? 22}
         fill="none"
-        stroke={accentSolid}
-        strokeOpacity="0.7"
-        strokeWidth="1.75"
+        stroke={stroke}
+        strokeWidth="3"
       />
     );
   }
@@ -168,52 +125,70 @@ function ShapeGlyph({
       y1={shape.y}
       x2={shape.x2 ?? shape.x + 60}
       y2={shape.y2 ?? shape.y}
-      stroke={accentSolid}
-      strokeOpacity="0.8"
-      strokeWidth="2"
-      strokeLinecap="round"
+      stroke={stroke}
+      strokeWidth="3"
+      strokeLinecap="square"
     />
   );
 }
 
 function paletteFromId(id: string): Palette {
-  // Simple deterministic hash → palette / shape pick. Light-theme palettes.
   const h = Array.from(id).reduce((acc, ch) => acc * 31 + ch.charCodeAt(0), 7);
   const palettes: Omit<Palette, 'shapes'>[] = [
-    { bgFrom: '#EFF6FF', bgTo: '#DBEAFE', accent: '#2563EB' }, // primary blue
-    { bgFrom: '#ECFEFF', bgTo: '#CFFAFE', accent: '#0891B2' }, // cyan
-    { bgFrom: '#F0FDF4', bgTo: '#DCFCE7', accent: '#16A34A' }, // green
-    { bgFrom: '#F5F3FF', bgTo: '#EDE9FE', accent: '#7C3AED' }, // lavender
-    { bgFrom: '#F1F5F9', bgTo: '#E2E8F0', accent: '#334155' }, // neutral
+    {
+      bgFrom: '#7eb8e8',
+      bgTo: '#c9e4f7',
+      accent: '#f0e2c4',
+      stroke: '#5b3a22',
+    },
+    {
+      bgFrom: '#8fbc8f',
+      bgTo: '#d4e8c8',
+      accent: '#f4e8d0',
+      stroke: '#3f5c2e',
+    },
+    {
+      bgFrom: '#d4a574',
+      bgTo: '#f0d9b5',
+      accent: '#fff6e4',
+      stroke: '#6b3e26',
+    },
+    {
+      bgFrom: '#6a9bcf',
+      bgTo: '#b8d4ef',
+      accent: '#e8d4a8',
+      stroke: '#2f4a6b',
+    },
+    {
+      bgFrom: '#c4a484',
+      bgTo: '#efe0c8',
+      accent: '#fff8ec',
+      stroke: '#5a4030',
+    },
   ];
 
   const base = palettes[Math.abs(h) % palettes.length];
-
   const shapeSets: Shape[][] = [
     [
-      { kind: 'rect', x: 60, y: 80, w: 90, h: 40 },
-      { kind: 'rect', x: 170, y: 60, w: 60, h: 60 },
-      { kind: 'line', x: 60, y: 150, x2: 340, y2: 150 },
+      { kind: 'rect', x: 48, y: 70, w: 100, h: 48 },
+      { kind: 'rect', x: 170, y: 54, w: 70, h: 70 },
+      { kind: 'line', x: 48, y: 180, x2: 340, y2: 180 },
     ],
     [
-      { kind: 'circle', x: 120, y: 100, r: 40 },
-      { kind: 'circle', x: 230, y: 100, r: 24 },
-      { kind: 'line', x: 60, y: 160, x2: 340, y2: 160 },
+      { kind: 'circle', x: 130, y: 110, r: 46 },
+      { kind: 'circle', x: 240, y: 110, r: 28 },
+      { kind: 'line', x: 50, y: 190, x2: 350, y2: 190 },
     ],
     [
-      { kind: 'rect', x: 70, y: 60, w: 260, h: 20 },
-      { kind: 'rect', x: 70, y: 90, w: 180, h: 20 },
-      { kind: 'rect', x: 70, y: 120, w: 220, h: 20 },
+      { kind: 'rect', x: 60, y: 58, w: 280, h: 24 },
+      { kind: 'rect', x: 60, y: 96, w: 200, h: 24 },
+      { kind: 'rect', x: 60, y: 134, w: 240, h: 24 },
     ],
     [
-      { kind: 'rect', x: 60, y: 60, w: 60, h: 60 },
-      { kind: 'rect', x: 140, y: 60, w: 60, h: 60 },
-      { kind: 'rect', x: 220, y: 60, w: 60, h: 60 },
-      { kind: 'rect', x: 300, y: 60, w: 40, h: 60 },
-    ],
-    [
-      { kind: 'line', x: 40, y: 140, x2: 360, y2: 60 },
-      { kind: 'circle', x: 200, y: 100, r: 34 },
+      { kind: 'rect', x: 56, y: 60, w: 64, h: 64 },
+      { kind: 'rect', x: 140, y: 60, w: 64, h: 64 },
+      { kind: 'rect', x: 224, y: 60, w: 64, h: 64 },
+      { kind: 'rect', x: 308, y: 60, w: 40, h: 64 },
     ],
   ];
 

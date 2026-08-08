@@ -20,8 +20,8 @@ describe('Portfolio pages', () => {
       { path: '/', ui: <HomePage />, heading: /Darren Tang/i },
       { path: '/about', ui: <AboutPage />, heading: 'About Me' },
       { path: '/projects', ui: <ProjectsPage />, heading: 'Projects' },
-      { path: '/resume', ui: <ResumePage />, heading: 'Resume' },
-      { path: '/contact', ui: <ContactPage />, heading: 'Contact' },
+      { path: '/resume', ui: <ResumePage />, heading: 'Resume Viewer' },
+      { path: '/contact', ui: <ContactPage />, heading: 'Get in Touch' },
     ];
 
     for (const route of routes) {

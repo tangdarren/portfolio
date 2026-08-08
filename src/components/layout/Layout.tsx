@@ -4,7 +4,6 @@ import { useEffect, type ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 
 import Navbar from './Navbar';
-import Footer from './Footer';
 
 interface LayoutProps {
   children: ReactNode;
@@ -59,7 +58,6 @@ export default function Layout({ children }: LayoutProps) {
       <main id="main-content" className="flex-1 pt-20">
         {children}
       </main>
-      <Footer />
     </div>
   );
 }

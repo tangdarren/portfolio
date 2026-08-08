@@ -89,3 +89,47 @@ vi.mock('next/link', () => ({
     return createElement('a', { href, ...rest }, children);
   },
 }));
+
+class MockResizeObserver {
+  callback: ResizeObserverCallback;
+
+  constructor(callback: ResizeObserverCallback) {
+    this.callback = callback;
+  }
+
+  observe(target: Element) {
+    const width = 720;
+    const height = 930;
+    this.callback(
+      [
+        {
+          target,
+          contentRect: {
+            width,
+            height,
+            x: 0,
+            y: 0,
+            top: 0,
+            left: 0,
+            bottom: height,
+            right: width,
+            toJSON: () => ({}),
+          },
+          borderBoxSize: [],
+          contentBoxSize: [],
+          devicePixelContentBoxSize: [],
+        } as ResizeObserverEntry,
+      ],
+      this as unknown as ResizeObserver,
+    );
+  }
+
+  unobserve() {}
+  disconnect() {}
+}
+
+Object.defineProperty(window, 'ResizeObserver', {
+  writable: true,
+  configurable: true,
+  value: MockResizeObserver,
+});

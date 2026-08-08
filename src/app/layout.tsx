@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description: SITE_DEFAULT_DESCRIPTION,
   applicationName: SITE_NAME,
   icons: {
-    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+    icon: [{ url: '/favicon.png', type: 'image/png', sizes: '256x256' }],
   },
   openGraph: {
     type: 'website',
